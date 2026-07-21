@@ -40,6 +40,7 @@ const STACK = [
 export default async function AboutPage() {
   const ctx = getRequestContext();
   const t = await getContent(ctx.locale);
+  const base = ctx.base;
   const a = t.about;
 
   return (
@@ -49,8 +50,8 @@ export default async function AboutPage() {
         dangerouslySetInnerHTML={{
           __html: jsonLdString(
             breadcrumbSchema(ctx.host, [
-              { name: t.nav.home, path: '/' },
-              { name: t.nav.about, path: '/about' },
+              { name: t.nav.home, path: base },
+              { name: t.nav.about, path: `${base}/about` },
             ]),
           ),
         }}
@@ -62,7 +63,7 @@ export default async function AboutPage() {
           className="relative z-[7] pb-16 pt-44"
           style={{
             background:
-              'radial-gradient(ellipse 60% 55% at 85% 0%, rgba(162,255,0,0.07), transparent 70%), #050505',
+              'radial-gradient(ellipse 60% 55% at 85% 0%, rgba(162,255,0,0.07), transparent 70%), #0D0E12',
           }}
         >
           <div className="container-y">
@@ -74,30 +75,63 @@ export default async function AboutPage() {
           </div>
         </section>
 
-        {/* ── Story ─────────────────────────────────────────────── */}
-        <section className="relative z-[7] border-t border-line py-16 lg:py-24">
-          <div className="container-y grid gap-10 md:grid-cols-[minmax(220px,1fr)_2fr] md:gap-16">
-            <Reveal>
-              <h2 className="text-[13px] font-extrabold uppercase tracking-[0.14em] text-yoca-lime">
-                {a.storyTitle}
-              </h2>
-            </Reveal>
-            <div className="grid max-w-[64ch] gap-6 text-[17px] leading-[1.85] text-soft">
-              {[a.story1, a.story2, a.story3].map((paragraph, index) => (
-                <Reveal key={index} delay={index * 0.08}>
-                  <p>{paragraph}</p>
+        {/* ── Editorial spread: sticky manifesto + flowing methodology ── */}
+        <section className="relative z-[7] border-t border-line bg-surface py-16 lg:py-28">
+          <div className="container-y grid gap-12 lg:grid-cols-[5fr_6fr] lg:gap-20">
+            {/* Sticky manifesto column */}
+            <div className="lg:sticky lg:top-32 lg:self-start">
+              <Reveal>
+                <h2 className="text-[13px] font-extrabold uppercase tracking-[0.14em] text-yoca-lime">
+                  {a.storyTitle}
+                </h2>
+                <div className="mt-6 grid max-w-[58ch] gap-6 text-[17px] leading-[1.85] text-soft">
+                  <p className="text-[21px] font-bold leading-[1.6] text-white">{a.story1}</p>
+                  <p>{a.story2}</p>
+                  <p>{a.story3}</p>
+                </div>
+                <Link href={`${base}/contact`} className="btn-primary mt-9">
+                  {t.hero.primaryCta}
+                </Link>
+              </Reveal>
+            </div>
+
+            {/* Flowing methodology cards — canonical 01→02→03 order */}
+            <div className="grid content-start gap-6">
+              {t.systems.items.map((system, index) => (
+                <Reveal key={system.name} delay={index * 0.08}>
+                  <article className="glass rounded-md p-7 transition-colors duration-300 hover:border-yoca-lime/40 lg:p-9">
+                    <p className="text-[13px] font-extrabold tracking-[0.1em] text-yoca-lime">
+                      {String(index + 1).padStart(2, '0')}
+                    </p>
+                    <h3 className="mt-3 text-xl font-extrabold tracking-tight">{system.name}</h3>
+                    <p className="mt-1 text-[12px] font-bold uppercase tracking-[0.12em] text-subtle">
+                      {system.tagline}
+                    </p>
+                    <p className="mt-4 text-[15px] leading-relaxed text-muted">{system.body}</p>
+                    <ul className="mt-5 grid gap-2 border-t border-line pt-4">
+                      {system.points.map((point) => (
+                        <li key={point} className="flex items-start gap-2.5 text-[13px] font-semibold text-soft">
+                          <span
+                            aria-hidden="true"
+                            className="mt-[6px] block h-1.5 w-1.5 flex-none bg-yoca-green"
+                          />
+                          {point}
+                        </li>
+                      ))}
+                    </ul>
+                  </article>
                 </Reveal>
               ))}
             </div>
           </div>
         </section>
 
-        {/* ── Values bento ──────────────────────────────────────── */}
+        {/* ── Values ────────────────────────────────────────────── */}
         <section
           className="relative z-[7] py-16 lg:py-24"
           style={{
             background:
-              'radial-gradient(ellipse 50% 60% at 10% 100%, rgba(64,196,1,0.05), transparent 70%)',
+              'radial-gradient(ellipse 50% 60% at 10% 100%, rgba(64,196,1,0.05), transparent 70%), #0D0E12',
           }}
         >
           <div className="container-y">
@@ -131,7 +165,7 @@ export default async function AboutPage() {
         </SectionWrapper>
 
         {/* ── Tech stack ────────────────────────────────────────── */}
-        <section className="relative z-[7] border-t border-line py-16 lg:py-20">
+        <section className="relative z-[7] border-t border-line bg-surface py-16 lg:py-20">
           <div className="container-y">
             <Reveal>
               <div className="mb-9 max-w-2xl">
@@ -146,7 +180,7 @@ export default async function AboutPage() {
                 {STACK.map((tool) => (
                   <li
                     key={tool}
-                    className="rounded-sm border border-line bg-surface px-3.5 py-2 text-[13px] font-bold text-soft transition-colors duration-200 hover:border-yoca-lime/50 hover:text-yoca-lime"
+                    className="rounded-sm border border-line bg-surface-deep px-3.5 py-2 text-[13px] font-bold text-soft transition-colors duration-200 hover:border-yoca-lime/50 hover:text-yoca-lime"
                   >
                     {tool}
                   </li>
@@ -156,26 +190,7 @@ export default async function AboutPage() {
           </div>
         </section>
 
-        {/* ── Check-up bridge ───────────────────────────────────── */}
-        <SectionWrapper sectionKey="checkup_banner">
-          <section className="relative z-[7] py-14">
-            <div className="container-y">
-              <div className="glass flex flex-wrap items-center justify-between gap-6 rounded-md p-8 lg:p-10">
-                <div>
-                  <h2 className="text-xl font-extrabold tracking-tight lg:text-2xl">
-                    {t.checkup.title}
-                  </h2>
-                  <p className="mt-2 max-w-[52ch] text-[15px] text-muted">{t.checkup.description}</p>
-                </div>
-                <Link href="/checkup" className="btn-primary">
-                  {t.hero.primaryCta}
-                </Link>
-              </div>
-            </div>
-          </section>
-        </SectionWrapper>
-
-        <CtaSection t={t.cta} />
+        <CtaSection t={t.cta} base={base} />
       </main>
       <SiteFooter t={t} />
     </>

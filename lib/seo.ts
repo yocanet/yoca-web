@@ -2,9 +2,11 @@ import type { Metadata } from 'next';
 import { headers } from 'next/headers';
 import type { Locale } from '@/types';
 import {
+  absoluteLocalizedUrl,
   absoluteUrl,
   canonicalHostFor,
-  hostForLocale,
+  DEFAULT_LOCALE,
+  HREFLANG,
   LOCALES,
 } from '@/lib/domains';
 
@@ -13,28 +15,33 @@ import {
 export interface RequestSeoContext {
   locale: Locale;
   host: string;
+  /** Locale base path, e.g. "/tr" — prefix for every internal link. */
+  base: string;
 }
 
 /** Read the locale/host that the middleware attached to the request. */
 export function getRequestContext(): RequestSeoContext {
   const h = headers();
-  const locale = (h.get('x-yoca-locale') as Locale) || 'en';
+  const locale = (h.get('x-yoca-locale') as Locale) || DEFAULT_LOCALE;
   const host = canonicalHostFor(h.get('x-yoca-host') ?? h.get('host'));
-  return { locale, host };
+  const base = h.get('x-yoca-base') ?? `/${locale}`;
+  return { locale, host, base };
 }
 
 const OG_LOCALES: Record<Locale, string> = {
   en: 'en_US',
   tr: 'tr_TR',
   az: 'az_AZ',
+  ar: 'ar_AR',
 };
 
 /**
- * Build page metadata with exact cross-domain canonical + hreflang alternates:
- *   en    → https://yoca.net{path}
- *   tr-TR → https://yoca.tr{path}
- *   az-AZ → https://yoca.az{path}
- *   x-default → https://yoca.net{path}
+ * Build page metadata with path-based canonical + hreflang alternates:
+ *   en    → https://host/en{path}
+ *   tr-TR → https://host/tr{path}
+ *   az-AZ → https://host/az{path}
+ *   ar    → https://host/ar{path}
+ *   x-default → https://host/en{path}
  */
 export function buildMetadata(opts: {
   ctx: RequestSeoContext;
@@ -44,15 +51,14 @@ export function buildMetadata(opts: {
   ogImagePath?: string;
 }): Metadata {
   const { ctx, path, title, description } = opts;
-  const canonical = absoluteUrl(ctx.host, path);
+  const canonical = absoluteLocalizedUrl(ctx.host, ctx.locale, path);
   const ogImage = absoluteUrl(ctx.host, opts.ogImagePath ?? '/brand/og-default.png');
 
   const languages: Record<string, string> = {};
   for (const locale of LOCALES) {
-    const hreflang = locale === 'en' ? 'en' : locale === 'tr' ? 'tr-TR' : 'az-AZ';
-    languages[hreflang] = absoluteUrl(hostForLocale(locale), path);
+    languages[HREFLANG[locale]] = absoluteLocalizedUrl(ctx.host, locale, path);
   }
-  languages['x-default'] = absoluteUrl(hostForLocale('en'), path);
+  languages['x-default'] = absoluteLocalizedUrl(ctx.host, DEFAULT_LOCALE, path);
 
   return {
     metadataBase: new URL(`https://${ctx.host}`),
@@ -106,6 +112,7 @@ export function professionalServiceSchema(host: string, locale: Locale): JsonLd 
     en: 'Brand strategy, web experiences, growth systems, creative production, AI automation and digital product development.',
     tr: 'Marka stratejisi, web deneyimleri, büyüme sistemleri, yaratıcı üretim, yapay zekâ otomasyonu ve dijital ürün geliştirme.',
     az: 'Brend strategiyası, veb təcrübələri, inkişaf sistemləri, kreativ istehsal, süni intellekt avtomatlaşdırması və rəqəmsal məhsul inkişafı.',
+    ar: 'استراتيجية العلامة، التجارب الرقمية، أنظمة النمو، الإنتاج الإبداعي، أتمتة الذكاء الاصطناعي وتطوير المنتجات الرقمية.',
   };
   return {
     '@context': 'https://schema.org',
@@ -113,7 +120,7 @@ export function professionalServiceSchema(host: string, locale: Locale): JsonLd 
     name: 'Yoca',
     description: descriptions[locale],
     url: absoluteUrl(host, '/'),
-    areaServed: ['TR', 'AZ', 'AE', 'GB', 'EU'],
+    areaServed: ['TR', 'AZ', 'AE', 'SA', 'GB', 'EU'],
     priceRange: '$$',
     parentOrganization: { '@type': 'Organization', name: 'Yoca' },
   };

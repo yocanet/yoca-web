@@ -39,6 +39,8 @@ function rowToCaseStudy(row: CaseStudyRow, locale: Locale): CaseStudy | null {
     market: row.market,
     image: row.image_url,
     services: row.services ?? [],
+    kind: row.kind === 'product' ? 'product' : 'client',
+    videoUrl: row.video_url,
     ...localized,
   };
 }

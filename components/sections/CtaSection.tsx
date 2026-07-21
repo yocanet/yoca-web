@@ -1,13 +1,14 @@
 import Link from 'next/link';
 import type { Dict } from '@/lib/i18n';
 
-/** Yoca — final call-to-action band. */
+/** Yoca — final call-to-action band (primary CTA → contact). */
 
 interface CtaSectionProps {
   t: Dict['cta'];
+  base: string;
 }
 
-export default function CtaSection({ t }: CtaSectionProps) {
+export default function CtaSection({ t, base }: CtaSectionProps) {
   return (
     <section className="relative z-[7] py-24 text-center lg:py-36">
       <div className="container-y grid justify-items-center">
@@ -20,7 +21,7 @@ export default function CtaSection({ t }: CtaSectionProps) {
           {t.heading}
         </h2>
         <p className="mt-5 max-w-[54ch] text-[17px] leading-relaxed text-muted">{t.body}</p>
-        <Link href="/checkup" className="btn-primary mt-9 px-8 py-4 text-base">
+        <Link href={`${base}/contact`} className="btn-primary mt-9 px-8 py-4 text-base">
           {t.button}
         </Link>
       </div>

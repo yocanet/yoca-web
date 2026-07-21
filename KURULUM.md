@@ -25,8 +25,9 @@ ve domainlerinizin DNS paneline erişim.
 > `schema.sql` tekrar çalıştırılabilir (idempotent) — mevcut verinize dokunmaz.
 
 > **Mevcut (eski sürüm) veritabanını yükseltiyorsanız:** `supabase/upgrade-v3.sql`
-> dosyasını SQL Editor'de bir kez çalıştırın. Work, site metinleri tabloları ve
-> About/Services menü kayıtları eklenir; mevcut veriye dokunulmaz.
+> ve ardından `supabase/upgrade-v4.sql` dosyalarını SQL Editor'de birer kez
+> çalıştırın (v4: work tür/video alanları, Arapça desteği, Products menüsü).
+> Mevcut veriye dokunulmaz.
 
 ### 1b. Admin Paneli Kullanıcısı — ~2 dakika
 
@@ -114,12 +115,29 @@ Ekip fotoğrafı yüklemek için: Supabase → **Storage → New bucket** (`publ
 işaretli, adı örn. `team`) → fotoğrafı yükleyin → **Get URL** → panelde
 `Fotoğraf URL` alanına yapıştırın.
 
-### Dil davranışı
+### Dil davranışı (v4 — path tabanlı i18n)
 
-Domainler bağlanana kadar sitedeki **EN/TR/AZ** düğmeleri dili site içinde
-değiştirir (çerez tabanlı). Gerçek domainler (yoca.net / yoca.tr / yoca.az)
-bağlandığında her dil kendi domaininde yaşar ve düğmeler domainler arasında
-geçiş yapar — SEO davranışı otomatik korunur.
+Site 4 dilde, URL öneki ile çalışır: `/en/…`, `/tr/…`, `/az/…` ve `/ar/…`
+(Arapça tam **RTL** düzeniyle). Önek olmadan gelen ziyaretçi, çerezde
+hatırlanan diline (varsayılan EN) 308 ile yönlendirilir. `hreflang`
+etiketleri ve sitemap dört dili de aynı host üzerinde işaretler; domainler
+bağlandığında yapı aynen çalışmaya devam eder.
+
+### Yayın öncesi ÖNEMLİ kontroller
+
+- **Örnek metrikler:** Work kartlarındaki rozetler, vaka detayındaki
+  "Doğrulanmış Sonuçlar" çubukları ve Products sayfasındaki büyüme
+  metrikleri ÖRNEK yer tutuculardır. Yayına almadan önce /admin → Work
+  üzerinden gerçek, doğrulanabilir verilerle değiştirin.
+- **Partner rozetleri:** Rozetler şu an ilgili resmi partner PROGRAMI
+  sayfalarına bağlıdır. Sertifikasyonunuz tamamlandığında
+  `components/sections/PartnersAndClients.tsx` içindeki `PARTNER_URLS`
+  değerlerini kendi doğrulama profil linklerinizle değiştirin.
+- **Calendly:** /admin → Metinler → "İletişim — Calendly linki" alanına
+  `https://calendly.com/kullanici-adiniz` yazdığınızda iletişim sayfasında
+  canlı randevu takvimi otomatik açılır.
+- **Müşteri yorumları:** Vaka detayındaki 5. modül (Müşteri Yorumu) yalnızca
+  /admin'den GERÇEK bir yorum girildiğinde görünür.
 
 ## 5. Yayın Sonrası Kontrol Listesi
 

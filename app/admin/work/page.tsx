@@ -11,6 +11,7 @@ const LOCALES: Array<{ code: Locale; label: string }> = [
   { code: 'tr', label: 'Türkçe' },
   { code: 'en', label: 'English' },
   { code: 'az', label: 'Azərbaycanca' },
+  { code: 'ar', label: 'العربية' },
 ];
 
 const EMPTY_LOCALIZED: CaseStudyLocalized = {
@@ -23,15 +24,37 @@ const EMPTY_LOCALIZED: CaseStudyLocalized = {
   results: '',
 };
 
-const LOCALIZED_FIELDS: Array<{ key: keyof CaseStudyLocalized; label: string; multiline: boolean }> = [
+type TextField = 'name' | 'sector' | 'summary' | 'problem' | 'approach' | 'solution' | 'results' | 'metricBadge' | 'quote' | 'quoteAuthor';
+
+const LOCALIZED_FIELDS: Array<{ key: TextField; label: string; multiline: boolean }> = [
   { key: 'name', label: 'Proje adı', multiline: false },
   { key: 'sector', label: 'Sektör', multiline: false },
   { key: 'summary', label: 'Özet', multiline: true },
-  { key: 'problem', label: 'Problem', multiline: true },
-  { key: 'approach', label: 'Yaklaşım', multiline: true },
-  { key: 'solution', label: 'Çözüm', multiline: true },
-  { key: 'results', label: 'Sonuç', multiline: true },
+  { key: 'problem', label: '1 · Meydan Okuma (Challenge)', multiline: true },
+  { key: 'approach', label: '2 · Uygulanan Sistem', multiline: true },
+  { key: 'solution', label: '3 · Uygulama ve Teknoloji', multiline: true },
+  { key: 'results', label: '4 · Doğrulanmış Sonuçlar (anlatı)', multiline: true },
+  { key: 'metricBadge', label: 'Metrik rozeti (kartta görünür, örn. "+210% büyüme")', multiline: false },
+  { key: 'quote', label: '5 · Müşteri Yorumu (boşsa bölüm gizlenir — gerçek yorum girin)', multiline: true },
+  { key: 'quoteAuthor', label: 'Yorum sahibi (ad — unvan)', multiline: false },
 ];
+
+/** stats textarea satır formatı: Etiket | Değer | 0-100 (çubuk yüzdesi) */
+function statsToText(stats?: Array<{ label: string; value: string; bar?: number }>): string {
+  return (stats ?? []).map((s) => `${s.label} | ${s.value} | ${s.bar ?? 50}`).join('\n');
+}
+
+function textToStats(text: string): Array<{ label: string; value: string; bar: number }> {
+  return text
+    .split('\n')
+    .map((line) => line.split('|').map((part) => part.trim()))
+    .filter((parts) => parts.length >= 2 && parts[0])
+    .map((parts) => ({
+      label: parts[0],
+      value: parts[1] ?? '',
+      bar: Math.min(100, Math.max(0, parseInt(parts[2] ?? '50', 10) || 50)),
+    }));
+}
 
 type EditableRow = Omit<CaseStudyRow, 'id'> & { id?: number };
 
@@ -44,7 +67,14 @@ function newRow(orderIndex: number): EditableRow {
     services: [],
     order_index: orderIndex,
     is_active: true,
-    content: { tr: { ...EMPTY_LOCALIZED }, en: { ...EMPTY_LOCALIZED }, az: { ...EMPTY_LOCALIZED } },
+    kind: 'client',
+    video_url: null,
+    content: {
+      tr: { ...EMPTY_LOCALIZED },
+      en: { ...EMPTY_LOCALIZED },
+      az: { ...EMPTY_LOCALIZED },
+      ar: { ...EMPTY_LOCALIZED },
+    },
   };
 }
 
@@ -94,6 +124,8 @@ export default function AdminWork() {
       services: editing.services ?? [],
       order_index: editing.order_index,
       is_active: editing.is_active,
+      kind: editing.kind === 'product' ? 'product' : 'client',
+      video_url: editing.video_url?.trim() || null,
       content: editing.content,
     };
     if (editing.id !== undefined) {
@@ -134,12 +166,21 @@ export default function AdminWork() {
     load();
   };
 
-  const setLocalizedField = (key: keyof CaseStudyLocalized, value: string) => {
+  const setLocalizedField = (key: TextField, value: string) => {
     if (!editing) return;
     const current = editing.content[editLocale] ?? { ...EMPTY_LOCALIZED };
     setEditing({
       ...editing,
       content: { ...editing.content, [editLocale]: { ...current, [key]: value } },
+    });
+  };
+
+  const setLocalizedStats = (text: string) => {
+    if (!editing) return;
+    const current = editing.content[editLocale] ?? { ...EMPTY_LOCALIZED };
+    setEditing({
+      ...editing,
+      content: { ...editing.content, [editLocale]: { ...current, stats: textToStats(text) } },
     });
   };
 
@@ -209,6 +250,27 @@ export default function AdminWork() {
               className="admin-input"
             />
           </label>
+          <label className="grid gap-1.5 text-[12px] font-bold text-subtle">
+            Tür
+            <select
+              value={editing.kind}
+              onChange={(event) =>
+                setEditing({ ...editing, kind: event.target.value as 'client' | 'product' })
+              }
+              className="admin-input"
+            >
+              <option value="client">Müşteri Projesi</option>
+              <option value="product">Yoca Ürünü</option>
+            </select>
+          </label>
+          <label className="grid gap-1.5 text-[12px] font-bold text-subtle sm:col-span-2 lg:col-span-3">
+            Hover video URL (opsiyonel — .mp4/.webm; karta gelince sessiz döngüyle oynar)
+            <input
+              value={editing.video_url ?? ''}
+              onChange={(event) => setEditing({ ...editing, video_url: event.target.value })}
+              className="admin-input"
+            />
+          </label>
           <label className="grid gap-1.5 text-[12px] font-bold text-subtle sm:col-span-2 lg:col-span-4">
             Görsel URL (/work/… veya https://…)
             <input
@@ -241,19 +303,29 @@ export default function AdminWork() {
               {field.multiline ? (
                 <textarea
                   rows={3}
-                  value={localized[field.key]}
+                  value={localized[field.key] ?? ''}
                   onChange={(event) => setLocalizedField(field.key, event.target.value)}
                   className="admin-input resize-y font-medium"
                 />
               ) : (
                 <input
-                  value={localized[field.key]}
+                  value={localized[field.key] ?? ''}
                   onChange={(event) => setLocalizedField(field.key, event.target.value)}
                   className="admin-input font-medium"
                 />
               )}
             </label>
           ))}
+          <label className="admin-card grid gap-2 !p-4 text-[13px] font-extrabold">
+            Sonuç istatistikleri — her satır: Etiket | Değer | 0-100 çubuk yüzdesi
+            <textarea
+              rows={4}
+              value={statsToText(localized.stats)}
+              onChange={(event) => setLocalizedStats(event.target.value)}
+              placeholder={'Online randevu | +87% | 87\nOrganik trafik | +120% | 95'}
+              className="admin-input resize-y font-medium"
+            />
+          </label>
         </div>
       </div>
     );

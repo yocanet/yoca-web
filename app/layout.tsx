@@ -37,7 +37,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const t = await getContent(ctx.locale);
 
   return (
-    <html lang={ctx.locale} className={manrope.variable}>
+    <html lang={ctx.locale} dir={ctx.locale === 'ar' ? 'rtl' : 'ltr'} className={manrope.variable}>
       <body className="font-sans">
         {/* JSON-LD structured data (valid anywhere in the document) */}
         <script

@@ -8,7 +8,7 @@ import type { SectionRow } from '@/types';
 
 const LABELS: Record<string, string> = {
   hero: 'Hero (giriş)',
-  bento: 'Bento — sistem vitrini',
+  bento: 'Sistem kartları (Brand → Growth → Scale)',
   services: 'Hizmetler ızgarası',
   clients: 'Müşteri logoları şeridi',
   partners: 'Resmi partner rozetleri',

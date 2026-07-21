@@ -24,10 +24,20 @@ export default function ContactForm({
   errorGeneric,
 }: ContactFormProps) {
   const [form, setForm] = useState({ name: '', email: '', company: '', message: '' });
+  const [selectedSystems, setSelectedSystems] = useState<string[]>([]);
+  const [budget, setBudget] = useState<string>('');
   const [consent, setConsent] = useState(false);
   const [status, setStatus] = useState<Status>('idle');
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+
+  const toggleSystem = (system: string) => {
+    setSelectedSystems((current) =>
+      current.includes(system)
+        ? current.filter((item) => item !== system)
+        : [...current, system],
+    );
+  };
 
   const submit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -42,6 +52,19 @@ export default function ContactForm({
       return;
     }
 
+    // Project-planner selections travel inside the message body.
+    const plannerLines: string[] = [];
+    if (selectedSystems.length > 0) {
+      plannerLines.push(`[${t.plannerSystems}] ${selectedSystems.join(', ')}`);
+    }
+    if (budget) {
+      plannerLines.push(`[${t.plannerBudget}] ${budget}`);
+    }
+    const fullMessage =
+      plannerLines.length > 0
+        ? `${plannerLines.join('\n')}\n\n${form.message.trim()}`
+        : form.message.trim();
+
     setStatus('submitting');
     try {
       const response = await fetch('/api/contact', {
@@ -51,7 +74,7 @@ export default function ContactForm({
           name: form.name.trim(),
           email: form.email.trim(),
           company: form.company.trim(),
-          message: form.message.trim(),
+          message: fullMessage,
           locale,
           website: '', // honeypot
         }),
@@ -144,6 +167,55 @@ export default function ContactForm({
           className={inputClass}
         />
       </div>
+      {/* ── Interactive Project Planner ─────────────────────────── */}
+      <fieldset className="grid gap-3 border-0 p-0">
+        <legend className="text-[13px] font-bold text-soft">{t.plannerSystems}</legend>
+        <div className="flex flex-wrap gap-2.5">
+          {t.systems.map((system) => {
+            const active = selectedSystems.includes(system);
+            return (
+              <button
+                key={system}
+                type="button"
+                aria-pressed={active}
+                onClick={() => toggleSystem(system)}
+                className={`min-h-[44px] rounded-sm border px-4 py-2 text-[13px] font-bold transition-colors ${
+                  active
+                    ? 'border-yoca-lime bg-yoca-lime text-black'
+                    : 'border-line bg-surface-secondary text-muted hover:border-subtle hover:text-white'
+                }`}
+              >
+                {system}
+              </button>
+            );
+          })}
+        </div>
+      </fieldset>
+
+      <fieldset className="grid gap-3 border-0 p-0">
+        <legend className="text-[13px] font-bold text-soft">{t.plannerBudget}</legend>
+        <div className="flex flex-wrap gap-2.5">
+          {t.budgets.map((option) => {
+            const active = budget === option;
+            return (
+              <button
+                key={option}
+                type="button"
+                aria-pressed={active}
+                onClick={() => setBudget(active ? '' : option)}
+                className={`min-h-[44px] rounded-sm border px-4 py-2 text-[13px] font-bold transition-colors ${
+                  active
+                    ? 'border-yoca-lime bg-yoca-lime text-black'
+                    : 'border-line bg-surface-secondary text-muted hover:border-subtle hover:text-white'
+                }`}
+              >
+                {option}
+              </button>
+            );
+          })}
+        </div>
+      </fieldset>
+
       <div className="grid gap-2">
         <label htmlFor="cf-message" className="text-[13px] font-bold text-soft">
           {t.message} <span className="text-yoca-lime">*</span>

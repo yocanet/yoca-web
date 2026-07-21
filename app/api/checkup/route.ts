@@ -29,7 +29,7 @@ function rateLimited(ip: string): boolean {
 }
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const LOCALES: Locale[] = ['en', 'tr', 'az'];
+const LOCALES: Locale[] = ['en', 'tr', 'az', 'ar'];
 
 export async function POST(request: NextRequest) {
   let payload: CheckupPayload;

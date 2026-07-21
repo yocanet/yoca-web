@@ -15,6 +15,7 @@ const LOCALES: Array<{ code: Locale; label: string }> = [
   { code: 'tr', label: 'Türkçe' },
   { code: 'en', label: 'English' },
   { code: 'az', label: 'Azərbaycanca' },
+  { code: 'ar', label: 'العربية' },
 ];
 
 export default function AdminContent() {

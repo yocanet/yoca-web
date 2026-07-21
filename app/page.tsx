@@ -4,7 +4,7 @@ import SectionWrapper from '@/components/SectionWrapper';
 import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 import Hero from '@/components/sections/Hero';
-import BentoFeatures from '@/components/sections/BentoFeatures';
+import SystemPillars from '@/components/sections/SystemPillars';
 import PartnersAndClients from '@/components/sections/PartnersAndClients';
 import TeamSection from '@/components/sections/TeamSection';
 import ServicesGrid from '@/components/sections/ServicesGrid';
@@ -28,19 +28,20 @@ export function generateMetadata(): Metadata {
 export default async function HomePage() {
   const ctx = getRequestContext();
   const t = await getContent(ctx.locale);
+  const base = ctx.base;
 
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: jsonLdString(breadcrumbSchema(ctx.host, [{ name: t.nav.home, path: '/' }])),
+          __html: jsonLdString(breadcrumbSchema(ctx.host, [{ name: t.nav.home, path: base }])),
         }}
       />
-      <SiteHeader t={t} />
+      <SiteHeader t={t} path="/" />
       <main id="main">
         <SectionWrapper sectionKey="hero">
-          <Hero t={t.hero} />
+          <Hero t={t.hero} base={base} />
         </SectionWrapper>
 
         <SectionWrapper sectionKey="clients">
@@ -51,20 +52,22 @@ export default async function HomePage() {
           />
         </SectionWrapper>
 
+        {/* System architecture — canonical order: Brand → Growth → Scale */}
         <SectionWrapper sectionKey="bento">
-          <BentoFeatures t={t.bento} />
+          <SystemPillars t={t.systems} base={base} />
         </SectionWrapper>
 
         <SectionWrapper sectionKey="services">
-          <ServicesGrid t={t.services} ctaLabel={t.cta.button} />
+          <ServicesGrid t={t.services} ctaLabel={t.cta.button} base={base} />
         </SectionWrapper>
 
         <SectionWrapper sectionKey="team">
           <TeamSection t={t.team} />
         </SectionWrapper>
 
+        {/* Digital Check-Up — secondary lead magnet (border CTA) */}
         <SectionWrapper sectionKey="checkup_banner">
-          <section className="relative z-[7] py-14">
+          <section className="relative z-[7] bg-surface py-14">
             <div className="container-y">
               <div className="glass grid items-center gap-8 overflow-hidden rounded-md p-8 md:grid-cols-[3fr_2fr] lg:p-12">
                 <div>
@@ -72,7 +75,7 @@ export default async function HomePage() {
                     {t.checkup.eyebrow}
                   </span>
                   <h2 className="mt-4 text-2xl font-extrabold leading-snug tracking-tight lg:text-3xl">
-                    {t.checkup.title}
+                    {t.checkup.introTitle}
                   </h2>
                   <p className="mt-3 max-w-[52ch] text-[15px] text-muted">{t.checkup.description}</p>
                 </div>
@@ -90,8 +93,8 @@ export default async function HomePage() {
                       />
                     ))}
                   </div>
-                  <Link href="/checkup" className="btn-primary">
-                    {t.hero.primaryCta}
+                  <Link href={`${base}/checkup`} className="btn-ghost">
+                    {t.hero.secondaryCta}
                   </Link>
                 </div>
               </div>
@@ -108,7 +111,7 @@ export default async function HomePage() {
         </SectionWrapper>
 
         <SectionWrapper sectionKey="cta">
-          <CtaSection t={t.cta} />
+          <CtaSection t={t.cta} base={base} />
         </SectionWrapper>
       </main>
 

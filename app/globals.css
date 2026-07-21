@@ -12,7 +12,8 @@
     scroll-behavior: smooth;
   }
   body {
-    @apply bg-black text-white antialiased;
+    /* Editorial dark base — never flat #000 */
+    @apply bg-surface-deep text-white antialiased;
   }
   ::selection {
     background: var(--yoca-lime);
@@ -34,11 +35,14 @@
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.08);
   }
+  /* Primary CTA — solid Electric Lime; text is ALWAYS pure black (#000) */
   .btn-primary {
-    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-sm bg-yoca-lime px-7 py-3 text-[15px] font-bold text-black transition-colors duration-200 hover:bg-yoca-green;
+    @apply inline-flex min-h-12 min-w-12 items-center justify-center gap-2 rounded-sm bg-yoca-lime px-7 py-3 text-[15px] font-bold text-black transition-colors duration-200 hover:bg-yoca-green;
+    color: #000000;
   }
+  /* Secondary CTA — border only (lead magnet / Digital Check-Up) */
   .btn-ghost {
-    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-sm border border-line px-7 py-3 text-[15px] font-bold text-white transition-colors duration-200 hover:border-yoca-lime hover:text-yoca-lime;
+    @apply inline-flex min-h-12 min-w-12 items-center justify-center gap-2 rounded-sm border border-line px-7 py-3 text-[15px] font-bold text-white transition-colors duration-200 hover:border-yoca-lime hover:text-yoca-lime;
   }
   .eyebrow {
     @apply flex items-center gap-2.5 text-[13px] font-bold uppercase tracking-[0.14em] text-muted;

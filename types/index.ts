@@ -1,6 +1,6 @@
 /** Yoca — shared TypeScript types. */
 
-export type Locale = 'en' | 'tr' | 'az';
+export type Locale = 'en' | 'tr' | 'az' | 'ar';
 
 export interface DomainConfig {
   host: string;
@@ -107,6 +107,13 @@ export interface CaseStudyLocalized {
   approach: string;
   solution: string;
   results: string;
+  /** Headline metric badge shown on cards, e.g. "+210% organic growth". */
+  metricBadge?: string;
+  /** Verified result stats rendered as a mini chart on the detail page. */
+  stats?: Array<{ label: string; value: string; bar?: number }>;
+  /** Client quote (optional). */
+  quote?: string;
+  quoteAuthor?: string;
 }
 
 export interface CaseStudyRow {
@@ -118,6 +125,10 @@ export interface CaseStudyRow {
   services: string[] | null;
   order_index: number;
   is_active: boolean;
+  /** 'client' work vs Yoca's own 'product' — drives the Work page filter. */
+  kind: 'client' | 'product';
+  /** Optional hover-preview video (muted loop) for the Work grid. */
+  video_url: string | null;
   content: Partial<Record<Locale, CaseStudyLocalized>>;
 }
 

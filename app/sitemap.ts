@@ -1,17 +1,22 @@
 import type { MetadataRoute } from 'next';
 import { headers } from 'next/headers';
-import { absoluteUrl, canonicalHostFor, hostForLocale, LOCALES } from '@/lib/domains';
+import {
+  absoluteLocalizedUrl,
+  canonicalHostFor,
+  DEFAULT_LOCALE,
+  HREFLANG,
+  LOCALES,
+} from '@/lib/domains';
 import { getAllSlugs } from '@/lib/work';
 
 /**
- * Yoca — host-aware dynamic sitemap.
- * Each domain serves its own sitemap with cross-domain hreflang alternates,
- * so yoca.net/sitemap.xml, yoca.tr/sitemap.xml and yoca.az/sitemap.xml all
- * stay consistent from one source of truth.
+ * Yoca — sitemap for path-based i18n.
+ * Every logical page is listed once per locale (/en, /tr, /az, /ar) with
+ * full cross-locale hreflang alternates.
  */
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const host = canonicalHostFor(headers().get('x-yoca-host') ?? headers().get('host'));
+  const host = canonicalHostFor(headers().get('host'));
   const lastModified = new Date();
   const slugs = await getAllSlugs();
 
@@ -25,24 +30,28 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.7,
       changeFrequency: 'monthly' as const,
     })),
+    { path: '/products', priority: 0.8, changeFrequency: 'monthly' },
     { path: '/checkup', priority: 0.8, changeFrequency: 'monthly' },
     { path: '/contact', priority: 0.8, changeFrequency: 'monthly' },
   ];
 
-  return PATHS.map(({ path, priority, changeFrequency }) => {
+  const entries: MetadataRoute.Sitemap = [];
+  for (const { path, priority, changeFrequency } of PATHS) {
     const languages: Record<string, string> = {};
     for (const locale of LOCALES) {
-      const hreflang = locale === 'en' ? 'en' : locale === 'tr' ? 'tr-TR' : 'az-AZ';
-      languages[hreflang] = absoluteUrl(hostForLocale(locale), path);
+      languages[HREFLANG[locale]] = absoluteLocalizedUrl(host, locale, path);
     }
-    languages['x-default'] = absoluteUrl(hostForLocale('en'), path);
+    languages['x-default'] = absoluteLocalizedUrl(host, DEFAULT_LOCALE, path);
 
-    return {
-      url: absoluteUrl(host, path),
-      lastModified,
-      changeFrequency,
-      priority,
-      alternates: { languages },
-    };
-  });
+    for (const locale of LOCALES) {
+      entries.push({
+        url: absoluteLocalizedUrl(host, locale, path),
+        lastModified,
+        changeFrequency,
+        priority: locale === DEFAULT_LOCALE ? priority : Math.max(0.1, priority - 0.1),
+        alternates: { languages },
+      });
+    }
+  }
+  return entries;
 }

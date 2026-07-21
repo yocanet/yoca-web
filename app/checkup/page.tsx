@@ -28,8 +28,8 @@ export default async function CheckupPage() {
         dangerouslySetInnerHTML={{
           __html: jsonLdString(
             breadcrumbSchema(ctx.host, [
-              { name: t.nav.home, path: '/' },
-              { name: t.nav.checkup, path: '/checkup' },
+              { name: t.nav.home, path: ctx.base },
+              { name: t.nav.checkup, path: `${ctx.base}/checkup` },
             ]),
           ),
         }}
@@ -37,24 +37,21 @@ export default async function CheckupPage() {
       <SiteHeader t={t} path="/checkup" />
       <main id="main">
         <section
-          className="relative z-[7] pb-14 pt-44"
+          className="relative z-[7] pb-10 pt-44"
           style={{
             background:
-              'radial-gradient(ellipse 60% 55% at 85% 0%, rgba(162,255,0,0.06), transparent 70%), #050505',
+              'radial-gradient(ellipse 60% 55% at 85% 0%, rgba(162,255,0,0.06), transparent 70%), #0D0E12',
           }}
         >
           <div className="container-y">
             <p className="eyebrow">{t.checkup.eyebrow}</p>
-            <h1 className="mt-5 max-w-[20ch] text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl">
+            <h1 className="mt-5 max-w-[22ch] text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl">
               {t.checkup.title}
             </h1>
-            <p className="mt-5 max-w-[60ch] text-[17px] leading-relaxed text-muted">
-              {t.checkup.description}
-            </p>
           </div>
         </section>
 
-        <section className="relative z-[7] py-16 lg:py-20">
+        <section className="relative z-[7] bg-surface py-16 lg:py-20">
           <div className="container-y">
             <div className="mx-auto max-w-3xl">
               <CheckUpWizard locale={ctx.locale} t={t.checkup} />

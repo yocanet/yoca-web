@@ -32,13 +32,13 @@ export default function MobileMenu({ items, cta, locale, path, languageLabel }: 
   }, [open]);
 
   return (
-    <div className="md:hidden">
+    <div className="lg:hidden">
       <button
         type="button"
         aria-expanded={open}
         aria-label={open ? 'Close menu' : 'Open menu'}
         onClick={() => setOpen((value) => !value)}
-        className="relative z-[120] flex h-10 w-10 flex-col items-center justify-center gap-[5px] rounded-sm border border-line bg-surface"
+        className="relative z-[120] flex h-12 w-12 flex-col items-center justify-center gap-[5px] rounded-sm border border-line bg-surface"
       >
         <span
           className={`h-[2px] w-[18px] bg-white transition-transform duration-200 ${
@@ -64,7 +64,7 @@ export default function MobileMenu({ items, cta, locale, path, languageLabel }: 
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-[110] bg-surface-deep/98 backdrop-blur-xl"
+            className="fixed inset-0 z-[110] bg-surface-deep/95 backdrop-blur-xl"
           >
             <motion.nav
               aria-label="Mobile"

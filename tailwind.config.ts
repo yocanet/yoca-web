@@ -16,14 +16,16 @@ const config: Config = {
           'lime-soft': '#E9FFC2',
         },
         surface: {
-          DEFAULT: '#0C0C0C',
-          deep: '#050505',
-          secondary: '#141414',
-          elevated: '#1B1B1B',
+          // Editorial dark rhythm: fume ↔ navy-grey instead of flat black
+          DEFAULT: '#121418',
+          deep: '#0D0E12',
+          secondary: '#171A20',
+          elevated: '#1E222A',
         },
-        line: '#292929',
-        muted: '#A1A1A1',
-        subtle: '#737373',
+        line: '#2A2E37',
+        // WCAG AA: secondary text on dark surfaces ≥ #A1A1AA
+        muted: '#B4B7BF',
+        subtle: '#A1A1AA',
         soft: '#F4F4F1',
       },
       fontFamily: {

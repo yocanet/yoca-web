@@ -26,6 +26,7 @@ export default function CheckUpWizard({ locale, t }: CheckUpWizardProps) {
   const questions = t.questions;
   const totalSteps = questions.length + 1; // + contact step
 
+  const [started, setStarted] = useState(false);
   const [step, setStep] = useState(0);
   const [direction, setDirection] = useState(1);
   const [answers, setAnswers] = useState<Record<string, number>>({});
@@ -135,6 +136,51 @@ export default function CheckUpWizard({ locale, t }: CheckUpWizardProps) {
           ✓
         </span>
         <p className="text-[16px] leading-relaxed text-soft">{t.success}</p>
+      </div>
+    );
+  }
+
+  // ── Intro landing card — no step counter, no %, no Back button ──
+  if (!started) {
+    return (
+      <div ref={topRef} className="scroll-mt-32">
+        <motion.div
+          initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: [0.22, 0.8, 0.3, 1] }}
+          className="glass rounded-md p-8 lg:p-12"
+        >
+          <span className="inline-block rounded-sm border border-line px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.1em] text-yoca-lime">
+            {t.eyebrow}
+          </span>
+          <h2 className="mt-5 max-w-[24ch] text-2xl font-extrabold leading-snug tracking-tight sm:text-3xl">
+            {t.introTitle}
+          </h2>
+          <p className="mt-4 max-w-[58ch] text-[16px] leading-relaxed text-muted">{t.introSub}</p>
+          <ul className="mt-7 grid gap-3">
+            {t.introPoints.map((point) => (
+              <li key={point} className="flex items-start gap-3 text-[15px] font-semibold text-soft">
+                <span
+                  aria-hidden="true"
+                  className="mt-1 grid h-5 w-5 flex-none place-items-center bg-yoca-green text-[11px] font-extrabold text-black"
+                >
+                  ✓
+                </span>
+                {point}
+              </li>
+            ))}
+          </ul>
+          <button
+            type="button"
+            onClick={() => {
+              setStarted(true);
+              scrollToTop();
+            }}
+            className="btn-primary mt-9 px-8 py-4 text-base"
+          >
+            {t.introStart} →
+          </button>
+        </motion.div>
       </div>
     );
   }

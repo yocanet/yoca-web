@@ -33,6 +33,17 @@ const PARTNERS: PartnerBadge[] = [
   { key: 'tiktok', name: 'TikTok', level: 'TikTok Marketing Partner', glow: '105,201,208' },
 ];
 
+/**
+ * Official partner-program verification links.
+ * TODO(yoca): replace each with your public verification PROFILE URL
+ * (e.g. your Google Partners directory listing) once certified.
+ */
+const PARTNER_URLS: Record<PartnerBadge['key'], string> = {
+  google: 'https://www.google.com/partners/',
+  meta: 'https://www.facebook.com/business/marketing-partners',
+  tiktok: 'https://partners.tiktok.com/',
+};
+
 function GoogleMark() {
   const letters: Array<[string, string]> = [
     ['G', '#4285F4'],
@@ -135,8 +146,12 @@ export default function PartnersAndClients({
               {PARTNERS.map((partner) => {
                 const Mark = MARKS[partner.key];
                 return (
-                  <article
+                  <a
                     key={partner.key}
+                    href={PARTNER_URLS[partner.key]}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${partner.level} — official verification`}
                     className="glass group relative grid justify-items-start gap-3.5 rounded-md p-8 transition-transform duration-300 hover:-translate-y-1"
                   >
                     <div
@@ -161,7 +176,7 @@ export default function PartnersAndClients({
                       </svg>
                       {t.partners.verified}
                     </span>
-                  </article>
+                  </a>
                 );
               })}
             </div>

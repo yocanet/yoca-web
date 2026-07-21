@@ -15,8 +15,8 @@ export const CONTENT_KEYS: Array<{ key: string; label: string; multiline?: boole
   { key: 'hero.line', label: 'Hero — alt satır' },
   { key: 'services.heading', label: 'Hizmetler — başlık', multiline: true },
   { key: 'services.sub', label: 'Hizmetler — alt metin', multiline: true },
-  { key: 'bento.heading', label: 'Bento — başlık', multiline: true },
-  { key: 'bento.sub', label: 'Bento — alt metin', multiline: true },
+  { key: 'systems.heading', label: 'Sistem kartları — başlık', multiline: true },
+  { key: 'systems.sub', label: 'Sistem kartları — alt metin', multiline: true },
   { key: 'clients.heading', label: 'Müşteriler — başlık' },
   { key: 'partners.heading', label: 'Partnerler — başlık', multiline: true },
   { key: 'partners.sub', label: 'Partnerler — alt metin', multiline: true },
@@ -36,6 +36,11 @@ export const CONTENT_KEYS: Array<{ key: string; label: string; multiline?: boole
   { key: 'about.story3', label: 'Hakkımızda — hikâye 3', multiline: true },
   { key: 'contact.heading', label: 'İletişim — başlık' },
   { key: 'contact.description', label: 'İletişim — açıklama', multiline: true },
+  { key: 'contact.calendlyUrl', label: 'İletişim — Calendly linki (https://calendly.com/…)' },
+  { key: 'footer.hook', label: 'Footer — kapanış kancası', multiline: true },
+  { key: 'footer.hookCta', label: 'Footer — kanca butonu' },
+  { key: 'checkup.introTitle', label: 'Check-Up — intro başlık' },
+  { key: 'checkup.introSub', label: 'Check-Up — intro açıklama', multiline: true },
 ];
 
 export const ALLOWED_CONTENT_KEYS = new Set(CONTENT_KEYS.map((entry) => entry.key));

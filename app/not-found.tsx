@@ -14,7 +14,7 @@ export default function NotFound() {
       className="relative z-[7] grid min-h-screen place-items-center px-5 py-24 text-center"
       style={{
         background:
-          'radial-gradient(ellipse 55% 45% at 50% 0%, rgba(162,255,0,0.05), transparent 70%), #050505',
+          'radial-gradient(ellipse 55% 45% at 50% 0%, rgba(162,255,0,0.05), transparent 70%), #0D0E12',
       }}
     >
       <div className="grid justify-items-center gap-4">
@@ -28,7 +28,7 @@ export default function NotFound() {
           {t.notFound.heading}
         </h1>
         <p className="max-w-[50ch] text-muted">{t.notFound.text}</p>
-        <Link href="/" className="btn-primary mt-3 px-8 py-4 text-base">
+        <Link href={ctx.base} className="btn-primary mt-3 px-8 py-4 text-base">
           {t.notFound.back}
         </Link>
       </div>

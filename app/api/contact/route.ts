@@ -22,7 +22,7 @@ function rateLimited(ip: string): boolean {
 }
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const LOCALES: Locale[] = ['en', 'tr', 'az'];
+const LOCALES: Locale[] = ['en', 'tr', 'az', 'ar'];
 
 interface ContactPayload {
   name?: string;

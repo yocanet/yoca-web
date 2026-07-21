@@ -20,12 +20,14 @@ export function generateMetadata(): Metadata {
 export default async function ContactPage() {
   const ctx = getRequestContext();
   const t = await getContent(ctx.locale);
+  const base = ctx.base;
+  const calendlyUrl = t.contact.calendlyUrl.trim();
 
   const contactPageSchema = {
     '@context': 'https://schema.org',
     '@type': 'ContactPage',
     name: t.contact.heading,
-    url: `https://${ctx.host}/contact`,
+    url: `https://${ctx.host}${base}/contact`,
   };
 
   return (
@@ -39,8 +41,8 @@ export default async function ContactPage() {
         dangerouslySetInnerHTML={{
           __html: jsonLdString(
             breadcrumbSchema(ctx.host, [
-              { name: t.nav.home, path: '/' },
-              { name: t.nav.contact, path: '/contact' },
+              { name: t.nav.home, path: base },
+              { name: t.nav.contact, path: `${base}/contact` },
             ]),
           ),
         }}
@@ -51,7 +53,7 @@ export default async function ContactPage() {
           className="relative z-[7] pb-14 pt-44"
           style={{
             background:
-              'radial-gradient(ellipse 60% 55% at 85% 0%, rgba(162,255,0,0.06), transparent 70%), #050505',
+              'radial-gradient(ellipse 60% 55% at 85% 0%, rgba(162,255,0,0.06), transparent 70%), #0D0E12',
           }}
         >
           <div className="container-y">
@@ -96,6 +98,30 @@ export default async function ContactPage() {
             </aside>
           </div>
         </section>
+
+        {/* ── Live scheduling (Calendly) — active once a URL is set in /admin ── */}
+        {calendlyUrl.startsWith('https://calendly.com/') && (
+          <section className="relative z-[7] border-t border-line bg-surface py-16">
+            <div className="container-y">
+              <div className="mb-8 max-w-2xl">
+                <h2 className="text-2xl font-extrabold leading-tight tracking-tight sm:text-3xl">
+                  {t.contact.scheduleTitle}
+                </h2>
+                <p className="mt-3 text-[15px] leading-relaxed text-muted">
+                  {t.contact.scheduleSub}
+                </p>
+              </div>
+              <div className="overflow-hidden rounded-md border border-line">
+                <iframe
+                  src={`${calendlyUrl}?hide_gdpr_banner=1&background_color=121418&text_color=f4f4f1&primary_color=a2ff00`}
+                  title={t.contact.scheduleTitle}
+                  loading="lazy"
+                  className="h-[720px] w-full"
+                />
+              </div>
+            </div>
+          </section>
+        )}
       </main>
       <SiteFooter t={t} />
     </>

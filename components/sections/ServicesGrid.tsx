@@ -6,11 +6,12 @@ import type { Dict } from '@/lib/i18n';
 interface ServicesGridProps {
   t: Dict['services'];
   ctaLabel: string;
+  base: string;
 }
 
-export default function ServicesGrid({ t, ctaLabel }: ServicesGridProps) {
+export default function ServicesGrid({ t, ctaLabel, base }: ServicesGridProps) {
   return (
-    <section className="relative z-[7] border-t border-line bg-surface py-20 lg:py-28">
+    <section className="relative z-[7] border-t border-line bg-surface-deep py-20 lg:py-28">
       <div className="container-y">
         <div className="mb-12 max-w-2xl lg:mb-16">
           <h2 className="text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl">
@@ -22,7 +23,7 @@ export default function ServicesGrid({ t, ctaLabel }: ServicesGridProps) {
           {t.items.map((service, index) => (
             <article
               key={service.name}
-              className="group relative rounded-sm border border-line bg-surface-deep p-6 pb-12 transition-colors duration-300 hover:border-yoca-green"
+              className="group relative rounded-sm border border-line bg-surface p-6 pb-12 transition-colors duration-300 hover:border-yoca-green"
             >
               <span className="text-[12px] font-extrabold tracking-[0.1em] text-yoca-lime">
                 {String(index + 1).padStart(2, '0')}
@@ -37,7 +38,7 @@ export default function ServicesGrid({ t, ctaLabel }: ServicesGridProps) {
           ))}
         </div>
         <div className="mt-12">
-          <Link href="/contact" className="btn-ghost">
+          <Link href={`${base}/services`} className="btn-ghost">
             {ctaLabel}
           </Link>
         </div>

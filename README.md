@@ -8,20 +8,21 @@ Next.js 14+ (App Router) + Tailwind CSS + Framer Motion + Supabase, designed for
 
 | Katman | Dosya | Görev |
 |---|---|---|
-| Multi-domain | `middleware.ts` | Host → locale eşlemesi (net→EN, tr/com.tr→TR, az→AZ); www ve yoca.com.tr → kanonik host'a 308 |
-| SEO | `lib/seo.ts` | Domainler arası canonical + hreflang (`en`, `tr-TR`, `az-AZ`, `x-default`), OG/Twitter, JSON-LD (Organization, ProfessionalService, CaseStudy, BreadcrumbList) |
+| i18n routing | `middleware.ts` | Path tabanlı diller: /en /tr /az /ar (AR = RTL); öneksiz istek çerezdeki dile 308 |
+| SEO | `lib/seo.ts` | Path bazlı canonical + hreflang (`en`, `tr-TR`, `az-AZ`, `ar`, `x-default`), OG/Twitter, JSON-LD (Organization, ProfessionalService, CaseStudy, BreadcrumbList) |
 | Sitemap/Robots | `app/sitemap.ts`, `app/robots.ts` | Host-aware dinamik üretim |
 | i18n | `lib/i18n.ts` | EN/TR/AZ sözlükleri (check-up soruları dahil) |
 | CMS | Supabase | `sections`, `menus`, `team_members`, `checkup_submissions` (RLS'li) |
 | Görünürlük | `components/SectionWrapper.tsx` | `is_active` kapalıysa bölüm hiç render edilmez |
-| Projeler | `app/work` + `lib/work.ts` | 4 vaka çalışması (liste + detay), CaseStudy JSON-LD |
+| Projeler | `app/work` + `lib/work.ts` | Filtre barlı grid (Müşteri/Ürün), metrik rozetleri, hover video; 5 modüllü vaka şablonu (Challenge → Applied System → Execution → Verified Results → Quote) |
 | İletişim | `app/contact` + `app/api/contact` | Form → `contact_submissions` + opsiyonel e-posta bildirimi |
 | Bildirimler | `lib/notify.ts` | Resend üzerinden opsiyonel e-posta (bağımlılıksız fetch) |
 | Cookie onayı | `components/ui/CookieConsent.tsx` | GA4 yalnızca onay sonrası yüklenir |
 | Dil seçici | `components/ui/LanguageSwitcher.tsx` | Domain bağlıyken domainler arası, öncesinde çerezle site içi dil değişimi |
 | Hata sayfaları | `app/not-found.tsx`, `app/error.tsx` | Marka dilinde 404/500 |
-| Hakkımızda | `app/about` | Manifesto, değerler bento'su, ekip, araç seti |
-| Hizmetler | `app/services` | 6 hizmetin kapsam listeleri + 4 adımlı süreç |
+| Hakkımızda | `app/about` | Editoryal düzen: sticky manifesto + akan 3'lü metodoloji kartları, değerler, ekip, araç seti |
+| Hizmetler | `app/services` | 3 şemsiye (Brand → Growth → Scale), sekmeli kartlar (problem/teslimatlar/stack) + süreç |
+| Ürünler | `app/products` | YocaServe, WonKick, Demo Hub, Labs — durum rozetleri ve büyüme metrikleri |
 | Admin paneli | `app/admin` + `components/admin` | Supabase Auth girişli tam CMS: bölümler, menüler, metinler (3 dil), work, ekip, başvurular |
 | Metin override | `lib/content.ts` + `site_content` | Admin'den düzenlenen metinler koddaki varsayılanların üzerine biner |
 

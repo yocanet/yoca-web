@@ -1,23 +1,33 @@
-import type { DomainConfig, Locale } from '@/types';
+import type { Locale } from '@/types';
 
 /**
- * Yoca — multi-domain configuration.
- * yoca.net     → global / English (x-default)
- * yoca.tr      → Turkish (canonical Turkish host)
- * yoca.com.tr  → Turkish (308 → yoca.tr to avoid duplicate content)
- * yoca.az      → Azerbaijani
+ * Yoca — locale & host configuration (path-based i18n).
+ *
+ * Every language lives under a path prefix on the same host:
+ *   /en/… (x-default) · /tr/… · /az/… · /ar/… (RTL)
+ * When the production domains are connected they all serve the same app;
+ * the path prefix keeps working identically on each of them.
  */
-export const DOMAINS: DomainConfig[] = [
-  { host: 'yoca.net', locale: 'en', hreflang: 'en' },
-  { host: 'yoca.tr', locale: 'tr', hreflang: 'tr-TR' },
-  { host: 'yoca.com.tr', locale: 'tr', hreflang: 'tr-TR', canonicalHost: 'yoca.tr' },
-  { host: 'yoca.az', locale: 'az', hreflang: 'az-AZ' },
-];
+
+export const LOCALES: Locale[] = ['en', 'tr', 'az', 'ar'];
+
+export const DEFAULT_LOCALE: Locale = 'en';
+
+export const HREFLANG: Record<Locale, string> = {
+  en: 'en',
+  tr: 'tr-TR',
+  az: 'az-AZ',
+  ar: 'ar',
+};
+
+export const RTL_LOCALES: Locale[] = ['ar'];
 
 export const DEFAULT_DOMAIN =
   process.env.NEXT_PUBLIC_DEFAULT_DOMAIN?.trim() || 'yoca.net';
 
-export const LOCALES: Locale[] = ['en', 'tr', 'az'];
+export function isRtl(locale: Locale): boolean {
+  return RTL_LOCALES.includes(locale);
+}
 
 /** Strip port / www and lowercase. */
 export function normalizeHost(rawHost: string | null | undefined): string {
@@ -25,32 +35,29 @@ export function normalizeHost(rawHost: string | null | undefined): string {
   return rawHost.toLowerCase().split(':')[0].replace(/^www\./, '');
 }
 
-export function domainForHost(rawHost: string | null | undefined): DomainConfig {
-  const host = normalizeHost(rawHost);
-  const found = DOMAINS.find((d) => d.host === host);
-  if (found) return found;
-  // Vercel previews / localhost fall back to the global domain config
-  return DOMAINS[0];
-}
-
-export function localeForHost(rawHost: string | null | undefined): Locale {
-  return domainForHost(rawHost).locale;
-}
-
-/** Canonical serving host for a request host (resolves com.tr → tr). */
+/** Kept for compatibility: the serving host (no per-locale hosts anymore). */
 export function canonicalHostFor(rawHost: string | null | undefined): string {
-  const d = domainForHost(rawHost);
-  return d.canonicalHost ?? d.host;
+  return normalizeHost(rawHost);
 }
 
-/** One canonical host per locale, used for hreflang alternates. */
-export function hostForLocale(locale: Locale): string {
-  const d = DOMAINS.find((x) => x.locale === locale && !x.canonicalHost);
-  return d ? d.host : DEFAULT_DOMAIN;
+/** The locale's base path prefix, e.g. "/tr". */
+export function basePathFor(locale: Locale): string {
+  return `/${locale}`;
+}
+
+/** Prefix an app path with a locale: localizePath('tr', '/work') → '/tr/work'. */
+export function localizePath(locale: Locale, path: string): string {
+  const p = path.startsWith('/') ? path : `/${path}`;
+  return p === '/' ? `/${locale}` : `/${locale}${p}`;
 }
 
 /** Absolute URL on a given host. */
 export function absoluteUrl(host: string, path: string = '/'): string {
   const p = path.startsWith('/') ? path : `/${path}`;
   return `https://${host}${p}`;
+}
+
+/** Absolute localized URL: https://host/tr/work */
+export function absoluteLocalizedUrl(host: string, locale: Locale, path: string): string {
+  return absoluteUrl(host, localizePath(locale, path));
 }

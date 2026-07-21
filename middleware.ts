@@ -1,63 +1,73 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { domainForHost, normalizeHost } from '@/lib/domains';
 
 /**
- * Yoca — edge middleware for multi-domain locale mapping.
+ * Yoca — edge middleware for path-based i18n routing.
  *
- * - Detects the incoming `host` header and resolves the locale
- *   (yoca.net → en, yoca.tr / yoca.com.tr → tr, yoca.az → az).
- * - 308-redirects non-canonical hosts (www.*, yoca.com.tr) to their
- *   canonical domain so each language lives on exactly one host.
- * - Forwards the resolved locale + host to the app via request headers,
- *   which server components and metadata builders read.
+ * URL structure: /en/… /tr/… /az/… /ar/… (Arabic renders RTL).
+ * - A request with a locale prefix is REWRITTEN to the unprefixed route
+ *   (app/ pages stay flat) while `x-yoca-locale` / `x-yoca-base` headers
+ *   carry the locale to the application layer.
+ * - A request without a prefix 308-redirects to the visitor's preferred
+ *   locale (remembered in the `yoca_locale` cookie; default: en).
+ * - /admin, /api, sitemap/robots/manifest and all static files bypass
+ *   locale handling entirely.
+ * - www.* hosts 308-redirect to the apex host.
  */
 
+const LOCALES = ['en', 'tr', 'az', 'ar'] as const;
+type AppLocale = (typeof LOCALES)[number];
+
 export const config = {
-  // Run on every route except static assets and Next internals.
-  matcher: ['/((?!_next/static|_next/image|favicon.ico|brand/|clients/|favicons/).*)'],
+  // Skip Next internals and any path with a file extension (static assets).
+  matcher: ['/((?!_next/|api/|admin|.*\\..*).*)'],
 };
 
+function isLocale(value: string | undefined): value is AppLocale {
+  return !!value && (LOCALES as readonly string[]).includes(value);
+}
+
 export function middleware(request: NextRequest) {
-  const rawHost = request.headers.get('host');
-  const host = normalizeHost(rawHost);
-  const domain = domainForHost(rawHost);
+  const rawHost = (request.headers.get('host') ?? '').toLowerCase();
+  const host = rawHost.split(':')[0];
 
-  // 1) www → apex on any known domain
-  const hadWww = (rawHost ?? '').toLowerCase().startsWith('www.');
-
-  // 2) Non-canonical domains (yoca.com.tr) → canonical host (yoca.tr)
-  const targetHost = domain.canonicalHost ?? host;
-  const knownHost = ['yoca.net', 'yoca.tr', 'yoca.com.tr', 'yoca.az'].includes(host);
-
-  if (knownHost && (hadWww || domain.canonicalHost)) {
+  // www → apex (any host)
+  if (host.startsWith('www.')) {
     const url = request.nextUrl.clone();
     url.protocol = 'https:';
-    url.host = targetHost;
+    url.host = host.replace(/^www\./, '');
     url.port = '';
     return NextResponse.redirect(url, 308);
   }
 
-  // 3) Resolve the locale.
-  //    On the real domains the host decides the language (SEO-correct).
-  //    On any other host (*.vercel.app, localhost — i.e. before the domains
-  //    are connected) an in-app cookie set by the language switcher decides,
-  //    so visitors can change language without leaving the site.
-  let locale = domain.locale;
-  if (!knownHost) {
-    const cookieLocale = request.cookies.get('yoca_locale')?.value;
-    if (cookieLocale === 'en' || cookieLocale === 'tr' || cookieLocale === 'az') {
-      locale = cookieLocale;
-    }
+  const { pathname } = request.nextUrl;
+  const segment = pathname.split('/')[1];
+
+  // ── Locale-prefixed request → rewrite to the flat route ──────────
+  if (isLocale(segment)) {
+    const rest = pathname.slice(segment.length + 1) || '/';
+    const url = request.nextUrl.clone();
+    url.pathname = rest;
+
+    const requestHeaders = new Headers(request.headers);
+    requestHeaders.set('x-yoca-locale', segment);
+    requestHeaders.set('x-yoca-base', `/${segment}`);
+    requestHeaders.set('x-yoca-host', host);
+
+    const response = NextResponse.rewrite(url, { request: { headers: requestHeaders } });
+    response.headers.set('x-yoca-locale', segment);
+    // Remember the visitor's language for future unprefixed requests.
+    response.cookies.set('yoca_locale', segment, {
+      path: '/',
+      maxAge: 31536000,
+      sameSite: 'lax',
+    });
+    return response;
   }
 
-  // 4) Forward locale + host context to the application layer
-  const requestHeaders = new Headers(request.headers);
-  requestHeaders.set('x-yoca-locale', locale);
-  requestHeaders.set('x-yoca-host', targetHost);
-
-  const response = NextResponse.next({ request: { headers: requestHeaders } });
-  response.headers.set('x-yoca-locale', locale);
-  // Content varies by Host; keep shared caches honest.
-  response.headers.set('Vary', 'Host');
-  return response;
+  // ── No locale prefix → redirect to the preferred locale ──────────
+  const cookieLocale = request.cookies.get('yoca_locale')?.value;
+  const locale: AppLocale = isLocale(cookieLocale) ? cookieLocale : 'en';
+  const url = request.nextUrl.clone();
+  url.pathname = `/${locale}${pathname === '/' ? '' : pathname}`;
+  return NextResponse.redirect(url, 308);
 }

@@ -10,6 +10,64 @@ export interface Dict {
     checkupDescription: string;
   };
   nav: { home: string; services: string; work: string; checkup: string; contact: string };
+  services: {
+    heading: string;
+    sub: string;
+    items: Array<{ name: string; desc: string }>;
+  };
+  work: {
+    metaTitle: string;
+    metaDescription: string;
+    eyebrow: string;
+    heading: string;
+    sub: string;
+    sector: string;
+    market: string;
+    year: string;
+    servicesLabel: string;
+    problem: string;
+    approach: string;
+    solution: string;
+    result: string;
+    viewCase: string;
+    backToWork: string;
+    allWork: string;
+  };
+  contact: {
+    metaTitle: string;
+    metaDescription: string;
+    eyebrow: string;
+    heading: string;
+    description: string;
+    name: string;
+    email: string;
+    company: string;
+    message: string;
+    consent: string;
+    submit: string;
+    success: string;
+    based: string;
+    direct: string;
+  };
+  cookies: {
+    text: string;
+    acceptAll: string;
+    essentialOnly: string;
+  };
+  notFound: {
+    heading: string;
+    text: string;
+    back: string;
+  };
+  errorPage: {
+    heading: string;
+    text: string;
+    retry: string;
+  };
+  common: {
+    languageSwitcher: string;
+    loading: string;
+  };
   hero: {
     eyebrow: string;
     title: string;
@@ -65,6 +123,71 @@ const en: Dict = {
       'Answer a short set of questions and get a personal analysis of your digital presence: website, SEO, ads, social and growth setup.',
   },
   nav: { home: 'Home', services: 'Services', work: 'Work', checkup: 'Digital Check-Up', contact: 'Contact' },
+  services: {
+    heading: 'What we build around your next move.',
+    sub: 'We do not begin by selling a predefined package. We identify what needs to change, then combine the right capabilities around it.',
+    items: [
+      { name: 'Brand Strategy & Identity', desc: 'Positioning, naming, verbal identity and visual systems built to make the brand clear, relevant and recognisable.' },
+      { name: 'Web & Digital Experiences', desc: 'Corporate websites, platforms and conversion-focused digital experiences designed around real user behaviour.' },
+      { name: 'Growth & Performance', desc: 'Acquisition, performance marketing, analytics and optimisation connected through one measurable growth model.' },
+      { name: 'Creative Production', desc: 'Campaign ideas, social content, advertising creatives and visual systems made to earn attention.' },
+      { name: 'AI & Automation', desc: 'Practical AI tools and automated workflows that reduce repetition, accelerate decisions and improve operations.' },
+      { name: 'Digital Product Development', desc: 'From idea validation to MVP and launch, we design and develop useful digital products with room to scale.' },
+    ],
+  },
+  work: {
+    metaTitle: 'Selected Work — Brands and Digital Experiences | Yoca',
+    metaDescription: 'Selected brands, websites, platforms and digital experiences created by Yoca across different sectors and markets.',
+    eyebrow: 'Selected Work',
+    heading: 'Different challenges. Clear decisions. Work designed to move.',
+    sub: 'Explore selected brands, websites, platforms and digital experiences created across different sectors and markets.',
+    sector: 'Sector',
+    market: 'Market',
+    year: 'Year',
+    servicesLabel: 'Services',
+    problem: 'Problem',
+    approach: 'Approach',
+    solution: 'Solution',
+    result: 'Result',
+    viewCase: 'View Case Study',
+    backToWork: 'Back to Work',
+    allWork: 'View All Work',
+  },
+  contact: {
+    metaTitle: 'Contact Yoca — Start a Project',
+    metaDescription: 'Tell us what you are building. Share the project, its stage and what you want to change, and we will help define the right next move.',
+    eyebrow: 'Contact',
+    heading: 'Let’s build the next move.',
+    description: 'Tell us what you are working on, where the project stands and what you want to change. Clear context helps us start with a better conversation.',
+    name: 'Full Name',
+    email: 'Email Address',
+    company: 'Company or Brand',
+    message: 'Tell us about the project',
+    consent: 'I agree to the processing of my information.',
+    submit: 'Send Project Details',
+    success: 'Thank you. Your project details have been received. We will review them and contact you through the information provided.',
+    based: 'Based in Türkiye. Working across markets.',
+    direct: 'Prefer email?',
+  },
+  cookies: {
+    text: 'We use essential cookies to keep the website working and optional analytics cookies to understand how it is used.',
+    acceptAll: 'Accept All',
+    essentialOnly: 'Essential Only',
+  },
+  notFound: {
+    heading: 'This page moved without leaving a strategy behind.',
+    text: 'The page you are looking for does not exist or may have been moved.',
+    back: 'Return Home',
+  },
+  errorPage: {
+    heading: 'Something broke on our side.',
+    text: 'An unexpected error occurred. Please try again in a moment.',
+    retry: 'Try Again',
+  },
+  common: {
+    languageSwitcher: 'Language',
+    loading: 'Loading…',
+  },
   hero: {
     eyebrow: 'Independent Creative Growth Partner',
     title: 'We turn ideas into brands, and brands into systems built to grow.',
@@ -169,6 +292,71 @@ const tr: Dict = {
       'Kısa bir soru setini yanıtlayın; web sitesi, SEO, reklam, sosyal medya ve büyüme kurulumunuz için kişisel bir analiz alın.',
   },
   nav: { home: 'Ana Sayfa', services: 'Hizmetler', work: 'Projeler', checkup: 'Dijital Check-Up', contact: 'İletişim' },
+  services: {
+    heading: 'Bir sonraki adımınızın ihtiyaç duyduğu yapıyı kuruyoruz.',
+    sub: 'Önceden hazırlanmış bir paket satarak başlamayız. Değişmesi gereken noktayı belirler, doğru yetkinlikleri bunun etrafında birleştiririz.',
+    items: [
+      { name: 'Marka Stratejisi ve Kimlik', desc: 'Markayı net, anlamlı ve ayırt edilebilir hâle getiren konumlandırma, isimlendirme, marka dili ve görsel kimlik sistemleri.' },
+      { name: 'Web ve Dijital Deneyimler', desc: 'Gerçek kullanıcı davranışlarına göre tasarlanan kurumsal siteler, platformlar ve dönüşüm odaklı dijital deneyimler.' },
+      { name: 'Büyüme ve Performans', desc: 'Tek bir ölçülebilir büyüme modeli altında birleştirilen müşteri kazanımı, performans pazarlaması, analiz ve optimizasyon.' },
+      { name: 'Yaratıcı Üretim', desc: 'Dikkat kazanmak için geliştirilen kampanya fikirleri, sosyal medya içerikleri, reklam kreatifleri ve görsel sistemler.' },
+      { name: 'Yapay Zekâ ve Otomasyon', desc: 'Tekrarlayan işleri azaltan, karar süreçlerini hızlandıran ve operasyonu geliştiren uygulanabilir yapay zekâ araçları ve otomasyonlar.' },
+      { name: 'Dijital Ürün Geliştirme', desc: 'Fikir doğrulamadan MVP ve yayına kadar ölçeklenebilir, kullanılabilir dijital ürünler tasarlar ve geliştiririz.' },
+    ],
+  },
+  work: {
+    metaTitle: 'Seçili Projeler — Markalar ve Dijital Deneyimler | Yoca',
+    metaDescription: 'Yoca tarafından farklı sektörler ve pazarlar için geliştirilen seçili markalar, internet siteleri, platformlar ve dijital deneyimler.',
+    eyebrow: 'Seçili Projeler',
+    heading: 'Farklı ihtiyaçlar. Net kararlar. Harekete geçiren işler.',
+    sub: 'Farklı sektörler ve pazarlar için geliştirilen seçili markaları, internet sitelerini, platformları ve dijital deneyimleri inceleyin.',
+    sector: 'Sektör',
+    market: 'Pazar',
+    year: 'Yıl',
+    servicesLabel: 'Hizmetler',
+    problem: 'Problem',
+    approach: 'Yaklaşım',
+    solution: 'Çözüm',
+    result: 'Sonuç',
+    viewCase: 'Projeyi İncele',
+    backToWork: 'Projelere Dön',
+    allWork: 'Tüm Projeleri Gör',
+  },
+  contact: {
+    metaTitle: 'Yoca ile İletişim — Projenizi Başlatın',
+    metaDescription: 'Neyi inşa ettiğinizi anlatın. Projenizi, bulunduğu aşamayı ve değiştirmek istediklerinizi paylaşın; doğru sonraki adımı birlikte tanımlayalım.',
+    eyebrow: 'İletişim',
+    heading: 'Bir sonraki adımı birlikte inşa edelim.',
+    description: 'Üzerinde çalıştığınız projeyi, bugün hangi aşamada olduğunu ve neyi değiştirmek istediğinizi anlatın. Net bir başlangıç, daha iyi bir görüşme sağlar.',
+    name: 'Ad Soyad',
+    email: 'E-posta Adresi',
+    company: 'Şirket veya Marka',
+    message: 'Projenizi Anlatın',
+    consent: 'Bilgilerimin işlenmesini kabul ediyorum.',
+    submit: 'Proje Bilgilerini Gönder',
+    success: 'Teşekkürler. Proje bilgileriniz bize ulaştı. Bilgileri inceleyerek bıraktığınız iletişim kanalı üzerinden sizinle iletişime geçeceğiz.',
+    based: 'Türkiye merkezli. Farklı pazarlarda çalışıyoruz.',
+    direct: 'E-posta mı tercih edersiniz?',
+  },
+  cookies: {
+    text: 'İnternet sitesinin çalışması için zorunlu çerezleri, kullanımını anlayabilmek için isteğe bağlı analiz çerezlerini kullanıyoruz.',
+    acceptAll: 'Tümünü Kabul Et',
+    essentialOnly: 'Yalnızca Zorunlu',
+  },
+  notFound: {
+    heading: 'Bu sayfa, arkasında bir strateji bırakmadan taşınmış.',
+    text: 'Aradığınız sayfa bulunmuyor veya başka bir adrese taşınmış olabilir.',
+    back: 'Ana Sayfaya Dön',
+  },
+  errorPage: {
+    heading: 'Bizim tarafımızda bir sorun oluştu.',
+    text: 'Beklenmeyen bir hata meydana geldi. Lütfen kısa bir süre sonra tekrar deneyin.',
+    retry: 'Tekrar Dene',
+  },
+  common: {
+    languageSwitcher: 'Dil',
+    loading: 'Yükleniyor…',
+  },
   hero: {
     eyebrow: 'Bağımsız Yaratıcı Büyüme Partneri',
     title: 'Fikirleri markaya, markaları büyüyen sistemlere dönüştürüyoruz.',
@@ -273,6 +461,71 @@ const az: Dict = {
       'Qısa sual dəstinə cavab verin; sayt, SEO, reklam, sosial media və inkişaf quruluşunuz üçün fərdi analiz əldə edin.',
   },
   nav: { home: 'Ana səhifə', services: 'Xidmətlər', work: 'Layihələr', checkup: 'Rəqəmsal Check-Up', contact: 'Əlaqə' },
+  services: {
+    heading: 'Növbəti addımınız üçün lazım olan sistemi qururuq.',
+    sub: 'Əvvəlcədən hazırlanmış paket satmaqla başlamırıq. Dəyişməli olan nöqtəni müəyyən edir və uyğun bacarıqları onun ətrafında birləşdiririk.',
+    items: [
+      { name: 'Brend Strategiyası və Kimlik', desc: 'Brendi aydın, uyğun və tanınan edən mövqeləndirmə, adlandırma, verbal kimlik və vizual sistemlər.' },
+      { name: 'Veb və Rəqəmsal Təcrübələr', desc: 'Real istifadəçi davranışlarına əsaslanan korporativ saytlar, platformalar və konversiya yönümlü rəqəmsal təcrübələr.' },
+      { name: 'İnkişaf və Performans', desc: 'Vahid ölçülə bilən inkişaf modeli ilə birləşdirilən istifadəçi cəlbi, performans marketinqi, analitika və optimizasiya.' },
+      { name: 'Kreativ İstehsal', desc: 'Diqqət qazanmaq üçün hazırlanan kampaniya ideyaları, sosial media məzmunu, reklam kreativləri və vizual sistemlər.' },
+      { name: 'Süni İntellekt və Avtomatlaşdırma', desc: 'Təkrarlanan işləri azaldan, qərarları sürətləndirən və əməliyyatları yaxşılaşdıran praktik süni intellekt alətləri və avtomatlaşdırmalar.' },
+      { name: 'Rəqəmsal Məhsul İnkişafı', desc: 'İdeyanın təsdiqindən MVP və buraxılışa qədər miqyaslana bilən faydalı rəqəmsal məhsullar hazırlayırıq.' },
+    ],
+  },
+  work: {
+    metaTitle: 'Seçilmiş Layihələr — Brendlər və Rəqəmsal Təcrübələr | Yoca',
+    metaDescription: 'Yoca tərəfindən müxtəlif sektorlar və bazarlar üçün hazırlanmış seçilmiş brendlər, saytlar, platformalar və rəqəmsal təcrübələr.',
+    eyebrow: 'Seçilmiş Layihələr',
+    heading: 'Fərqli ehtiyaclar. Aydın qərarlar. Hərəkət yaradan işlər.',
+    sub: 'Müxtəlif sektorlar və bazarlar üçün hazırlanmış seçilmiş brendləri, saytları, platformaları və rəqəmsal təcrübələri kəşf edin.',
+    sector: 'Sektor',
+    market: 'Bazar',
+    year: 'İl',
+    servicesLabel: 'Xidmətlər',
+    problem: 'Problem',
+    approach: 'Yanaşma',
+    solution: 'Həll',
+    result: 'Nəticə',
+    viewCase: 'Layihəyə Bax',
+    backToWork: 'Layihələrə Qayıt',
+    allWork: 'Bütün Layihələrə Bax',
+  },
+  contact: {
+    metaTitle: 'Yoca ilə Əlaqə — Layihənizə Başlayın',
+    metaDescription: 'Nə qurduğunuzu bizə danışın. Layihənizi, mərhələsini və dəyişmək istədiklərinizi paylaşın; doğru növbəti addımı birlikdə müəyyən edək.',
+    eyebrow: 'Əlaqə',
+    heading: 'Növbəti addımı birlikdə quraq.',
+    description: 'Üzərində işlədiyiniz layihəni, hazırda hansı mərhələdə olduğunu və nəyi dəyişmək istədiyinizi paylaşın. Aydın məlumat daha yaxşı söhbətə başlamağa kömək edir.',
+    name: 'Ad və Soyad',
+    email: 'E-poçt Ünvanı',
+    company: 'Şirkət və ya Brend',
+    message: 'Layihəniz Haqqında Danışın',
+    consent: 'Məlumatlarımın emalına razıyam.',
+    submit: 'Layihə Məlumatlarını Göndər',
+    success: 'Təşəkkür edirik. Layihə məlumatlarınız bizə çatdı. Məlumatları nəzərdən keçirərək qeyd etdiyiniz əlaqə vasitəsi ilə sizinlə əlaqə saxlayacağıq.',
+    based: 'Türkiyə mərkəzli. Müxtəlif bazarlarda işləyirik.',
+    direct: 'E-poçtu üstün tutursunuz?',
+  },
+  cookies: {
+    text: 'Saytın işləməsi üçün zəruri kukilərdən, istifadəsini anlamaq üçün isə seçimli analitika kukilərindən istifadə edirik.',
+    acceptAll: 'Hamısını Qəbul Et',
+    essentialOnly: 'Yalnız Zəruri',
+  },
+  notFound: {
+    heading: 'Bu səhifə arxasında strategiya qoymadan köçüb.',
+    text: 'Axtardığınız səhifə mövcud deyil və ya başqa ünvana köçürülüb.',
+    back: 'Ana Səhifəyə Qayıt',
+  },
+  errorPage: {
+    heading: 'Bizim tərəfdə problem yarandı.',
+    text: 'Gözlənilməz xəta baş verdi. Bir az sonra yenidən cəhd edin.',
+    retry: 'Yenidən Cəhd Et',
+  },
+  common: {
+    languageSwitcher: 'Dil',
+    loading: 'Yüklənir…',
+  },
   hero: {
     eyebrow: 'Müstəqil Kreativ İnkişaf Tərəfdaşı',
     title: 'İdeyaları brendə, brendləri isə böyüyən sistemlərə çeviririk.',

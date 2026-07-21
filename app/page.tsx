@@ -7,6 +7,7 @@ import Hero from '@/components/sections/Hero';
 import BentoFeatures from '@/components/sections/BentoFeatures';
 import PartnersAndClients from '@/components/sections/PartnersAndClients';
 import TeamSection from '@/components/sections/TeamSection';
+import ServicesGrid from '@/components/sections/ServicesGrid';
 import CtaSection from '@/components/sections/CtaSection';
 import LiveStatus from '@/components/ui/LiveStatus';
 import { getDict } from '@/lib/i18n';
@@ -51,6 +52,10 @@ export default async function HomePage() {
 
         <SectionWrapper sectionKey="bento">
           <BentoFeatures t={t.bento} />
+        </SectionWrapper>
+
+        <SectionWrapper sectionKey="services">
+          <ServicesGrid t={t.services} ctaLabel={t.cta.button} />
         </SectionWrapper>
 
         <SectionWrapper sectionKey="team">

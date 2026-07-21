@@ -1,20 +1,26 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from 'next/link';
 import { fetchMenu } from '@/lib/supabase';
+import { getRequestContext } from '@/lib/seo';
+import LanguageSwitcher from '@/components/ui/LanguageSwitcher';
 import type { Dict } from '@/lib/i18n';
 import type { MenuItem } from '@/types';
 
 /**
  * Yoca — site header (Server Component).
  * Navigation comes from the Supabase `menus` table (location = header);
- * when the table is empty a sensible default menu is used.
+ * when the table is empty a sensible default menu is used. Includes the
+ * cross-domain language switcher (EN → yoca.net, TR → yoca.tr, AZ → yoca.az).
  */
 
 interface SiteHeaderProps {
   t: Dict;
+  /** Current path, used by the language switcher to keep the page across domains. */
+  path?: string;
 }
 
-export default async function SiteHeader({ t }: SiteHeaderProps) {
+export default async function SiteHeader({ t, path = '/' }: SiteHeaderProps) {
+  const ctx = getRequestContext();
   const rows = await fetchMenu('header');
   const items: MenuItem[] = rows
     ? rows.map((row) => ({
@@ -24,8 +30,9 @@ export default async function SiteHeader({ t }: SiteHeaderProps) {
       }))
     : [
         { title: t.nav.home, url: '/' },
+        { title: t.nav.work, url: '/work' },
         { title: t.nav.checkup, url: '/checkup' },
-        { title: t.nav.contact, url: 'mailto:connect@yoca.net', external: true },
+        { title: t.nav.contact, url: '/contact' },
       ];
 
   return (
@@ -70,9 +77,18 @@ export default async function SiteHeader({ t }: SiteHeaderProps) {
           </ul>
         </nav>
 
-        <Link href="/checkup" className="btn-primary max-md:hidden">
-          {t.hero.primaryCta}
-        </Link>
+        <div className="flex items-center gap-4">
+          <div className="max-sm:hidden">
+            <LanguageSwitcher
+              current={ctx.locale}
+              path={path}
+              ariaLabel={t.common.languageSwitcher}
+            />
+          </div>
+          <Link href="/checkup" className="btn-primary max-md:hidden">
+            {t.hero.primaryCta}
+          </Link>
+        </div>
       </div>
     </header>
   );

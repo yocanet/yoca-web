@@ -33,7 +33,7 @@ export default function CheckupPage() {
           ),
         }}
       />
-      <SiteHeader t={t} />
+      <SiteHeader t={t} path="/checkup" />
       <main id="main">
         <section
           className="relative z-[7] pb-14 pt-44"

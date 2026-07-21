@@ -62,11 +62,25 @@ create table if not exists public.checkup_submissions (
 
 create index if not exists idx_checkup_created on public.checkup_submissions (created_at desc);
 
+-- ── contact_submissions: contact form leads ────────────────────
+create table if not exists public.contact_submissions (
+  id uuid primary key default gen_random_uuid(),
+  name text not null,
+  email text not null,
+  company text not null default '',
+  message text not null default '',
+  locale text not null default 'en',
+  created_at timestamptz not null default now()
+);
+
+create index if not exists idx_contact_created on public.contact_submissions (created_at desc);
+
 -- ═══ Row Level Security ════════════════════════════════════════
 alter table public.sections enable row level security;
 alter table public.menus enable row level security;
 alter table public.team_members enable row level security;
 alter table public.checkup_submissions enable row level security;
+alter table public.contact_submissions enable row level security;
 
 -- Public (anon) read access for content tables
 drop policy if exists "public read sections" on public.sections;
@@ -121,10 +135,23 @@ create policy "auth read checkup"
   to authenticated
   using (true);
 
+drop policy if exists "anon insert contact" on public.contact_submissions;
+create policy "anon insert contact"
+  on public.contact_submissions for insert
+  to anon, authenticated
+  with check (true);
+
+drop policy if exists "auth read contact" on public.contact_submissions;
+create policy "auth read contact"
+  on public.contact_submissions for select
+  to authenticated
+  using (true);
+
 -- ═══ Seed data ═════════════════════════════════════════════════
 insert into public.sections (key, name, is_active) values
   ('hero', 'Hero', true),
   ('bento', 'Bento Feature Showcase', true),
+  ('services', 'Services Grid', true),
   ('clients', 'Client Logos Marquee', true),
   ('partners', 'Official Partner Badges', true),
   ('team', 'Team Showcase', true),
@@ -138,11 +165,14 @@ insert into public.menus (title, url, location, order_index, is_active)
 select * from (
   values
     ('Home', '/', 'header', 0, true),
-    ('Digital Check-Up', '/checkup', 'header', 1, true),
-    ('Contact', 'mailto:connect@yoca.net', 'header', 2, true),
-    ('Digital Check-Up', '/checkup', 'footer', 0, true),
-    ('Instagram', 'https://instagram.com/thisisyoca', 'footer', 1, true),
-    ('Email', 'mailto:connect@yoca.net', 'footer', 2, true)
+    ('Work', '/work', 'header', 1, true),
+    ('Digital Check-Up', '/checkup', 'header', 2, true),
+    ('Contact', '/contact', 'header', 3, true),
+    ('Work', '/work', 'footer', 0, true),
+    ('Digital Check-Up', '/checkup', 'footer', 1, true),
+    ('Contact', '/contact', 'footer', 2, true),
+    ('Instagram', 'https://instagram.com/thisisyoca', 'footer', 3, true),
+    ('Email', 'mailto:connect@yoca.net', 'footer', 4, true)
 ) as seed(title, url, location, order_index, is_active)
 where not exists (select 1 from public.menus);
 

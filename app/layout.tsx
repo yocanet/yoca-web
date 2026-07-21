@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Manrope } from 'next/font/google';
 import AmbientBackground from '@/components/ui/AmbientBackground';
+import CookieConsent from '@/components/ui/CookieConsent';
 import { getDict } from '@/lib/i18n';
 import {
   buildMetadata,
@@ -31,6 +32,7 @@ export function generateMetadata(): Metadata {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const ctx = getRequestContext();
+  const t = getDict(ctx.locale);
 
   return (
     <html lang={ctx.locale} className={manrope.variable}>
@@ -48,6 +50,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
         <AmbientBackground />
         {children}
+        <CookieConsent
+          text={t.cookies.text}
+          acceptAll={t.cookies.acceptAll}
+          essentialOnly={t.cookies.essentialOnly}
+        />
       </body>
     </html>
   );

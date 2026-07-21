@@ -19,7 +19,9 @@ export default async function SiteFooter({ t }: SiteFooterProps) {
         external: /^(https?:|mailto:)/.test(row.url),
       }))
     : [
+        { title: t.nav.work, url: '/work' },
         { title: t.nav.checkup, url: '/checkup' },
+        { title: t.nav.contact, url: '/contact' },
         { title: 'Instagram', url: 'https://instagram.com/thisisyoca', external: true },
         { title: 'connect@yoca.net', url: 'mailto:connect@yoca.net', external: true },
       ];

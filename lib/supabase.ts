@@ -42,6 +42,7 @@ export function getSupabaseAdmin(): SupabaseClient | null {
 const DEFAULT_SECTION_KEYS = [
   'hero',
   'bento',
+  'services',
   'clients',
   'partners',
   'team',

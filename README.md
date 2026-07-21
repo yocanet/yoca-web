@@ -14,6 +14,12 @@ Next.js 14+ (App Router) + Tailwind CSS + Framer Motion + Supabase, designed for
 | i18n | `lib/i18n.ts` | EN/TR/AZ sözlükleri (check-up soruları dahil) |
 | CMS | Supabase | `sections`, `menus`, `team_members`, `checkup_submissions` (RLS'li) |
 | Görünürlük | `components/SectionWrapper.tsx` | `is_active` kapalıysa bölüm hiç render edilmez |
+| Projeler | `app/work` + `lib/work.ts` | 4 vaka çalışması (liste + detay), CaseStudy JSON-LD |
+| İletişim | `app/contact` + `app/api/contact` | Form → `contact_submissions` + opsiyonel e-posta bildirimi |
+| Bildirimler | `lib/notify.ts` | Resend üzerinden opsiyonel e-posta (bağımlılıksız fetch) |
+| Cookie onayı | `components/ui/CookieConsent.tsx` | GA4 yalnızca onay sonrası yüklenir |
+| Dil seçici | `components/ui/LanguageSwitcher.tsx` | Aynı sayfayı ilgili domainde açar |
+| Hata sayfaları | `app/not-found.tsx`, `app/error.tsx` | Marka dilinde 404/500 |
 
 ## Kurulum
 

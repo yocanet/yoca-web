@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getSupabaseAdmin } from '@/lib/supabase';
 import { CHECKUP_WEIGHTS, getDict } from '@/lib/i18n';
+import { notifyCheckup } from '@/lib/notify';
 import type { CheckupAnswer, CheckupPayload, Locale } from '@/types';
 
 /**
@@ -111,6 +112,8 @@ export async function POST(request: NextRequest) {
     console.error('checkup insert failed:', error.message);
     return NextResponse.json({ ok: false, error: dict.checkup.errorGeneric }, { status: 500 });
   }
+
+  await notifyCheckup({ name, email, company, phone, locale, score: finalScore, answers });
 
   return NextResponse.json({ ok: true, score: finalScore });
 }

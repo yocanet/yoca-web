@@ -6,6 +6,7 @@ import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 import CtaSection from '@/components/sections/CtaSection';
 import { getDict } from '@/lib/i18n';
+import { getContent } from '@/lib/content';
 import { getCaseStudies, getCaseStudy } from '@/lib/work';
 import {
   buildMetadata,
@@ -19,10 +20,10 @@ interface PageProps {
   params: { slug: string };
 }
 
-export function generateMetadata({ params }: PageProps): Metadata {
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const ctx = getRequestContext();
   const t = getDict(ctx.locale);
-  const study = getCaseStudy(ctx.locale, params.slug);
+  const study = await getCaseStudy(ctx.locale, params.slug);
   if (!study) {
     return buildMetadata({
       ctx,
@@ -40,13 +41,13 @@ export function generateMetadata({ params }: PageProps): Metadata {
   });
 }
 
-export default function CaseStudyPage({ params }: PageProps) {
+export default async function CaseStudyPage({ params }: PageProps) {
   const ctx = getRequestContext();
-  const t = getDict(ctx.locale);
-  const study = getCaseStudy(ctx.locale, params.slug);
+  const t = await getContent(ctx.locale);
+  const study = await getCaseStudy(ctx.locale, params.slug);
   if (!study) notFound();
 
-  const all = getCaseStudies(ctx.locale);
+  const all = await getCaseStudies(ctx.locale);
   const index = all.findIndex((cs) => cs.slug === study.slug);
   const prev = index > 0 ? all[index - 1] : null;
   const next = index < all.length - 1 ? all[index + 1] : null;

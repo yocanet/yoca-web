@@ -1,0 +1,360 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import { getAdminClient } from '@/lib/adminClient';
+import { getDefaultCaseStudyRows } from '@/lib/workData';
+import type { CaseStudyLocalized, CaseStudyRow, Locale } from '@/types';
+
+/** Yoca Admin — Work / vaka çalışmaları yönetimi (3 dilde içerik). */
+
+const LOCALES: Array<{ code: Locale; label: string }> = [
+  { code: 'tr', label: 'Türkçe' },
+  { code: 'en', label: 'English' },
+  { code: 'az', label: 'Azərbaycanca' },
+];
+
+const EMPTY_LOCALIZED: CaseStudyLocalized = {
+  name: '',
+  sector: '',
+  summary: '',
+  problem: '',
+  approach: '',
+  solution: '',
+  results: '',
+};
+
+const LOCALIZED_FIELDS: Array<{ key: keyof CaseStudyLocalized; label: string; multiline: boolean }> = [
+  { key: 'name', label: 'Proje adı', multiline: false },
+  { key: 'sector', label: 'Sektör', multiline: false },
+  { key: 'summary', label: 'Özet', multiline: true },
+  { key: 'problem', label: 'Problem', multiline: true },
+  { key: 'approach', label: 'Yaklaşım', multiline: true },
+  { key: 'solution', label: 'Çözüm', multiline: true },
+  { key: 'results', label: 'Sonuç', multiline: true },
+];
+
+type EditableRow = Omit<CaseStudyRow, 'id'> & { id?: number };
+
+function newRow(orderIndex: number): EditableRow {
+  return {
+    slug: '',
+    year: '',
+    market: '',
+    image_url: '',
+    services: [],
+    order_index: orderIndex,
+    is_active: true,
+    content: { tr: { ...EMPTY_LOCALIZED }, en: { ...EMPTY_LOCALIZED }, az: { ...EMPTY_LOCALIZED } },
+  };
+}
+
+export default function AdminWork() {
+  const supabase = getAdminClient();
+  const [rows, setRows] = useState<CaseStudyRow[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [editing, setEditing] = useState<EditableRow | null>(null);
+  const [editLocale, setEditLocale] = useState<Locale>('tr');
+  const [saving, setSaving] = useState(false);
+  const [message, setMessage] = useState<string | null>(null);
+
+  const flash = (text: string) => {
+    setMessage(text);
+    setTimeout(() => setMessage(null), 2500);
+  };
+
+  const load = async () => {
+    if (!supabase) return;
+    const { data } = await supabase.from('case_studies').select('*').order('order_index');
+    setRows((data as CaseStudyRow[]) ?? []);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    load();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const importDefaults = async () => {
+    if (!supabase) return;
+    setSaving(true);
+    await supabase.from('case_studies').insert(getDefaultCaseStudyRows());
+    setSaving(false);
+    flash('Varsayılan 4 proje içe aktarıldı.');
+    load();
+  };
+
+  const saveEditing = async () => {
+    if (!supabase || !editing || !editing.slug.trim()) return;
+    setSaving(true);
+    const payload = {
+      slug: editing.slug.trim(),
+      year: editing.year.trim(),
+      market: editing.market.trim(),
+      image_url: editing.image_url.trim(),
+      services: editing.services ?? [],
+      order_index: editing.order_index,
+      is_active: editing.is_active,
+      content: editing.content,
+    };
+    if (editing.id !== undefined) {
+      await supabase.from('case_studies').update(payload).eq('id', editing.id);
+      flash('Proje güncellendi.');
+    } else {
+      await supabase.from('case_studies').insert(payload);
+      flash('Proje eklendi.');
+    }
+    setSaving(false);
+    setEditing(null);
+    load();
+  };
+
+  const move = async (row: CaseStudyRow, direction: -1 | 1) => {
+    if (!supabase) return;
+    const sorted = [...rows].sort((a, b) => a.order_index - b.order_index);
+    const index = sorted.findIndex((item) => item.id === row.id);
+    const target = sorted[index + direction];
+    if (!target) return;
+    await Promise.all([
+      supabase.from('case_studies').update({ order_index: target.order_index }).eq('id', row.id),
+      supabase.from('case_studies').update({ order_index: row.order_index }).eq('id', target.id),
+    ]);
+    load();
+  };
+
+  const toggle = async (row: CaseStudyRow) => {
+    if (!supabase) return;
+    await supabase.from('case_studies').update({ is_active: !row.is_active }).eq('id', row.id);
+    load();
+  };
+
+  const remove = async (row: CaseStudyRow) => {
+    if (!supabase) return;
+    await supabase.from('case_studies').delete().eq('id', row.id);
+    flash('Proje silindi.');
+    load();
+  };
+
+  const setLocalizedField = (key: keyof CaseStudyLocalized, value: string) => {
+    if (!editing) return;
+    const current = editing.content[editLocale] ?? { ...EMPTY_LOCALIZED };
+    setEditing({
+      ...editing,
+      content: { ...editing.content, [editLocale]: { ...current, [key]: value } },
+    });
+  };
+
+  // ── Edit form ────────────────────────────────────────────────
+  if (editing) {
+    const localized = editing.content[editLocale] ?? EMPTY_LOCALIZED;
+    return (
+      <div className="grid gap-6">
+        <header className="flex flex-wrap items-center justify-between gap-3">
+          <h1 className="text-2xl font-extrabold tracking-tight">
+            {editing.id !== undefined ? `Düzenle: ${editing.slug}` : 'Yeni Proje'}
+          </h1>
+          <div className="flex gap-2">
+            <button type="button" className="admin-btn" onClick={() => setEditing(null)}>
+              Vazgeç
+            </button>
+            <button
+              type="button"
+              className="admin-btn-primary"
+              disabled={saving || !editing.slug.trim()}
+              onClick={saveEditing}
+            >
+              {saving ? 'Kaydediliyor…' : 'Kaydet'}
+            </button>
+          </div>
+        </header>
+
+        <div className="admin-card grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <label className="grid gap-1.5 text-[12px] font-bold text-subtle">
+            Slug (URL) *
+            <input
+              value={editing.slug}
+              onChange={(event) => setEditing({ ...editing, slug: event.target.value })}
+              placeholder="orn-proje-adi"
+              className="admin-input"
+            />
+          </label>
+          <label className="grid gap-1.5 text-[12px] font-bold text-subtle">
+            Yıl
+            <input
+              value={editing.year}
+              onChange={(event) => setEditing({ ...editing, year: event.target.value })}
+              className="admin-input"
+            />
+          </label>
+          <label className="grid gap-1.5 text-[12px] font-bold text-subtle">
+            Pazar
+            <input
+              value={editing.market}
+              onChange={(event) => setEditing({ ...editing, market: event.target.value })}
+              className="admin-input"
+            />
+          </label>
+          <label className="grid gap-1.5 text-[12px] font-bold text-subtle">
+            Hizmetler (virgülle)
+            <input
+              value={(editing.services ?? []).join(', ')}
+              onChange={(event) =>
+                setEditing({
+                  ...editing,
+                  services: event.target.value
+                    .split(',')
+                    .map((item) => item.trim())
+                    .filter(Boolean),
+                })
+              }
+              className="admin-input"
+            />
+          </label>
+          <label className="grid gap-1.5 text-[12px] font-bold text-subtle sm:col-span-2 lg:col-span-4">
+            Görsel URL (/work/… veya https://…)
+            <input
+              value={editing.image_url}
+              onChange={(event) => setEditing({ ...editing, image_url: event.target.value })}
+              className="admin-input"
+            />
+          </label>
+        </div>
+
+        <div className="flex gap-1 rounded-sm border border-line p-1 sm:w-fit">
+          {LOCALES.map((locale) => (
+            <button
+              key={locale.code}
+              type="button"
+              onClick={() => setEditLocale(locale.code)}
+              className={`flex-1 rounded-sm px-4 py-1.5 text-[13px] font-bold transition-colors sm:flex-none ${
+                editLocale === locale.code ? 'bg-yoca-lime text-black' : 'text-muted hover:text-white'
+              }`}
+            >
+              {locale.label}
+            </button>
+          ))}
+        </div>
+
+        <div className="grid gap-3">
+          {LOCALIZED_FIELDS.map((field) => (
+            <label key={field.key} className="admin-card grid gap-2 !p-4 text-[13px] font-extrabold">
+              {field.label}
+              {field.multiline ? (
+                <textarea
+                  rows={3}
+                  value={localized[field.key]}
+                  onChange={(event) => setLocalizedField(field.key, event.target.value)}
+                  className="admin-input resize-y font-medium"
+                />
+              ) : (
+                <input
+                  value={localized[field.key]}
+                  onChange={(event) => setLocalizedField(field.key, event.target.value)}
+                  className="admin-input font-medium"
+                />
+              )}
+            </label>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  // ── List ─────────────────────────────────────────────────────
+  return (
+    <div className="grid gap-6">
+      <header className="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <h1 className="text-2xl font-extrabold tracking-tight">Work / Projeler</h1>
+          <p className="mt-1.5 text-[14px] text-muted">
+            Vaka çalışmaları 3 dilde yönetilir; tablo boşken sitede koddaki varsayılanlar gösterilir.
+          </p>
+        </div>
+        <div className="flex items-center gap-3">
+          {message && <p className="text-[13px] font-bold text-yoca-lime">{message}</p>}
+          {rows.length === 0 && !loading && (
+            <button type="button" className="admin-btn" disabled={saving} onClick={importDefaults}>
+              Varsayılan 4 projeyi içe aktar
+            </button>
+          )}
+          <button
+            type="button"
+            className="admin-btn-primary"
+            onClick={() => {
+              setEditLocale('tr');
+              setEditing(newRow(rows.length));
+            }}
+          >
+            Yeni Proje
+          </button>
+        </div>
+      </header>
+
+      {loading ? (
+        <p className="text-[14px] text-muted">Yükleniyor…</p>
+      ) : rows.length === 0 ? (
+        <p className="text-[14px] text-muted">
+          Henüz veritabanında proje yok — site koddaki 4 varsayılan projeyi gösteriyor.
+        </p>
+      ) : (
+        <div className="grid gap-2.5">
+          {[...rows]
+            .sort((a, b) => a.order_index - b.order_index)
+            .map((row, index, list) => (
+              <div key={row.id} className="admin-card flex flex-wrap items-center gap-3 !p-3.5">
+                <div className="flex flex-none gap-1">
+                  <button
+                    type="button"
+                    aria-label="Yukarı taşı"
+                    className="admin-btn !px-2.5 !py-1"
+                    disabled={index === 0}
+                    onClick={() => move(row, -1)}
+                  >
+                    ↑
+                  </button>
+                  <button
+                    type="button"
+                    aria-label="Aşağı taşı"
+                    className="admin-btn !px-2.5 !py-1"
+                    disabled={index === list.length - 1}
+                    onClick={() => move(row, 1)}
+                  >
+                    ↓
+                  </button>
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className={`text-[14px] font-extrabold ${row.is_active ? '' : 'text-subtle line-through'}`}>
+                    {row.content?.tr?.name || row.content?.en?.name || row.slug}
+                  </p>
+                  <p className="truncate text-[12px] text-subtle">
+                    /work/{row.slug} · {row.year} · {row.market}
+                  </p>
+                </div>
+                <div className="flex flex-none gap-2">
+                  <button type="button" className="admin-btn" onClick={() => toggle(row)}>
+                    {row.is_active ? 'Gizle' : 'Göster'}
+                  </button>
+                  <button
+                    type="button"
+                    className="admin-btn"
+                    onClick={() => {
+                      setEditLocale('tr');
+                      setEditing({ ...row, services: row.services ?? [] });
+                    }}
+                  >
+                    Düzenle
+                  </button>
+                  <button
+                    type="button"
+                    className="admin-btn hover:!border-red-400 hover:!text-red-400"
+                    onClick={() => remove(row)}
+                  >
+                    Sil
+                  </button>
+                </div>
+              </div>
+            ))}
+        </div>
+      )}
+    </div>
+  );
+}

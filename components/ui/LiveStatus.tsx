@@ -12,11 +12,12 @@ import type { CityClock, Locale } from '@/types';
 interface LiveStatusProps {
   locale: Locale;
   activeLabel: string;
-  cityLabels: { istanbul: string; london: string; dubai: string };
+  cityLabels: { istanbul: string; baku: string; london: string; dubai: string };
 }
 
 const CITIES: CityClock[] = [
   { key: 'istanbul', label: 'Istanbul', timeZone: 'Europe/Istanbul' },
+  { key: 'baku', label: 'Baku', timeZone: 'Asia/Baku' },
   { key: 'london', label: 'London', timeZone: 'Europe/London' },
   { key: 'dubai', label: 'Dubai', timeZone: 'Asia/Dubai' },
 ];

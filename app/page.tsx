@@ -11,6 +11,7 @@ import ServicesGrid from '@/components/sections/ServicesGrid';
 import CtaSection from '@/components/sections/CtaSection';
 import LiveStatus from '@/components/ui/LiveStatus';
 import { getDict } from '@/lib/i18n';
+import { getContent } from '@/lib/content';
 import { buildMetadata, getRequestContext, jsonLdString, breadcrumbSchema } from '@/lib/seo';
 
 export function generateMetadata(): Metadata {
@@ -26,7 +27,7 @@ export function generateMetadata(): Metadata {
 
 export default async function HomePage() {
   const ctx = getRequestContext();
-  const t = getDict(ctx.locale);
+  const t = await getContent(ctx.locale);
 
   return (
     <>
@@ -117,6 +118,7 @@ export default async function HomePage() {
           activeLabel={t.clocks.active}
           cityLabels={{
             istanbul: t.clocks.istanbul,
+            baku: t.clocks.baku,
             london: t.clocks.london,
             dubai: t.clocks.dubai,
           }}

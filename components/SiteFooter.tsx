@@ -84,6 +84,14 @@ export default async function SiteFooter({ t }: SiteFooterProps) {
             © {year} {t.footer.rights}
           </p>
         </div>
+
+        {/* Oversized outlined wordmark — pure typographic texture, not a logo redraw. */}
+        <p
+          aria-hidden="true"
+          className="wordmark-outline pointer-events-none mt-10 select-none text-center leading-none"
+        >
+          YOCA
+        </p>
       </div>
     </footer>
   );

@@ -9,11 +9,36 @@ export interface Dict {
     checkupTitle: string;
     checkupDescription: string;
   };
-  nav: { home: string; services: string; work: string; checkup: string; contact: string };
+  nav: { home: string; about: string; services: string; work: string; checkup: string; contact: string };
   services: {
     heading: string;
     sub: string;
-    items: Array<{ name: string; desc: string }>;
+    items: Array<{ name: string; desc: string; points: string[] }>;
+  };
+  servicesPage: {
+    metaTitle: string;
+    metaDescription: string;
+    eyebrow: string;
+    deliverables: string;
+    processTitle: string;
+    processSub: string;
+    process: Array<{ name: string; desc: string }>;
+  };
+  about: {
+    metaTitle: string;
+    metaDescription: string;
+    eyebrow: string;
+    heading: string;
+    sub: string;
+    storyTitle: string;
+    story1: string;
+    story2: string;
+    story3: string;
+    valuesTitle: string;
+    valuesSub: string;
+    values: Array<{ title: string; body: string }>;
+    stackTitle: string;
+    stackSub: string;
   };
   work: {
     metaTitle: string;
@@ -85,7 +110,7 @@ export interface Dict {
   };
   clients: { heading: string };
   partners: { heading: string; sub: string; verified: string };
-  clocks: { active: string; istanbul: string; london: string; dubai: string };
+  clocks: { active: string; istanbul: string; baku: string; london: string; dubai: string };
   team: { heading: string; sub: string; linkedin: string };
   cta: { heading: string; body: string; button: string };
   footer: { message: string; rights: string; company: string; connect: string };
@@ -122,18 +147,53 @@ const en: Dict = {
     checkupDescription:
       'Answer a short set of questions and get a personal analysis of your digital presence: website, SEO, ads, social and growth setup.',
   },
-  nav: { home: 'Home', services: 'Services', work: 'Work', checkup: 'Digital Check-Up', contact: 'Contact' },
+  nav: { home: 'Home', about: 'About', services: 'Services', work: 'Work', checkup: 'Digital Check-Up', contact: 'Contact' },
   services: {
     heading: 'What we build around your next move.',
     sub: 'We do not begin by selling a predefined package. We identify what needs to change, then combine the right capabilities around it.',
     items: [
-      { name: 'Brand Strategy & Identity', desc: 'Positioning, naming, verbal identity and visual systems built to make the brand clear, relevant and recognisable.' },
-      { name: 'Web & Digital Experiences', desc: 'Corporate websites, platforms and conversion-focused digital experiences designed around real user behaviour.' },
-      { name: 'Growth & Performance', desc: 'Acquisition, performance marketing, analytics and optimisation connected through one measurable growth model.' },
-      { name: 'Creative Production', desc: 'Campaign ideas, social content, advertising creatives and visual systems made to earn attention.' },
-      { name: 'AI & Automation', desc: 'Practical AI tools and automated workflows that reduce repetition, accelerate decisions and improve operations.' },
-      { name: 'Digital Product Development', desc: 'From idea validation to MVP and launch, we design and develop useful digital products with room to scale.' },
+      { name: 'Brand Strategy & Identity', desc: 'Positioning, naming, verbal identity and visual systems built to make the brand clear, relevant and recognisable.', points: ['Positioning & brand architecture', 'Naming & verbal identity', 'Visual identity systems', 'Brand guidelines & rollout'] },
+      { name: 'Web & Digital Experiences', desc: 'Corporate websites, platforms and conversion-focused digital experiences designed around real user behaviour.', points: ['UX architecture & prototyping', 'Corporate & campaign websites', 'E-commerce experiences', 'Performance, accessibility & SEO foundations'] },
+      { name: 'Growth & Performance', desc: 'Acquisition, performance marketing, analytics and optimisation connected through one measurable growth model.', points: ['Google, Meta & TikTok campaigns', 'Conversion tracking & analytics setup', 'SEO & content strategy', 'CRO & landing page optimisation'] },
+      { name: 'Creative Production', desc: 'Campaign ideas, social content, advertising creatives and visual systems made to earn attention.', points: ['Campaign concepts', 'Social media content systems', 'Ad creatives & motion', 'Art direction'] },
+      { name: 'AI & Automation', desc: 'Practical AI tools and automated workflows that reduce repetition, accelerate decisions and improve operations.', points: ['Workflow automation', 'AI-assisted content pipelines', 'Chat & support assistants', 'Internal tools & integrations'] },
+      { name: 'Digital Product Development', desc: 'From idea validation to MVP and launch, we design and develop useful digital products with room to scale.', points: ['Idea validation & scoping', 'MVP design & development', 'Product iteration & analytics', 'Launch & growth support'] },
     ],
+  },
+  servicesPage: {
+    metaTitle: 'Services — Strategy, Design, Growth & Product | Yoca',
+    metaDescription: 'Explore Yoca services: brand strategy, web and digital experiences, growth and performance, creative production, AI automation and digital product development.',
+    eyebrow: 'Services',
+    deliverables: 'What this covers',
+    processTitle: 'One process. No black boxes.',
+    processSub: 'Every engagement follows the same transparent rhythm, so you always know where the work stands and why.',
+    process: [
+      { name: 'Understand', desc: 'We map your market, audience and current setup — decisions start from evidence, not assumptions.' },
+      { name: 'Define', desc: 'Together we agree on the change that matters most and the clearest route to it.' },
+      { name: 'Build', desc: 'Strategy, design and engineering work side by side in short, reviewable cycles.' },
+      { name: 'Grow', desc: 'We measure, report openly and keep optimising what the data proves is working.' },
+    ],
+  },
+  about: {
+    metaTitle: 'About Yoca — Your Own Creative Agency',
+    metaDescription: 'Yoca is an independent creative growth partner connecting strategy, design, technology and performance in one system. Meet the approach, the values and the team.',
+    eyebrow: 'About Yoca',
+    heading: 'Your Own Creative Agency.',
+    sub: 'An independent team that treats your brand like its own — connecting strategy, design, technology and growth in one accountable system.',
+    storyTitle: 'Why we exist',
+    story1: 'Most brands don’t fail because of a lack of ideas. They fail because strategy, design, technology and marketing live in separate rooms, run by separate vendors, measured by separate numbers.',
+    story2: 'Yoca was built to close that gap. We work as one compact senior team around a single question: what actually needs to change for this brand to grow — and what is the clearest way to build it?',
+    story3: 'That is also why we are called Your Own Creative Agency: we work embedded, transparent and accountable, closer to an in-house team than an external supplier.',
+    valuesTitle: 'The principles we work by',
+    valuesSub: 'Not wall posters — the actual rules that shape daily decisions on every project.',
+    values: [
+      { title: 'Data before opinion', body: 'Every recommendation starts from research and measurement. When the data disagrees with us, the data wins.' },
+      { title: 'ROI over output', body: 'We are not paid to produce deliverables. We are paid to move a number that matters to your business.' },
+      { title: 'Transparent reporting', body: 'You see what we see: open dashboards, honest reviews and no vanity metrics in between.' },
+      { title: 'Craft with intent', body: 'Design earns its place by working — beauty that doesn’t serve clarity or conversion is decoration.' },
+    ],
+    stackTitle: 'The tools behind the system',
+    stackSub: 'A first-party, measurement-ready stack we set up and manage for every engagement.',
   },
   work: {
     metaTitle: 'Selected Work — Brands and Digital Experiences | Yoca',
@@ -222,7 +282,7 @@ const en: Dict = {
     sub: 'Certified partnerships that keep our campaigns, data and tooling first-party.',
     verified: 'Verified Partner',
   },
-  clocks: { active: 'Actively working for our clients right now.', istanbul: 'Istanbul', london: 'London', dubai: 'Dubai' },
+  clocks: { active: 'Actively working for our clients right now.', istanbul: 'Istanbul', baku: 'Baku', london: 'London', dubai: 'Dubai' },
   team: {
     heading: 'The people behind the system.',
     sub: 'A compact senior team — strategy, creative, engineering and growth working side by side, without layers.',
@@ -291,18 +351,53 @@ const tr: Dict = {
     checkupDescription:
       'Kısa bir soru setini yanıtlayın; web sitesi, SEO, reklam, sosyal medya ve büyüme kurulumunuz için kişisel bir analiz alın.',
   },
-  nav: { home: 'Ana Sayfa', services: 'Hizmetler', work: 'Projeler', checkup: 'Dijital Check-Up', contact: 'İletişim' },
+  nav: { home: 'Ana Sayfa', about: 'Hakkımızda', services: 'Hizmetler', work: 'Projeler', checkup: 'Dijital Check-Up', contact: 'İletişim' },
   services: {
     heading: 'Bir sonraki adımınızın ihtiyaç duyduğu yapıyı kuruyoruz.',
     sub: 'Önceden hazırlanmış bir paket satarak başlamayız. Değişmesi gereken noktayı belirler, doğru yetkinlikleri bunun etrafında birleştiririz.',
     items: [
-      { name: 'Marka Stratejisi ve Kimlik', desc: 'Markayı net, anlamlı ve ayırt edilebilir hâle getiren konumlandırma, isimlendirme, marka dili ve görsel kimlik sistemleri.' },
-      { name: 'Web ve Dijital Deneyimler', desc: 'Gerçek kullanıcı davranışlarına göre tasarlanan kurumsal siteler, platformlar ve dönüşüm odaklı dijital deneyimler.' },
-      { name: 'Büyüme ve Performans', desc: 'Tek bir ölçülebilir büyüme modeli altında birleştirilen müşteri kazanımı, performans pazarlaması, analiz ve optimizasyon.' },
-      { name: 'Yaratıcı Üretim', desc: 'Dikkat kazanmak için geliştirilen kampanya fikirleri, sosyal medya içerikleri, reklam kreatifleri ve görsel sistemler.' },
-      { name: 'Yapay Zekâ ve Otomasyon', desc: 'Tekrarlayan işleri azaltan, karar süreçlerini hızlandıran ve operasyonu geliştiren uygulanabilir yapay zekâ araçları ve otomasyonlar.' },
-      { name: 'Dijital Ürün Geliştirme', desc: 'Fikir doğrulamadan MVP ve yayına kadar ölçeklenebilir, kullanılabilir dijital ürünler tasarlar ve geliştiririz.' },
+      { name: 'Marka Stratejisi ve Kimlik', desc: 'Markayı net, anlamlı ve ayırt edilebilir hâle getiren konumlandırma, isimlendirme, marka dili ve görsel kimlik sistemleri.', points: ['Konumlandırma ve marka mimarisi', 'İsimlendirme ve marka dili', 'Görsel kimlik sistemleri', 'Marka rehberi ve uygulama'] },
+      { name: 'Web ve Dijital Deneyimler', desc: 'Gerçek kullanıcı davranışlarına göre tasarlanan kurumsal siteler, platformlar ve dönüşüm odaklı dijital deneyimler.', points: ['UX mimarisi ve prototipleme', 'Kurumsal ve kampanya siteleri', 'E-ticaret deneyimleri', 'Performans, erişilebilirlik ve SEO altyapısı'] },
+      { name: 'Büyüme ve Performans', desc: 'Tek bir ölçülebilir büyüme modeli altında birleştirilen müşteri kazanımı, performans pazarlaması, analiz ve optimizasyon.', points: ['Google, Meta ve TikTok kampanyaları', 'Dönüşüm takibi ve analitik kurulumu', 'SEO ve içerik stratejisi', 'CRO ve açılış sayfası optimizasyonu'] },
+      { name: 'Yaratıcı Üretim', desc: 'Dikkat kazanmak için geliştirilen kampanya fikirleri, sosyal medya içerikleri, reklam kreatifleri ve görsel sistemler.', points: ['Kampanya konseptleri', 'Sosyal medya içerik sistemleri', 'Reklam kreatifleri ve motion', 'Sanat yönetimi'] },
+      { name: 'Yapay Zekâ ve Otomasyon', desc: 'Tekrarlayan işleri azaltan, karar süreçlerini hızlandıran ve operasyonu geliştiren uygulanabilir yapay zekâ araçları ve otomasyonlar.', points: ['İş akışı otomasyonu', 'Yapay zekâ destekli içerik süreçleri', 'Sohbet ve destek asistanları', 'Kurum içi araçlar ve entegrasyonlar'] },
+      { name: 'Dijital Ürün Geliştirme', desc: 'Fikir doğrulamadan MVP ve yayına kadar ölçeklenebilir, kullanılabilir dijital ürünler tasarlar ve geliştiririz.', points: ['Fikir doğrulama ve kapsam', 'MVP tasarımı ve geliştirme', 'Ürün iterasyonu ve analitik', 'Lansman ve büyüme desteği'] },
     ],
+  },
+  servicesPage: {
+    metaTitle: 'Hizmetler — Strateji, Tasarım, Büyüme ve Ürün | Yoca',
+    metaDescription: 'Yoca hizmetlerini keşfedin: marka stratejisi, web ve dijital deneyimler, büyüme ve performans, yaratıcı üretim, yapay zekâ otomasyonu ve dijital ürün geliştirme.',
+    eyebrow: 'Hizmetler',
+    deliverables: 'Neleri kapsar',
+    processTitle: 'Tek süreç. Kapalı kutu yok.',
+    processSub: 'Her iş birliği aynı şeffaf ritimle ilerler; işin hangi aşamada olduğunu ve nedenini her zaman bilirsiniz.',
+    process: [
+      { name: 'Anla', desc: 'Pazarınızı, hedef kitlenizi ve mevcut yapınızı haritalarız — kararlar varsayımdan değil, veriden başlar.' },
+      { name: 'Tanımla', desc: 'En kritik değişimi ve ona giden en net rotayı birlikte belirleriz.' },
+      { name: 'İnşa Et', desc: 'Strateji, tasarım ve yazılım; kısa ve incelenebilir döngülerle yan yana çalışır.' },
+      { name: 'Büyüt', desc: 'Ölçer, şeffaf raporlar ve verinin işe yaradığını kanıtladığı noktaları optimize etmeye devam ederiz.' },
+    ],
+  },
+  about: {
+    metaTitle: 'Hakkımızda — Yoca | Your Own Creative Agency',
+    metaDescription: 'Yoca; strateji, tasarım, teknoloji ve performansı tek sistemde birleştiren bağımsız bir yaratıcı büyüme partneridir. Yaklaşımı, değerleri ve ekibi tanıyın.',
+    eyebrow: 'Hakkımızda',
+    heading: 'Your Own Creative Agency.',
+    sub: 'Markanıza kendi markası gibi davranan bağımsız bir ekip — strateji, tasarım, teknoloji ve büyümeyi tek ve hesap verebilir bir sistemde birleştirir.',
+    storyTitle: 'Neden varız',
+    story1: 'Çoğu marka fikir eksikliğinden başarısız olmaz. Strateji, tasarım, teknoloji ve pazarlamanın ayrı odalarda, ayrı tedarikçilerle, ayrı metriklerle yaşamasından başarısız olur.',
+    story2: 'Yoca bu boşluğu kapatmak için kuruldu. Kompakt ve kıdemli tek bir ekip olarak tek bir sorunun etrafında çalışırız: Bu markanın büyümesi için gerçekte neyin değişmesi gerekiyor ve bunu inşa etmenin en net yolu ne?',
+    story3: 'Adımızın Your Own Creative Agency olmasının nedeni de bu: Dışarıdan bir tedarikçi gibi değil, şirket içi bir ekibe daha yakın biçimde — gömülü, şeffaf ve hesap verebilir çalışırız.',
+    valuesTitle: 'Çalışma ilkelerimiz',
+    valuesSub: 'Duvar posteri değil — her projede günlük kararları şekillendiren gerçek kurallar.',
+    values: [
+      { title: 'Görüşten önce veri', body: 'Her öneri araştırma ve ölçümle başlar. Veri bizimle aynı fikirde değilse, veri kazanır.' },
+      { title: 'Çıktı değil, ROI', body: 'İş teslim etmek için değil; işletmeniz için önemli olan bir sayıyı hareket ettirmek için çalışırız.' },
+      { title: 'Şeffaf raporlama', body: 'Bizim gördüğümüzü siz de görürsünüz: Açık panolar, dürüst değerlendirmeler ve arada gösteriş metrikleri yok.' },
+      { title: 'Amaçlı ustalık', body: 'Tasarım, işe yaradığı için yerini hak eder — netliğe veya dönüşüme hizmet etmeyen güzellik, süslemedir.' },
+    ],
+    stackTitle: 'Sistemin arkasındaki araçlar',
+    stackSub: 'Her iş birliği için kurduğumuz ve yönettiğimiz, ölçüme hazır birincil veri altyapısı.',
   },
   work: {
     metaTitle: 'Seçili Projeler — Markalar ve Dijital Deneyimler | Yoca',
@@ -391,7 +486,7 @@ const tr: Dict = {
     sub: 'Kampanyalarımızı, verimizi ve araçlarımızı birincil kaynaktan yöneten sertifikalı iş ortaklıkları.',
     verified: 'Doğrulanmış İş Ortağı',
   },
-  clocks: { active: 'Şu an müşterilerimiz için aktif çalışıyoruz.', istanbul: 'İstanbul', london: 'Londra', dubai: 'Dubai' },
+  clocks: { active: 'Şu an müşterilerimiz için aktif çalışıyoruz.', istanbul: 'İstanbul', baku: 'Bakü', london: 'Londra', dubai: 'Dubai' },
   team: {
     heading: 'Sistemin arkasındaki insanlar.',
     sub: 'Katmansız çalışan kompakt bir kıdemli ekip — strateji, kreatif, yazılım ve büyüme yan yana.',
@@ -460,18 +555,53 @@ const az: Dict = {
     checkupDescription:
       'Qısa sual dəstinə cavab verin; sayt, SEO, reklam, sosial media və inkişaf quruluşunuz üçün fərdi analiz əldə edin.',
   },
-  nav: { home: 'Ana səhifə', services: 'Xidmətlər', work: 'Layihələr', checkup: 'Rəqəmsal Check-Up', contact: 'Əlaqə' },
+  nav: { home: 'Ana səhifə', about: 'Haqqımızda', services: 'Xidmətlər', work: 'Layihələr', checkup: 'Rəqəmsal Check-Up', contact: 'Əlaqə' },
   services: {
     heading: 'Növbəti addımınız üçün lazım olan sistemi qururuq.',
     sub: 'Əvvəlcədən hazırlanmış paket satmaqla başlamırıq. Dəyişməli olan nöqtəni müəyyən edir və uyğun bacarıqları onun ətrafında birləşdiririk.',
     items: [
-      { name: 'Brend Strategiyası və Kimlik', desc: 'Brendi aydın, uyğun və tanınan edən mövqeləndirmə, adlandırma, verbal kimlik və vizual sistemlər.' },
-      { name: 'Veb və Rəqəmsal Təcrübələr', desc: 'Real istifadəçi davranışlarına əsaslanan korporativ saytlar, platformalar və konversiya yönümlü rəqəmsal təcrübələr.' },
-      { name: 'İnkişaf və Performans', desc: 'Vahid ölçülə bilən inkişaf modeli ilə birləşdirilən istifadəçi cəlbi, performans marketinqi, analitika və optimizasiya.' },
-      { name: 'Kreativ İstehsal', desc: 'Diqqət qazanmaq üçün hazırlanan kampaniya ideyaları, sosial media məzmunu, reklam kreativləri və vizual sistemlər.' },
-      { name: 'Süni İntellekt və Avtomatlaşdırma', desc: 'Təkrarlanan işləri azaldan, qərarları sürətləndirən və əməliyyatları yaxşılaşdıran praktik süni intellekt alətləri və avtomatlaşdırmalar.' },
-      { name: 'Rəqəmsal Məhsul İnkişafı', desc: 'İdeyanın təsdiqindən MVP və buraxılışa qədər miqyaslana bilən faydalı rəqəmsal məhsullar hazırlayırıq.' },
+      { name: 'Brend Strategiyası və Kimlik', desc: 'Brendi aydın, uyğun və tanınan edən mövqeləndirmə, adlandırma, verbal kimlik və vizual sistemlər.', points: ['Mövqeləndirmə və brend arxitekturası', 'Adlandırma və verbal kimlik', 'Vizual kimlik sistemləri', 'Brend qaydaları və tətbiq'] },
+      { name: 'Veb və Rəqəmsal Təcrübələr', desc: 'Real istifadəçi davranışlarına əsaslanan korporativ saytlar, platformalar və konversiya yönümlü rəqəmsal təcrübələr.', points: ['UX arxitekturası və prototipləşdirmə', 'Korporativ və kampaniya saytları', 'E-ticarət təcrübələri', 'Performans, əlçatanlıq və SEO təməli'] },
+      { name: 'İnkişaf və Performans', desc: 'Vahid ölçülə bilən inkişaf modeli ilə birləşdirilən istifadəçi cəlbi, performans marketinqi, analitika və optimizasiya.', points: ['Google, Meta və TikTok kampaniyaları', 'Konversiya izləməsi və analitika qurulumu', 'SEO və məzmun strategiyası', 'CRO və açılış səhifəsi optimizasiyası'] },
+      { name: 'Kreativ İstehsal', desc: 'Diqqət qazanmaq üçün hazırlanan kampaniya ideyaları, sosial media məzmunu, reklam kreativləri və vizual sistemlər.', points: ['Kampaniya konseptləri', 'Sosial media məzmun sistemləri', 'Reklam kreativləri və motion', 'Art direksiya'] },
+      { name: 'Süni İntellekt və Avtomatlaşdırma', desc: 'Təkrarlanan işləri azaldan, qərarları sürətləndirən və əməliyyatları yaxşılaşdıran praktik süni intellekt alətləri və avtomatlaşdırmalar.', points: ['İş axını avtomatlaşdırması', 'Sİ dəstəkli məzmun prosesləri', 'Söhbət və dəstək asistentləri', 'Daxili alətlər və inteqrasiyalar'] },
+      { name: 'Rəqəmsal Məhsul İnkişafı', desc: 'İdeyanın təsdiqindən MVP və buraxılışa qədər miqyaslana bilən faydalı rəqəmsal məhsullar hazırlayırıq.', points: ['İdeyanın təsdiqi və əhatə dairəsi', 'MVP dizaynı və inkişafı', 'Məhsul iterasiyası və analitika', 'Buraxılış və inkişaf dəstəyi'] },
     ],
+  },
+  servicesPage: {
+    metaTitle: 'Xidmətlər — Strategiya, Dizayn, İnkişaf və Məhsul | Yoca',
+    metaDescription: 'Yoca xidmətlərini kəşf edin: brend strategiyası, veb və rəqəmsal təcrübələr, inkişaf və performans, kreativ istehsal, Sİ avtomatlaşdırması və rəqəmsal məhsul inkişafı.',
+    eyebrow: 'Xidmətlər',
+    deliverables: 'Nələri əhatə edir',
+    processTitle: 'Vahid proses. Qapalı qutu yoxdur.',
+    processSub: 'Hər əməkdaşlıq eyni şəffaf ritmlə irəliləyir; işin hansı mərhələdə olduğunu və səbəbini hər zaman bilirsiniz.',
+    process: [
+      { name: 'Anla', desc: 'Bazarınızı, auditoriyanızı və mövcud quruluşunuzu xəritələyirik — qərarlar fərziyyədən deyil, faktlardan başlayır.' },
+      { name: 'Müəyyən et', desc: 'Ən vacib dəyişikliyi və ona gedən ən aydın yolu birlikdə müəyyən edirik.' },
+      { name: 'Qur', desc: 'Strategiya, dizayn və proqramlaşdırma qısa, izlənə bilən dövrlərlə yan-yana işləyir.' },
+      { name: 'Böyüt', desc: 'Ölçürük, şəffaf hesabat veririk və datanın işlədiyini sübut etdiyi nöqtələri optimallaşdırmağa davam edirik.' },
+    ],
+  },
+  about: {
+    metaTitle: 'Haqqımızda — Yoca | Your Own Creative Agency',
+    metaDescription: 'Yoca strategiya, dizayn, texnologiya və performansı vahid sistemdə birləşdirən müstəqil kreativ inkişaf tərəfdaşıdır. Yanaşma, dəyərlər və komanda ilə tanış olun.',
+    eyebrow: 'Haqqımızda',
+    heading: 'Your Own Creative Agency.',
+    sub: 'Brendinizə öz brendi kimi yanaşan müstəqil komanda — strategiya, dizayn, texnologiya və inkişafı vahid və hesabatlı sistemdə birləşdirir.',
+    storyTitle: 'Niyə varıq',
+    story1: 'Əksər brendlər ideya çatışmazlığından uğursuz olmur. Strategiya, dizayn, texnologiya və marketinqin ayrı otaqlarda, ayrı podratçılarla, ayrı göstəricilərlə yaşamasından uğursuz olur.',
+    story2: 'Yoca bu boşluğu bağlamaq üçün quruldu. Yığcam və təcrübəli vahid komanda kimi tək sualın ətrafında işləyirik: bu brendin böyüməsi üçün əslində nə dəyişməlidir və bunu qurmağın ən aydın yolu nədir?',
+    story3: 'Adımızın Your Own Creative Agency olmasının səbəbi də budur: kənar podratçı kimi deyil, daxili komandaya daha yaxın şəkildə — inteqrasiyalı, şəffaf və hesabatlı işləyirik.',
+    valuesTitle: 'İş prinsiplərimiz',
+    valuesSub: 'Divar posteri deyil — hər layihədə gündəlik qərarları formalaşdıran real qaydalar.',
+    values: [
+      { title: 'Fikirdən əvvəl data', body: 'Hər tövsiyə araşdırma və ölçmə ilə başlayır. Data bizimlə razı deyilsə, data qalib gəlir.' },
+      { title: 'Nəticə deyil, ROI', body: 'İş təhvil vermək üçün deyil, biznesiniz üçün vacib olan göstəricini hərəkət etdirmək üçün işləyirik.' },
+      { title: 'Şəffaf hesabat', body: 'Bizim gördüyümüzü siz də görürsünüz: açıq panellər, dürüst dəyərləndirmələr və arada göstəriş metrikaları yoxdur.' },
+      { title: 'Məqsədli ustalıq', body: 'Dizayn işlədiyi üçün yerini qazanır — aydınlığa və ya konversiyaya xidmət etməyən gözəllik bəzəkdir.' },
+    ],
+    stackTitle: 'Sistemin arxasındakı alətlər',
+    stackSub: 'Hər əməkdaşlıq üçün qurduğumuz və idarə etdiyimiz, ölçməyə hazır birbaşa data infrastrukturu.',
   },
   work: {
     metaTitle: 'Seçilmiş Layihələr — Brendlər və Rəqəmsal Təcrübələr | Yoca',
@@ -560,7 +690,7 @@ const az: Dict = {
     sub: 'Kampaniyalarımızı, datamızı və alətlərimizi birbaşa mənbədən idarə edən sertifikatlı tərəfdaşlıqlar.',
     verified: 'Təsdiqlənmiş Tərəfdaş',
   },
-  clocks: { active: 'Hazırda müştərilərimiz üçün aktiv işləyirik.', istanbul: 'İstanbul', london: 'London', dubai: 'Dubay' },
+  clocks: { active: 'Hazırda müştərilərimiz üçün aktiv işləyirik.', istanbul: 'İstanbul', baku: 'Bakı', london: 'London', dubai: 'Dubay' },
   team: {
     heading: 'Sistemin arxasındakı insanlar.',
     sub: 'Mərhələsiz işləyən yığcam təcrübəli komanda — strategiya, kreativ, proqramlaşdırma və inkişaf yan-yana.',

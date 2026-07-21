@@ -10,21 +10,24 @@ import { getAllSlugs } from '@/lib/work';
  * stay consistent from one source of truth.
  */
 
-const PATHS: Array<{ path: string; priority: number; changeFrequency: 'weekly' | 'monthly' }> = [
-  { path: '/', priority: 1, changeFrequency: 'weekly' },
-  { path: '/work', priority: 0.9, changeFrequency: 'weekly' },
-  ...getAllSlugs().map((slug) => ({
-    path: `/work/${slug}`,
-    priority: 0.7,
-    changeFrequency: 'monthly' as const,
-  })),
-  { path: '/checkup', priority: 0.8, changeFrequency: 'monthly' },
-  { path: '/contact', priority: 0.8, changeFrequency: 'monthly' },
-];
-
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const host = canonicalHostFor(headers().get('x-yoca-host') ?? headers().get('host'));
   const lastModified = new Date();
+  const slugs = await getAllSlugs();
+
+  const PATHS: Array<{ path: string; priority: number; changeFrequency: 'weekly' | 'monthly' }> = [
+    { path: '/', priority: 1, changeFrequency: 'weekly' },
+    { path: '/about', priority: 0.8, changeFrequency: 'monthly' },
+    { path: '/services', priority: 0.9, changeFrequency: 'monthly' },
+    { path: '/work', priority: 0.9, changeFrequency: 'weekly' },
+    ...slugs.map((slug) => ({
+      path: `/work/${slug}`,
+      priority: 0.7,
+      changeFrequency: 'monthly' as const,
+    })),
+    { path: '/checkup', priority: 0.8, changeFrequency: 'monthly' },
+    { path: '/contact', priority: 0.8, changeFrequency: 'monthly' },
+  ];
 
   return PATHS.map(({ path, priority, changeFrequency }) => {
     const languages: Record<string, string> = {};

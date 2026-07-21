@@ -5,6 +5,7 @@ import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 import CtaSection from '@/components/sections/CtaSection';
 import { getDict } from '@/lib/i18n';
+import { getContent } from '@/lib/content';
 import { getCaseStudies } from '@/lib/work';
 import {
   buildMetadata,
@@ -25,10 +26,10 @@ export function generateMetadata(): Metadata {
   });
 }
 
-export default function WorkPage() {
+export default async function WorkPage() {
   const ctx = getRequestContext();
-  const t = getDict(ctx.locale);
-  const studies = getCaseStudies(ctx.locale);
+  const t = await getContent(ctx.locale);
+  const studies = await getCaseStudies(ctx.locale);
 
   return (
     <>

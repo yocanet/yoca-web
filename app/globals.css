@@ -47,6 +47,19 @@
     content: '';
     @apply block h-2.5 w-2.5 flex-none bg-yoca-lime;
   }
+  /* Admin panel form controls */
+  .admin-input {
+    @apply w-full rounded-sm border border-line bg-surface px-3.5 py-2.5 text-[14px] font-medium text-white outline-none transition-colors placeholder:text-subtle focus:border-yoca-lime;
+  }
+  .admin-card {
+    @apply rounded-md border border-line bg-surface-deep/80 p-6;
+  }
+  .admin-btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-sm border border-line px-4 py-2 text-[13px] font-bold text-muted transition-colors hover:border-yoca-lime hover:text-yoca-lime disabled:opacity-50;
+  }
+  .admin-btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-sm bg-yoca-lime px-4 py-2 text-[13px] font-bold text-black transition-colors hover:bg-yoca-green disabled:opacity-50;
+  }
 }
 
 @layer utilities {
@@ -58,6 +71,18 @@
   .marquee-mask {
     -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
     mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+  /* Oversized outlined footer wordmark */
+  .wordmark-outline {
+    font-size: clamp(72px, 17vw, 260px);
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.12);
+    transition: -webkit-text-stroke-color 0.5s ease;
+  }
+  .wordmark-outline:hover {
+    -webkit-text-stroke-color: rgba(162, 255, 0, 0.45);
   }
 }
 

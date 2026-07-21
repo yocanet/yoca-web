@@ -3,6 +3,7 @@ import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 import CheckUpWizard from '@/components/checkup/CheckUpWizard';
 import { getDict } from '@/lib/i18n';
+import { getContent } from '@/lib/content';
 import { buildMetadata, breadcrumbSchema, getRequestContext, jsonLdString } from '@/lib/seo';
 
 export function generateMetadata(): Metadata {
@@ -16,9 +17,9 @@ export function generateMetadata(): Metadata {
   });
 }
 
-export default function CheckupPage() {
+export default async function CheckupPage() {
   const ctx = getRequestContext();
-  const t = getDict(ctx.locale);
+  const t = await getContent(ctx.locale);
 
   return (
     <>

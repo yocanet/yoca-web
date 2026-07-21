@@ -24,6 +24,21 @@ ve domainlerinizin DNS paneline erişim.
 
 > `schema.sql` tekrar çalıştırılabilir (idempotent) — mevcut verinize dokunmaz.
 
+> **Mevcut (eski sürüm) veritabanını yükseltiyorsanız:** `supabase/upgrade-v3.sql`
+> dosyasını SQL Editor'de bir kez çalıştırın. Work, site metinleri tabloları ve
+> About/Services menü kayıtları eklenir; mevcut veriye dokunulmaz.
+
+### 1b. Admin Paneli Kullanıcısı — ~2 dakika
+
+Site, `/admin` adresinde tam kapsamlı bir yönetim paneli içerir
+(bölümler, menüler, metinler, work, ekip, başvurular).
+
+1. Supabase → **Authentication → Users → Add user → Create new user**:
+   e-posta + güçlü bir şifre girin (panele bu bilgilerle gireceksiniz).
+2. **ÖNEMLİ (güvenlik):** Authentication → **Sign In / Providers → Email**
+   bölümünde **"Allow new users to sign up"** seçeneğini **kapatın**.
+   Böylece panele yalnızca sizin oluşturduğunuz kullanıcılar girebilir.
+
 ## 2. Yerel Kurulum
 
 ```bash
@@ -81,18 +96,30 @@ DNS yayıldıktan sonra middleware her şeyi otomatik yönetir:
 | `yoca.az` | Azerbaycanca site |
 | `www.*` | 308 → apex |
 
-## 4. İçerik Yönetimi (Supabase Studio → Table Editor)
+## 4. İçerik Yönetimi — Admin Paneli (`/admin`)
 
-| Tablo | Ne işe yarar |
+Siteniz yayına girdikten sonra `https://siteniz/admin` adresine gidin ve
+1b adımında oluşturduğunuz kullanıcı ile giriş yapın. Panel Türkçedir.
+
+| Modül | Ne yönetir |
 |---|---|
-| `sections` | `is_active` = false → o bölüm sitede anında gizlenir (hero, bento, services, clients, partners, team, clocks, checkup_banner, cta) |
-| `menus` | Header/footer linkleri; `order_index` sıralar, `is_active` gizler. Tablo boşaltılırsa varsayılan menü devreye girer |
-| `team_members` | Gerçek ekibinizi ekleyin: `name`, `role`, `image_url` (Storage'a yükleyip public URL verin), `linkedin`, `tags` (dizi: `{"SEO","CRO","Growth"}`). Tablo boşken ekip bölümü hiç görünmez |
-| `checkup_submissions` | Check-Up başvuruları; skor `contact_info_json.score` içinde (0–100) |
-| `contact_submissions` | İletişim formu mesajları |
+| **Bölümler** | Ana sayfa bloklarını tek tıkla aç/kapat (hero, bento, hizmetler, müşteriler, partnerler, ekip, saatler, check-up, CTA) |
+| **Menüler** | Header/footer linkleri: ekle, düzenle, sırala (↑↓), gizle, sil. Bilinen sayfaların başlıkları sitede ziyaretçinin dilinde gösterilir |
+| **Metinler** | Hero, CTA, bölüm başlıkları gibi ana metinleri **3 dilde (TR/EN/AZ)** düzenleyin; boş bırakılan alan koddaki varsayılana döner |
+| **Work / Projeler** | Vaka çalışmalarını 3 dilde yönetin (slug, yıl, pazar, görsel, hizmetler + tüm anlatı alanları). Tablo boşsa "Varsayılan 4 projeyi içe aktar" ile başlayın |
+| **Ekip** | Gerçek ekip üyeleri: ad, unvan, fotoğraf URL'i, LinkedIn, uzmanlık etiketleri, sıralama. Liste boşken ekip bölümü sitede görünmez |
+| **Başvurular** | İletişim mesajları ve skorlu (0–100) Check-Up lead'leri; tek tıkla e-posta ile yanıtlayın veya silin |
 
-Ekip fotoğrafı yüklemek için: **Storage → New bucket** (`public` işaretli, adı örn.
-`team`) → fotoğrafı yükleyin → **Get URL** → `image_url` alanına yapıştırın.
+Ekip fotoğrafı yüklemek için: Supabase → **Storage → New bucket** (`public`
+işaretli, adı örn. `team`) → fotoğrafı yükleyin → **Get URL** → panelde
+`Fotoğraf URL` alanına yapıştırın.
+
+### Dil davranışı
+
+Domainler bağlanana kadar sitedeki **EN/TR/AZ** düğmeleri dili site içinde
+değiştirir (çerez tabanlı). Gerçek domainler (yoca.net / yoca.tr / yoca.az)
+bağlandığında her dil kendi domaininde yaşar ve düğmeler domainler arasında
+geçiş yapar — SEO davranışı otomatik korunur.
 
 ## 5. Yayın Sonrası Kontrol Listesi
 

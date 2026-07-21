@@ -37,13 +37,26 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(url, 308);
   }
 
-  // 3) Forward locale + host context to the application layer
+  // 3) Resolve the locale.
+  //    On the real domains the host decides the language (SEO-correct).
+  //    On any other host (*.vercel.app, localhost — i.e. before the domains
+  //    are connected) an in-app cookie set by the language switcher decides,
+  //    so visitors can change language without leaving the site.
+  let locale = domain.locale;
+  if (!knownHost) {
+    const cookieLocale = request.cookies.get('yoca_locale')?.value;
+    if (cookieLocale === 'en' || cookieLocale === 'tr' || cookieLocale === 'az') {
+      locale = cookieLocale;
+    }
+  }
+
+  // 4) Forward locale + host context to the application layer
   const requestHeaders = new Headers(request.headers);
-  requestHeaders.set('x-yoca-locale', domain.locale);
+  requestHeaders.set('x-yoca-locale', locale);
   requestHeaders.set('x-yoca-host', targetHost);
 
   const response = NextResponse.next({ request: { headers: requestHeaders } });
-  response.headers.set('x-yoca-locale', domain.locale);
+  response.headers.set('x-yoca-locale', locale);
   // Content varies by Host; keep shared caches honest.
   response.headers.set('Vary', 'Host');
   return response;

@@ -18,8 +18,12 @@ Next.js 14+ (App Router) + Tailwind CSS + Framer Motion + Supabase, designed for
 | İletişim | `app/contact` + `app/api/contact` | Form → `contact_submissions` + opsiyonel e-posta bildirimi |
 | Bildirimler | `lib/notify.ts` | Resend üzerinden opsiyonel e-posta (bağımlılıksız fetch) |
 | Cookie onayı | `components/ui/CookieConsent.tsx` | GA4 yalnızca onay sonrası yüklenir |
-| Dil seçici | `components/ui/LanguageSwitcher.tsx` | Aynı sayfayı ilgili domainde açar |
+| Dil seçici | `components/ui/LanguageSwitcher.tsx` | Domain bağlıyken domainler arası, öncesinde çerezle site içi dil değişimi |
 | Hata sayfaları | `app/not-found.tsx`, `app/error.tsx` | Marka dilinde 404/500 |
+| Hakkımızda | `app/about` | Manifesto, değerler bento'su, ekip, araç seti |
+| Hizmetler | `app/services` | 6 hizmetin kapsam listeleri + 4 adımlı süreç |
+| Admin paneli | `app/admin` + `components/admin` | Supabase Auth girişli tam CMS: bölümler, menüler, metinler (3 dil), work, ekip, başvurular |
+| Metin override | `lib/content.ts` + `site_content` | Admin'den düzenlenen metinler koddaki varsayılanların üzerine biner |
 
 ## Kurulum
 

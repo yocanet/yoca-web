@@ -2,7 +2,9 @@ import type { Metadata } from 'next';
 import { Manrope } from 'next/font/google';
 import AmbientBackground from '@/components/ui/AmbientBackground';
 import CookieConsent from '@/components/ui/CookieConsent';
+import ScrollProgress from '@/components/ui/ScrollProgress';
 import { getDict } from '@/lib/i18n';
+import { getContent } from '@/lib/content';
 import {
   buildMetadata,
   getRequestContext,
@@ -30,9 +32,9 @@ export function generateMetadata(): Metadata {
   });
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const ctx = getRequestContext();
-  const t = getDict(ctx.locale);
+  const t = await getContent(ctx.locale);
 
   return (
     <html lang={ctx.locale} className={manrope.variable}>
@@ -49,6 +51,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }}
         />
         <AmbientBackground />
+        <ScrollProgress />
         {children}
         <CookieConsent
           text={t.cookies.text}

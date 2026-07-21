@@ -93,9 +93,49 @@ export interface PartnerBadge {
 }
 
 export interface CityClock {
-  key: 'istanbul' | 'london' | 'dubai';
+  key: 'istanbul' | 'baku' | 'london' | 'dubai';
   label: string;
   timeZone: string;
+}
+
+// ── CMS rows (v3) ──────────────────────────────────────────────────
+export interface CaseStudyLocalized {
+  name: string;
+  sector: string;
+  summary: string;
+  problem: string;
+  approach: string;
+  solution: string;
+  results: string;
+}
+
+export interface CaseStudyRow {
+  id: number;
+  slug: string;
+  year: string;
+  market: string;
+  image_url: string;
+  services: string[] | null;
+  order_index: number;
+  is_active: boolean;
+  content: Partial<Record<Locale, CaseStudyLocalized>>;
+}
+
+export interface SiteContentRow {
+  id: number;
+  key: string;
+  locale: Locale;
+  value: string;
+}
+
+export interface ContactSubmissionRow {
+  id: string;
+  name: string;
+  email: string;
+  company: string;
+  message: string;
+  locale: string;
+  created_at: string;
 }
 
 export interface MenuItem {

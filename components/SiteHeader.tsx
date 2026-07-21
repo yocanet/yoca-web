@@ -41,23 +41,24 @@ export default async function SiteHeader({ t, path = '/' }: SiteHeaderProps) {
   const withBase = (url: string) => (url === '/' ? base : `${base}${url}`);
 
   const rows = await fetchMenu('header');
-  const items: MenuItem[] = (
-    rows
-      ? rows.map((row) => ({
-          title: localizedTitle(row.url, row.title, t),
-          url: row.url,
-          external: /^(https?:|mailto:)/.test(row.url),
-        }))
-      : [
-          { title: t.nav.home, url: '/' },
-          { title: t.nav.about, url: '/about' },
-          { title: t.nav.services, url: '/services' },
-          { title: t.nav.work, url: '/work' },
-          { title: t.nav.products, url: '/products' },
-          { title: t.nav.checkup, url: '/checkup' },
-          { title: t.nav.contact, url: '/contact' },
-        ]
-  ).map((item) => (item.external ? item : { ...item, url: withBase(item.url) }));
+  const rawItems: MenuItem[] = rows
+    ? rows.map((row) => ({
+        title: localizedTitle(row.url, row.title, t),
+        url: row.url,
+        external: /^(https?:|mailto:)/.test(row.url),
+      }))
+    : [
+        { title: t.nav.home, url: '/' },
+        { title: t.nav.about, url: '/about' },
+        { title: t.nav.services, url: '/services' },
+        { title: t.nav.work, url: '/work' },
+        { title: t.nav.products, url: '/products' },
+        { title: t.nav.checkup, url: '/checkup' },
+        { title: t.nav.contact, url: '/contact' },
+      ];
+  const items: MenuItem[] = rawItems.map((item) =>
+    item.external ? item : { ...item, url: withBase(item.url) },
+  );
 
   return (
     <header className="fixed inset-x-0 top-0 z-[100] border-b border-line/60 bg-surface-deep/85 backdrop-blur-xl">

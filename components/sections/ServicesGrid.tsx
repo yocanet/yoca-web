@@ -30,6 +30,10 @@ export default function ServicesGrid({ t, ctaLabel, base }: ServicesGridProps) {
               </span>
               <h3 className="mt-3 text-lg font-extrabold leading-snug">{service.name}</h3>
               <p className="mt-2.5 text-[14px] leading-relaxed text-muted">{service.desc}</p>
+              <p className="mt-3 flex items-start gap-2 border-t border-line pt-3 text-[13px] font-bold leading-relaxed text-yoca-lime/90">
+                <span aria-hidden="true" className="mt-[5px] block h-1.5 w-1.5 flex-none bg-yoca-lime" />
+                {service.changes}
+              </p>
               <span
                 aria-hidden="true"
                 className="absolute bottom-4 right-5 h-2 w-2 bg-surface-elevated transition-colors duration-300 group-hover:bg-yoca-lime"

@@ -63,7 +63,7 @@ export default async function ServicesPage() {
         {/* ── Three umbrellas with problem/deliverables/stack tabs ─ */}
         <section className="relative z-[7] bg-surface py-16">
           <div className="container-y">
-            <ServiceUmbrellas t={sp} />
+            <ServiceUmbrellas t={sp} serviceNames={t.services.items.map((item) => item.name)} base={base} />
           </div>
         </section>
 

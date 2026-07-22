@@ -11,7 +11,7 @@ const LABELS: Record<string, string> = {
   bento: 'Sistem kartları (Brand → Growth → Scale)',
   services: 'Hizmetler ızgarası',
   clients: 'Müşteri logoları şeridi',
-  partners: 'Resmi partner rozetleri',
+  partners: 'Platform yığını (Ölç / Büyüt / İnşa Et)',
   team: 'Ekip vitrini',
   clocks: 'Canlı saatler şeridi',
   checkup_banner: 'Check-Up banner',

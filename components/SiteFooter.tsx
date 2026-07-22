@@ -60,17 +60,46 @@ export default async function SiteFooter({ t }: SiteFooterProps) {
   return (
     <footer className="relative z-[7] border-t border-line bg-surface-deep pb-8 pt-16 lg:pt-24">
       <div className="container-y">
-        {/* ── Closing hook + full-width lime CTA ─────────────────── */}
+        {/* ── Closing hook + 3-column action gateway ─────────────── */}
         <div className="border-b border-line pb-14">
           <p className="max-w-[16ch] text-4xl font-extrabold leading-[1.08] tracking-tight sm:text-5xl lg:text-6xl">
             {t.footer.hook}
           </p>
-          <Link
-            href={`${base}/contact`}
-            className="btn-primary mt-9 w-full px-8 py-5 text-lg"
-          >
-            {t.footer.hookCta} →
-          </Link>
+          <div className="mt-10 grid gap-4 md:grid-cols-3">
+            {/* 01 — Primary */}
+            <Link
+              href={`${base}/contact`}
+              className="group flex flex-col justify-between gap-6 rounded-md bg-yoca-lime p-7 text-black transition-colors hover:bg-yoca-green"
+            >
+              <p className="text-[14px] font-semibold leading-relaxed text-black/70">
+                {t.footer.gatewayProject}
+              </p>
+              <span className="text-xl font-extrabold tracking-tight">
+                {t.footer.hookCta} →
+              </span>
+            </Link>
+            {/* 02 — Secondary */}
+            <Link
+              href={`${base}/checkup`}
+              className="group flex flex-col justify-between gap-6 rounded-md border border-line bg-surface p-7 transition-colors hover:border-yoca-lime/60"
+            >
+              <p className="text-[14px] leading-relaxed text-muted">{t.footer.gatewayCheckup}</p>
+              <span className="flex items-center gap-2.5 text-xl font-extrabold tracking-tight text-soft transition-colors group-hover:text-yoca-lime">
+                <span aria-hidden="true" className="block h-2.5 w-2.5 flex-none bg-yoca-lime" />
+                {t.nav.checkup} →
+              </span>
+            </Link>
+            {/* 03 — Tertiary */}
+            <Link
+              href={`${base}/products`}
+              className="group flex flex-col justify-between gap-6 rounded-md border border-line/60 p-7 transition-colors hover:border-line"
+            >
+              <p className="text-[14px] leading-relaxed text-subtle">{t.footer.gatewayProducts}</p>
+              <span className="text-xl font-extrabold tracking-tight text-muted transition-colors group-hover:text-white">
+                {t.footer.exploreProducts} →
+              </span>
+            </Link>
+          </div>
         </div>
 
         {/* ── 4-column system breakdown ──────────────────────────── */}

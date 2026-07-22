@@ -95,6 +95,19 @@ export default async function ContactPage() {
               <p className="mt-2 w-full border-t border-line pt-4 text-[13px] text-subtle">
                 {t.contact.based}
               </p>
+              <div className="mt-4 w-full border-t border-line pt-5">
+                <h3 className="text-[15px] font-extrabold">{t.contact.nextTitle}</h3>
+                <ol className="mt-4 grid gap-4">
+                  {t.contact.nextSteps.map((stepText, index) => (
+                    <li key={index} className="flex items-start gap-3">
+                      <span className="flex-none text-[13px] font-extrabold tracking-[0.08em] text-yoca-lime">
+                        {String(index + 1).padStart(2, '0')}
+                      </span>
+                      <span className="text-[13px] leading-relaxed text-muted">{stepText}</span>
+                    </li>
+                  ))}
+                </ol>
+              </div>
             </aside>
           </div>
         </section>

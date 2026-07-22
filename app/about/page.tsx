@@ -6,6 +6,7 @@ import TeamSection from '@/components/sections/TeamSection';
 import CtaSection from '@/components/sections/CtaSection';
 import SectionWrapper from '@/components/SectionWrapper';
 import Reveal from '@/components/ui/Reveal';
+import Manifesto from '@/components/ui/Manifesto';
 import { getDict } from '@/lib/i18n';
 import { getContent } from '@/lib/content';
 import { buildMetadata, breadcrumbSchema, getRequestContext, jsonLdString } from '@/lib/seo';
@@ -68,10 +69,12 @@ export default async function AboutPage() {
         >
           <div className="container-y">
             <p className="eyebrow">{a.eyebrow}</p>
-            <h1 className="mt-5 max-w-[16ch] text-4xl font-extrabold leading-[1.08] tracking-tight sm:text-6xl">
+            <h1 className="mt-5 max-w-[24ch] text-4xl font-extrabold leading-[1.12] tracking-tight sm:text-5xl lg:text-6xl">
               {a.heading}
             </h1>
-            <p className="mt-6 max-w-[58ch] text-[18px] leading-relaxed text-muted">{a.sub}</p>
+            <p className="mt-6 text-[17px] font-extrabold uppercase tracking-[0.14em] text-yoca-lime">
+              {a.sub}
+            </p>
           </div>
         </section>
 
@@ -123,6 +126,13 @@ export default async function AboutPage() {
                 </Reveal>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* ── Scroll-activated manifesto ────────────────────────── */}
+        <section className="relative z-[7] border-t border-line py-20 lg:py-32">
+          <div className="container-y">
+            <Manifesto lines={a.manifesto} />
           </div>
         </section>
 

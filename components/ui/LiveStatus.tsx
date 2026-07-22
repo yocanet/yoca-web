@@ -23,7 +23,9 @@ const CITIES: CityClock[] = [
 ];
 
 export default function LiveStatus({ locale, activeLabel, cityLabels }: LiveStatusProps) {
-  const [now, setNow] = useState<Date | null>(null);
+  // Initialize with the real time so no "--:--" flash appears; the server/client
+  // minute difference is covered by suppressHydrationWarning on <time>.
+  const [now, setNow] = useState<Date>(() => new Date());
 
   useEffect(() => {
     setNow(new Date());
@@ -67,7 +69,7 @@ export default function LiveStatus({ locale, activeLabel, cityLabels }: LiveStat
                 className="text-[15px] font-extrabold tabular-nums text-soft"
                 suppressHydrationWarning
               >
-                {now ? formatters.get(city.timeZone)!.format(now) : '--:--'}
+                {formatters.get(city.timeZone)!.format(now)}
               </time>
             </span>
           ))}

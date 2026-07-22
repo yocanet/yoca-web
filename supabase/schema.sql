@@ -85,10 +85,12 @@ create table if not exists public.case_studies (
   services text[] default '{}',
   order_index integer not null default 0,
   is_active boolean not null default true,
-  -- 'client' work vs Yoca's own 'product' (Work page filter)
-  kind text not null default 'client' check (kind in ('client', 'product')),
+  -- work status: client case study / concept project / Yoca product / experimental
+  kind text not null default 'client' check (kind in ('client', 'concept', 'product', 'experimental')),
   -- optional hover-preview video for the Work grid
   video_url text,
+  -- optional live/interactive project link (case detail page)
+  live_url text,
   -- {"en": {...}, "tr": {...}, "az": {...}, "ar": {...}} incl. metricBadge/stats/quote
   content jsonb not null default '{}'::jsonb
 );

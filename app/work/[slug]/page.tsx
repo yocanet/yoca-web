@@ -50,6 +50,16 @@ export default async function CaseStudyPage({ params }: PageProps) {
   if (!study) notFound();
 
   const all = await getCaseStudies(ctx.locale);
+  const isConcept = study.kind === 'concept' || study.kind === 'experimental';
+  const resultsHeading = isConcept ? t.work.designedOutcome : t.work.result;
+  const statusLabel =
+    study.kind === 'client'
+      ? t.work.statusClient
+      : study.kind === 'concept'
+        ? t.work.statusConcept
+        : study.kind === 'product'
+          ? t.work.statusProduct
+          : t.work.statusExp;
   const index = all.findIndex((cs) => cs.slug === study.slug);
   const prev = index > 0 ? all[index - 1] : null;
   const next = index < all.length - 1 ? all[index + 1] : null;
@@ -116,6 +126,9 @@ export default async function CaseStudyPage({ params }: PageProps) {
               <h1 className="text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl">
                 {study.name}
               </h1>
+              <span className="rounded-sm border border-line px-2.5 py-1 text-[11px] font-extrabold uppercase tracking-[0.06em] text-soft">
+                {statusLabel}
+              </span>
               {study.metricBadge && (
                 <span className="rounded-sm bg-yoca-lime px-3 py-1.5 text-[13px] font-extrabold text-black">
                   {study.metricBadge}
@@ -180,7 +193,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
           <div className="container-y grid gap-10 md:grid-cols-[minmax(200px,1fr)_2fr] md:gap-8">
             <div>
               <span className="text-[13px] font-extrabold tracking-[0.1em] text-yoca-lime">04</span>
-              <h2 className="mt-2 text-xl font-extrabold">{t.work.result}</h2>
+              <h2 className="mt-2 text-xl font-extrabold">{resultsHeading}</h2>
             </div>
             <div>
               <p className="max-w-[62ch] text-[17px] leading-[1.8] text-soft">{study.results}</p>
@@ -208,6 +221,16 @@ export default async function CaseStudyPage({ params }: PageProps) {
                   ))}
                   <p className="text-[12px] text-subtle">{t.work.metricNote}</p>
                 </div>
+              )}
+              {study.liveUrl && (
+                <a
+                  href={study.liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-ghost mt-8"
+                >
+                  {t.work.liveLabel} ↗
+                </a>
               )}
             </div>
           </div>

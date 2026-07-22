@@ -32,7 +32,7 @@ export default function MobileMenu({ items, cta, locale, path, languageLabel }: 
   }, [open]);
 
   return (
-    <div className="lg:hidden">
+    <div>
       <button
         type="button"
         aria-expanded={open}

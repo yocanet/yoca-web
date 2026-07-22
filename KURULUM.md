@@ -24,10 +24,10 @@ ve domainlerinizin DNS paneline erişim.
 
 > `schema.sql` tekrar çalıştırılabilir (idempotent) — mevcut verinize dokunmaz.
 
-> **Mevcut (eski sürüm) veritabanını yükseltiyorsanız:** `supabase/upgrade-v3.sql`
-> ve ardından `supabase/upgrade-v4.sql` dosyalarını SQL Editor'de birer kez
-> çalıştırın (v4: work tür/video alanları, Arapça desteği, Products menüsü).
-> Mevcut veriye dokunulmaz.
+> **Mevcut (eski sürüm) veritabanını yükseltiyorsanız:** `supabase/upgrade-v3.sql`,
+> `supabase/upgrade-v4.sql` ve `supabase/upgrade-v5.sql` dosyalarını SQL
+> Editor'de sırayla birer kez çalıştırın (v5: work durum etiketleri
+> concept/experimental + canlı proje linki). Mevcut veriye dokunulmaz.
 
 ### 1b. Admin Paneli Kullanıcısı — ~2 dakika
 
@@ -125,14 +125,16 @@ bağlandığında yapı aynen çalışmaya devam eder.
 
 ### Yayın öncesi ÖNEMLİ kontroller
 
-- **Örnek metrikler:** Work kartlarındaki rozetler, vaka detayındaki
-  "Doğrulanmış Sonuçlar" çubukları ve Products sayfasındaki büyüme
-  metrikleri ÖRNEK yer tutuculardır. Yayına almadan önce /admin → Work
-  üzerinden gerçek, doğrulanabilir verilerle değiştirin.
-- **Partner rozetleri:** Rozetler şu an ilgili resmi partner PROGRAMI
-  sayfalarına bağlıdır. Sertifikasyonunuz tamamlandığında
-  `components/sections/PartnersAndClients.tsx` içindeki `PARTNER_URLS`
-  değerlerini kendi doğrulama profil linklerinizle değiştirin.
+- **Metrik dürüstlüğü (v5):** Varsayılan 4 proje artık "Konsept Proje"
+  olarak etiketlenir ve HİÇBİR örnek metrik içermez. Metrik rozeti ve sonuç
+  çubukları yalnızca /admin → Work'ten girdiğiniz doğrulanmış, müşteri onaylı
+  verilerle görünür. Konsept projelerde sonuç bölümü otomatik olarak
+  "Tasarlanan Sonuç" başlığıyla sunulur.
+- **Partner rozetleri kaldırıldı (v5):** Resmi doğrulama URL'i olmadan
+  "Google Premier Partner" vb. rozet gösterilmez. Yerine "Modern dijital
+  büyümenin arkasındaki platformlarla inşa ediyoruz" başlıklı Ölç/Büyüt/İnşa Et
+  araç kategorileri sunulur. Sertifikasyon aldığınızda rozetleri doğrulama
+  linkleriyle yeniden ekleyebiliriz.
 - **Calendly:** /admin → Metinler → "İletişim — Calendly linki" alanına
   `https://calendly.com/kullanici-adiniz` yazdığınızda iletişim sayfasında
   canlı randevu takvimi otomatik açılır.

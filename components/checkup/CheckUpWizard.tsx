@@ -21,10 +21,33 @@ interface CheckUpWizardProps {
 
 type Status = 'idle' | 'submitting' | 'success' | 'error';
 
+/** Question keys grouped into the six logical check-up sections (in flow order). */
+const SECTION_KEYS: string[][] = [
+  ['sector', 'audience', 'size'], // business
+  ['website', 'mobile', 'ecommerce'], // website
+  ['google_ads', 'meta_ads', 'other_channels'], // marketing
+  ['seo', 'content', 'social'], // content & SEO
+  ['analytics', 'crm'], // measurement
+  ['budget', 'goal'], // goals
+];
+
 export default function CheckUpWizard({ locale, t }: CheckUpWizardProps) {
   const prefersReducedMotion = useReducedMotion();
-  const questions = t.questions;
+  // Re-order questions to follow the six sections; unknown keys keep dict order.
+  const questions = useMemo(() => {
+    const byKey = new Map(t.questions.map((question) => [question.key, question]));
+    const ordered = SECTION_KEYS.flat()
+      .map((key) => byKey.get(key))
+      .filter((question): question is (typeof t.questions)[number] => !!question);
+    const rest = t.questions.filter((question) => !SECTION_KEYS.flat().includes(question.key));
+    return [...ordered, ...rest];
+  }, [t.questions]);
   const totalSteps = questions.length + 1; // + contact step
+
+  const sectionIndexOf = (questionKey: string): number => {
+    const found = SECTION_KEYS.findIndex((keys) => keys.includes(questionKey));
+    return found === -1 ? SECTION_KEYS.length - 1 : found;
+  };
 
   const [started, setStarted] = useState(false);
   const [step, setStep] = useState(0);
@@ -38,7 +61,6 @@ export default function CheckUpWizard({ locale, t }: CheckUpWizardProps) {
   const topRef = useRef<HTMLDivElement>(null);
 
   const isContactStep = step === questions.length;
-  const progress = Math.round((step / (totalSteps - 1)) * 100);
 
   const scrollToTop = () => {
     topRef.current?.scrollIntoView({
@@ -170,13 +192,29 @@ export default function CheckUpWizard({ locale, t }: CheckUpWizardProps) {
               </li>
             ))}
           </ul>
+          {/* Analysis scope — full transparency before starting */}
+          <div className="mt-7 border-t border-line pt-6">
+            <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-subtle">
+              {t.sectionWord} 1–6
+            </p>
+            <ul className="mt-3 flex flex-wrap gap-2">
+              {t.sections.map((section, index) => (
+                <li
+                  key={section.key}
+                  className="rounded-sm border border-line bg-surface px-3 py-1.5 text-[12px] font-bold text-soft"
+                >
+                  {String(index + 1).padStart(2, '0')} · {section.label}
+                </li>
+              ))}
+            </ul>
+          </div>
           <button
             type="button"
             onClick={() => {
               setStarted(true);
               scrollToTop();
             }}
-            className="btn-primary mt-9 px-8 py-4 text-base"
+            className="btn-primary mt-8 px-8 py-4 text-base"
           >
             {t.introStart} →
           </button>
@@ -187,21 +225,41 @@ export default function CheckUpWizard({ locale, t }: CheckUpWizardProps) {
 
   return (
     <div ref={topRef} className="scroll-mt-32">
-      {/* Progress bar */}
+      {/* Section-aware progress */}
       <div className="mb-8" aria-hidden="true">
-        <div className="mb-2.5 flex items-baseline justify-between text-[12px] font-bold uppercase tracking-[0.08em] text-subtle">
+        <div className="mb-2.5 flex flex-wrap items-baseline justify-between gap-2 text-[12px] font-bold uppercase tracking-[0.08em] text-subtle">
+          <span className="text-yoca-lime">
+            {isContactStep
+              ? `${t.step} ${step + 1} ${t.of} ${totalSteps}`
+              : `${t.sectionWord} ${sectionIndexOf(questions[step].key) + 1}/6 — ${
+                  t.sections[sectionIndexOf(questions[step].key)]?.label ?? ''
+                }`}
+          </span>
           <span>
             {t.step} {step + 1} {t.of} {totalSteps}
           </span>
-          <span className="text-[14px] text-yoca-lime">{progress}%</span>
         </div>
-        <div className="h-1 overflow-hidden rounded-full bg-surface-elevated">
-          <motion.div
-            className="h-full rounded-full"
-            style={{ background: 'linear-gradient(90deg, #40C401, #A2FF00)' }}
-            animate={{ width: `${progress}%` }}
-            transition={{ duration: prefersReducedMotion ? 0 : 0.4, ease: [0.22, 0.8, 0.3, 1] }}
-          />
+        <div className="flex gap-1.5">
+          {SECTION_KEYS.map((keys, sectionIndex) => {
+            const answeredInSection = keys.filter((key) => answers[key] !== undefined).length;
+            const currentSection = !isContactStep && sectionIndexOf(questions[step].key) === sectionIndex;
+            const fill = isContactStep ? 1 : answeredInSection / keys.length;
+            return (
+              <div
+                key={sectionIndex}
+                className={`h-1 flex-1 overflow-hidden rounded-full ${
+                  currentSection ? 'bg-surface-elevated ring-1 ring-yoca-lime/40' : 'bg-surface-elevated'
+                }`}
+              >
+                <motion.div
+                  className="h-full rounded-full"
+                  style={{ background: 'linear-gradient(90deg, #40C401, #A2FF00)' }}
+                  animate={{ width: `${Math.round(fill * 100)}%` }}
+                  transition={{ duration: prefersReducedMotion ? 0 : 0.35 }}
+                />
+              </div>
+            );
+          })}
         </div>
       </div>
 

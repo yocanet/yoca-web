@@ -125,10 +125,12 @@ export interface CaseStudyRow {
   services: string[] | null;
   order_index: number;
   is_active: boolean;
-  /** 'client' work vs Yoca's own 'product' — drives the Work page filter. */
-  kind: 'client' | 'product';
+  /** Work status label + filter: client case study, concept project, Yoca product, experimental. */
+  kind: 'client' | 'concept' | 'product' | 'experimental';
   /** Optional hover-preview video (muted loop) for the Work grid. */
   video_url: string | null;
+  /** Optional live/interactive project link shown on the case detail page. */
+  live_url: string | null;
   content: Partial<Record<Locale, CaseStudyLocalized>>;
 }
 

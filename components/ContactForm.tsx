@@ -23,9 +23,10 @@ export default function ContactForm({
   errorEmail,
   errorGeneric,
 }: ContactFormProps) {
-  const [form, setForm] = useState({ name: '', email: '', company: '', message: '' });
+  const [form, setForm] = useState({ name: '', email: '', company: '', message: '', phone: '' });
   const [selectedSystems, setSelectedSystems] = useState<string[]>([]);
   const [budget, setBudget] = useState<string>('');
+  const [launch, setLaunch] = useState<string>('');
   const [consent, setConsent] = useState(false);
   const [status, setStatus] = useState<Status>('idle');
   const [error, setError] = useState('');
@@ -59,6 +60,12 @@ export default function ContactForm({
     }
     if (budget) {
       plannerLines.push(`[${t.plannerBudget}] ${budget}`);
+    }
+    if (launch) {
+      plannerLines.push(`[${t.launchLabel}] ${launch}`);
+    }
+    if (form.phone.trim()) {
+      plannerLines.push(`[${t.phone}] ${form.phone.trim()}`);
     }
     const fullMessage =
       plannerLines.length > 0
@@ -154,18 +161,34 @@ export default function ContactForm({
           />
         </div>
       </div>
-      <div className="grid gap-2">
-        <label htmlFor="cf-company" className="text-[13px] font-bold text-soft">
-          {t.company}
-        </label>
-        <input
-          id="cf-company"
-          maxLength={190}
-          autoComplete="organization"
-          value={form.company}
-          onChange={(e) => setForm((f) => ({ ...f, company: e.target.value }))}
-          className={inputClass}
-        />
+      <div className="grid gap-5 sm:grid-cols-2">
+        <div className="grid gap-2">
+          <label htmlFor="cf-company" className="text-[13px] font-bold text-soft">
+            {t.company}
+          </label>
+          <input
+            id="cf-company"
+            maxLength={190}
+            autoComplete="organization"
+            value={form.company}
+            onChange={(e) => setForm((f) => ({ ...f, company: e.target.value }))}
+            className={inputClass}
+          />
+        </div>
+        <div className="grid gap-2">
+          <label htmlFor="cf-phone" className="text-[13px] font-bold text-soft">
+            {t.phone}
+          </label>
+          <input
+            id="cf-phone"
+            type="tel"
+            maxLength={60}
+            autoComplete="tel"
+            value={form.phone}
+            onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
+            className={inputClass}
+          />
+        </div>
       </div>
       {/* ── Interactive Project Planner ─────────────────────────── */}
       <fieldset className="grid gap-3 border-0 p-0">
@@ -203,6 +226,30 @@ export default function ContactForm({
                 type="button"
                 aria-pressed={active}
                 onClick={() => setBudget(active ? '' : option)}
+                className={`min-h-[44px] rounded-sm border px-4 py-2 text-[13px] font-bold transition-colors ${
+                  active
+                    ? 'border-yoca-lime bg-yoca-lime text-black'
+                    : 'border-line bg-surface-secondary text-muted hover:border-subtle hover:text-white'
+                }`}
+              >
+                {option}
+              </button>
+            );
+          })}
+        </div>
+      </fieldset>
+
+      <fieldset className="grid gap-3 border-0 p-0">
+        <legend className="text-[13px] font-bold text-soft">{t.launchLabel}</legend>
+        <div className="flex flex-wrap gap-2.5">
+          {t.launches.map((option) => {
+            const active = launch === option;
+            return (
+              <button
+                key={option}
+                type="button"
+                aria-pressed={active}
+                onClick={() => setLaunch(active ? '' : option)}
                 className={`min-h-[44px] rounded-sm border px-4 py-2 text-[13px] font-bold transition-colors ${
                   active
                     ? 'border-yoca-lime bg-yoca-lime text-black'

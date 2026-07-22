@@ -78,7 +78,7 @@ export default async function WorkPage() {
           </div>
         </section>
 
-        <section className="relative z-[7] bg-surface py-16">
+        <section className="section-light relative z-[7] py-16 lg:py-20">
           <div className="container-y">
             <WorkGrid
               studies={studies}
@@ -90,6 +90,12 @@ export default async function WorkPage() {
                 viewCase: t.work.viewCase,
                 metricNote: t.work.metricNote,
                 empty: t.work.empty,
+                status: {
+                  client: t.work.statusClient,
+                  concept: t.work.statusConcept,
+                  product: t.work.statusProduct,
+                  experimental: t.work.statusExp,
+                },
               }}
             />
           </div>

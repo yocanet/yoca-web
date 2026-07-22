@@ -33,8 +33,8 @@ const LOCALIZED_FIELDS: Array<{ key: TextField; label: string; multiline: boolea
   { key: 'problem', label: '1 · Meydan Okuma (Challenge)', multiline: true },
   { key: 'approach', label: '2 · Uygulanan Sistem', multiline: true },
   { key: 'solution', label: '3 · Uygulama ve Teknoloji', multiline: true },
-  { key: 'results', label: '4 · Doğrulanmış Sonuçlar (anlatı)', multiline: true },
-  { key: 'metricBadge', label: 'Metrik rozeti (kartta görünür, örn. "+210% büyüme")', multiline: false },
+  { key: 'results', label: '4 · Sonuç anlatısı (müşteri: Doğrulanmış Sonuçlar / konsept: Tasarlanan Sonuç)', multiline: true },
+  { key: 'metricBadge', label: 'Metrik rozeti — YALNIZCA doğrulanmış, müşteri onaylı veri girin', multiline: false },
   { key: 'quote', label: '5 · Müşteri Yorumu (boşsa bölüm gizlenir — gerçek yorum girin)', multiline: true },
   { key: 'quoteAuthor', label: 'Yorum sahibi (ad — unvan)', multiline: false },
 ];
@@ -69,6 +69,7 @@ function newRow(orderIndex: number): EditableRow {
     is_active: true,
     kind: 'client',
     video_url: null,
+    live_url: null,
     content: {
       tr: { ...EMPTY_LOCALIZED },
       en: { ...EMPTY_LOCALIZED },
@@ -124,8 +125,9 @@ export default function AdminWork() {
       services: editing.services ?? [],
       order_index: editing.order_index,
       is_active: editing.is_active,
-      kind: editing.kind === 'product' ? 'product' : 'client',
+      kind: editing.kind,
       video_url: editing.video_url?.trim() || null,
+      live_url: editing.live_url?.trim() || null,
       content: editing.content,
     };
     if (editing.id !== undefined) {
@@ -255,12 +257,17 @@ export default function AdminWork() {
             <select
               value={editing.kind}
               onChange={(event) =>
-                setEditing({ ...editing, kind: event.target.value as 'client' | 'product' })
+                setEditing({
+                  ...editing,
+                  kind: event.target.value as 'client' | 'concept' | 'product' | 'experimental',
+                })
               }
               className="admin-input"
             >
-              <option value="client">Müşteri Projesi</option>
+              <option value="client">Müşteri Projesi (doğrulanmış)</option>
+              <option value="concept">Konsept Proje</option>
               <option value="product">Yoca Ürünü</option>
+              <option value="experimental">Deneysel</option>
             </select>
           </label>
           <label className="grid gap-1.5 text-[12px] font-bold text-subtle sm:col-span-2 lg:col-span-3">
@@ -268,6 +275,14 @@ export default function AdminWork() {
             <input
               value={editing.video_url ?? ''}
               onChange={(event) => setEditing({ ...editing, video_url: event.target.value })}
+              className="admin-input"
+            />
+          </label>
+          <label className="grid gap-1.5 text-[12px] font-bold text-subtle sm:col-span-2 lg:col-span-4">
+            Canlı proje linki (opsiyonel — vaka sayfasında "Canlı Görüntüle" butonu)
+            <input
+              value={editing.live_url ?? ''}
+              onChange={(event) => setEditing({ ...editing, live_url: event.target.value })}
               className="admin-input"
             />
           </label>

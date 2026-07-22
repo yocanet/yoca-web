@@ -14,6 +14,7 @@
   body {
     /* Editorial dark base — never flat #000 */
     @apply bg-surface-deep text-white antialiased;
+    overflow-x: clip;
   }
   ::selection {
     background: var(--yoca-lime);
@@ -50,6 +51,22 @@
   .eyebrow::before {
     content: '';
     @apply block h-2.5 w-2.5 flex-none bg-yoca-lime;
+  }
+  /* ── Soft-white editorial sections ─────────────────────────── */
+  .section-light {
+    background: #f4f4f1;
+    color: #050505;
+  }
+  .section-light .light-muted {
+    color: rgba(5, 5, 5, 0.62);
+  }
+  .section-light .light-subtle {
+    color: rgba(5, 5, 5, 0.48);
+  }
+  .light-card {
+    background: #ffffff;
+    border: 1px solid rgba(5, 5, 5, 0.14);
+    color: #050505;
   }
   /* Admin panel form controls */
   .admin-input {

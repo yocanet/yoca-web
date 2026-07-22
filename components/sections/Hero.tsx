@@ -2,13 +2,15 @@
 
 import Link from 'next/link';
 import { motion, useReducedMotion } from 'framer-motion';
-import HeroSymbol from '@/components/ui/HeroSymbol';
+import HeroSystemDiagram from '@/components/ui/HeroSystemDiagram';
+import MovingIndex from '@/components/ui/MovingIndex';
 import type { Dict } from '@/lib/i18n';
 
 /**
  * Yoca — homepage hero.
- * Two-column editorial layout: staggered copy on the start side, the
- * interactive fragmented-Y motion system on the end side.
+ * Two-column editorial layout: staggered copy on the start side, the living
+ * system diagram (Brand → Identity → Experience → Growth → Scale) on the end
+ * side. The bottom index line highlights each word in Electric Lime in turn.
  * CTA hierarchy: Start a Project (solid lime, → contact) is primary;
  * the free Digital Check-Up (border) is the secondary lead magnet.
  */
@@ -69,16 +71,13 @@ export default function Hero({ t, base }: HeroProps) {
               {t.secondaryCta}
             </Link>
           </motion.div>
-          <motion.p
-            {...item(0.4)}
-            className="mt-11 text-[13px] font-bold uppercase tracking-[0.16em] text-subtle"
-          >
-            {t.line}
-          </motion.p>
+          <motion.div {...item(0.4)} className="mt-11">
+            <MovingIndex line={t.line} />
+          </motion.div>
         </div>
 
         <motion.div {...item(0.25)} className="max-lg:hidden">
-          <HeroSymbol />
+          <HeroSystemDiagram />
         </motion.div>
       </div>
     </section>

@@ -4,6 +4,7 @@ import { useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import type { CheckupPayload, Locale } from '@/types';
 import type { Dict } from '@/lib/i18n';
+import { DUR, EASE_YOCA } from '@/lib/motion';
 
 /**
  * Yoca — Digital Marketing Check-Up Wizard.
@@ -169,7 +170,7 @@ export default function CheckUpWizard({ locale, t }: CheckUpWizardProps) {
         <motion.div
           initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: [0.22, 0.8, 0.3, 1] }}
+          transition={{ duration: DUR.reveal, ease: EASE_YOCA }}
           className="glass rounded-md p-8 lg:p-12"
         >
           {/* Helper question — deliberately secondary; the page H1 leads. */}
@@ -213,7 +214,7 @@ export default function CheckUpWizard({ locale, t }: CheckUpWizardProps) {
             }}
             className="btn-primary mt-8 px-8 py-4 text-base"
           >
-            {t.introStart} →
+            {t.introStart} <span aria-hidden="true" className="icon-arrow">→</span>
           </button>
         </motion.div>
       </div>
@@ -260,7 +261,7 @@ export default function CheckUpWizard({ locale, t }: CheckUpWizardProps) {
                   className="h-full rounded-full"
                   style={{ background: 'linear-gradient(90deg, #40C401, #A2FF00)' }}
                   animate={{ width: `${Math.round(fill * 100)}%` }}
-                  transition={{ duration: prefersReducedMotion ? 0 : 0.35 }}
+                  transition={{ duration: prefersReducedMotion ? 0 : DUR.ui, ease: EASE_YOCA }}
                 />
               </div>
             );
@@ -287,7 +288,7 @@ export default function CheckUpWizard({ locale, t }: CheckUpWizardProps) {
               initial="enter"
               animate="center"
               exit="exit"
-              transition={{ duration: prefersReducedMotion ? 0 : 0.3, ease: [0.22, 0.8, 0.3, 1] }}
+              transition={{ duration: prefersReducedMotion ? 0 : DUR.ui, ease: EASE_YOCA }}
               className="border-0 p-0"
             >
               <legend className="mb-6 text-xl font-extrabold leading-snug tracking-tight sm:text-2xl">
@@ -335,7 +336,7 @@ export default function CheckUpWizard({ locale, t }: CheckUpWizardProps) {
               initial="enter"
               animate="center"
               exit="exit"
-              transition={{ duration: prefersReducedMotion ? 0 : 0.3, ease: [0.22, 0.8, 0.3, 1] }}
+              transition={{ duration: prefersReducedMotion ? 0 : DUR.ui, ease: EASE_YOCA }}
               className="border-0 p-0"
             >
               <legend className="mb-2 text-xl font-extrabold leading-snug tracking-tight sm:text-2xl">

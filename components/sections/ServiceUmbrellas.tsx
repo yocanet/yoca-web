@@ -132,7 +132,7 @@ export default function ServiceUmbrellas({ t, serviceNames, base }: ServiceUmbre
                         {serviceNames[serviceIndex]}
                         <span
                           aria-hidden="true"
-                          className="inline-block transition-transform duration-200 group-hover/link:translate-x-1 rtl:rotate-180 rtl:group-hover/link:-translate-x-1"
+                          className="icon-arrow"
                         >
                           →
                         </span>

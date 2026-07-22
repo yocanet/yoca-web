@@ -47,7 +47,7 @@ export default function ServicesGrid({ t, ctaLabel, base }: ServicesGridProps) {
               </p>
               <span className="absolute bottom-4 start-6 inline-flex items-center gap-1.5 text-[12px] font-bold uppercase tracking-[0.1em] text-subtle transition-colors duration-300 group-hover:text-yoca-lime">
                 {t.explore}
-                <span aria-hidden="true" className="inline-block transition-transform duration-300 group-hover:translate-x-1 rtl:rotate-180 rtl:group-hover:-translate-x-1">
+                <span aria-hidden="true" className="icon-arrow">
                   →
                 </span>
               </span>

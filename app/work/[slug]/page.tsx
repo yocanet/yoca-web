@@ -264,7 +264,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
             {prev ? (
               <Link href={`${base}/work/${prev.slug}`} className="group grid gap-1">
                 <span className="text-[12px] font-bold uppercase tracking-[0.1em] text-subtle">
-                  ← {t.work.backToWork}
+                  <span aria-hidden="true" className="inline-block rtl:rotate-180">←</span> {t.work.backToWork}
                 </span>
                 <span className="text-lg font-extrabold transition-colors group-hover:text-yoca-lime">
                   {prev.name}
@@ -289,12 +289,12 @@ export default async function CaseStudyPage({ params }: PageProps) {
                   width={1400}
                   height={470}
                   loading="lazy"
-                  className="h-full w-full object-cover opacity-60 transition-all duration-500 ease-out group-hover:scale-[1.03] group-hover:opacity-90"
+                  className="h-full w-full object-cover opacity-60 transition-all duration-700 ease-out group-hover:scale-[1.03] group-hover:opacity-90"
                 />
                 <span className="absolute inset-0 bg-gradient-to-t from-surface-deep/90 via-surface-deep/30 to-transparent" />
                 <span className="absolute bottom-6 start-6">
                   <span className="block text-[12px] font-bold uppercase tracking-[0.1em] text-yoca-lime">
-                    {t.work.allWork} →
+                    {t.work.allWork} <span aria-hidden="true" className="icon-arrow">→</span>
                   </span>
                   <span className="mt-1 block text-2xl font-extrabold tracking-tight sm:text-3xl">
                     {next.name}

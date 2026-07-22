@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import LanguageSwitcher from '@/components/ui/LanguageSwitcher';
 import type { Locale, MenuItem } from '@/types';
+import { DUR, EASE_YOCA, STAGGER } from '@/lib/motion';
 
 /**
  * Yoca — mobile slide-over menu (Client Component).
@@ -64,7 +65,7 @@ export default function MobileMenu({ items, cta, secondaryCta, locale, path, lan
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
+            transition={{ duration: DUR.micro, ease: EASE_YOCA }}
             className="fixed inset-0 z-[110] bg-surface-deep/95 backdrop-blur-xl"
           >
             <motion.nav
@@ -72,7 +73,7 @@ export default function MobileMenu({ items, cta, secondaryCta, locale, path, lan
               initial={{ y: 16, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: 16, opacity: 0 }}
-              transition={{ duration: 0.25, ease: 'easeOut' }}
+              transition={{ duration: DUR.ui, ease: EASE_YOCA }}
               className="flex h-full flex-col justify-between px-6 pb-10 pt-24"
             >
               <ul className="grid gap-1">
@@ -81,7 +82,7 @@ export default function MobileMenu({ items, cta, secondaryCta, locale, path, lan
                     key={item.url + item.title}
                     initial={{ opacity: 0, x: -12 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.06 + index * 0.05, duration: 0.25 }}
+                    transition={{ delay: 0.06 + index * STAGGER * 0.6, duration: DUR.ui, ease: EASE_YOCA }}
                   >
                     {item.external ? (
                       <a

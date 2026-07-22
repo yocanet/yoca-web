@@ -75,7 +75,7 @@ export default async function SiteFooter({ t }: SiteFooterProps) {
                 {t.footer.gatewayProject}
               </p>
               <span className="text-xl font-extrabold tracking-tight">
-                {t.footer.hookCta} →
+                {t.footer.hookCta} <span aria-hidden="true" className="icon-arrow">→</span>
               </span>
             </Link>
             {/* 02 — Secondary */}
@@ -86,7 +86,7 @@ export default async function SiteFooter({ t }: SiteFooterProps) {
               <p className="text-[14px] leading-relaxed text-muted">{t.footer.gatewayCheckup}</p>
               <span className="flex items-center gap-2.5 text-xl font-extrabold tracking-tight text-soft transition-colors group-hover:text-yoca-lime">
                 <span aria-hidden="true" className="block h-2.5 w-2.5 flex-none bg-yoca-lime" />
-                {t.nav.checkup} →
+                {t.nav.checkup} <span aria-hidden="true" className="icon-arrow">→</span>
               </span>
             </Link>
             {/* 03 — Tertiary */}
@@ -96,7 +96,7 @@ export default async function SiteFooter({ t }: SiteFooterProps) {
             >
               <p className="text-[14px] leading-relaxed text-subtle">{t.footer.gatewayProducts}</p>
               <span className="text-xl font-extrabold tracking-tight text-muted transition-colors group-hover:text-white">
-                {t.footer.exploreProducts} →
+                {t.footer.exploreProducts} <span aria-hidden="true" className="icon-arrow">→</span>
               </span>
             </Link>
           </div>

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import type { CaseStudy } from '@/lib/workData';
+import { DUR, EASE_YOCA } from '@/lib/motion';
 
 /**
  * Yoca — editorial Work grid (soft-white section).
@@ -115,7 +116,7 @@ export default function WorkGrid({ studies, base, labels }: WorkGridProps) {
                   initial={{ opacity: 0, y: 18 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.97 }}
-                  transition={{ duration: 0.3 }}
+                  transition={{ duration: DUR.ui, ease: EASE_YOCA }}
                   className={slot.span}
                 >
                   <Link
@@ -134,7 +135,7 @@ export default function WorkGrid({ studies, base, labels }: WorkGridProps) {
                         width={featured ? 1400 : 880}
                         height={featured ? 600 : 560}
                         loading={featured ? 'eager' : 'lazy'}
-                        className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.035]"
+                        className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                       />
                       {study.videoUrl && hovered === study.slug && (
                         <video
@@ -184,7 +185,7 @@ export default function WorkGrid({ studies, base, labels }: WorkGridProps) {
                       {labels.viewCase}
                       <span
                         aria-hidden="true"
-                        className="inline-block transition-transform duration-300 group-hover:translate-x-1 rtl:rotate-180 rtl:group-hover:-translate-x-1"
+                        className="icon-arrow"
                       >
                         →
                       </span>

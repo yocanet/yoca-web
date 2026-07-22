@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { EASE_YOCA } from '@/lib/motion';
 
 /**
  * Yoca — scroll-activated manifesto.
@@ -17,7 +18,7 @@ export default function Manifesto({ lines }: { lines: string[] }) {
           initial={{ opacity: 0.18, x: -14 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: false, margin: '-30% 0px -30% 0px' }}
-          transition={{ duration: 0.5, delay: index * 0.05, ease: [0.21, 0.6, 0.35, 1] }}
+          transition={{ duration: 0.5, delay: index * 0.05, ease: EASE_YOCA }}
           className="text-3xl font-extrabold leading-[1.15] tracking-tight text-soft sm:text-5xl lg:text-6xl"
         >
           {line}

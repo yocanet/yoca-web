@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import type { Dict } from '@/lib/i18n';
+import { EASE_YOCA } from '@/lib/motion';
 
 /**
  * Yoca — the three systems on a soft-white editorial break.
@@ -234,7 +235,7 @@ export default function SystemPillars({ t, base }: SystemPillarsProps) {
                 initial={{ opacity: 0, y: 26 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-60px' }}
-                transition={{ duration: 0.55, delay: index * 0.1, ease: [0.21, 0.6, 0.35, 1] }}
+                transition={{ duration: 0.55, delay: index * 0.1, ease: EASE_YOCA }}
               >
                 <Link
                   href={`${base}/services#${GROUP_ANCHORS[index] ?? ''}`}

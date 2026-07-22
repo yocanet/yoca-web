@@ -2,27 +2,43 @@
 
 import { motion } from 'framer-motion';
 import type { ReactNode } from 'react';
+import { DUR, EASE_YOCA, RISE, VIEWPORT_ONCE } from '@/lib/motion';
 
 /**
- * Yoca — scroll-reveal wrapper.
- * Fades and rises content into view the first time it enters the viewport.
- * Honors reduced-motion preferences via framer-motion's built-in handling.
+ * Yoca — shared scroll reveal (the ONLY entry animation primitive).
+ * mode="rise" (default): fade + modular upward shift.
+ * mode="mask": geometric wipe — content emerges from structure.
+ * All timing/easing comes from lib/motion.ts.
  */
 
 interface RevealProps {
   children: ReactNode;
-  /** Extra delay in seconds (for staggering siblings). */
+  /** Extra delay in seconds (use multiples of STAGGER for siblings). */
   delay?: number;
+  mode?: 'rise' | 'mask';
   className?: string;
 }
 
-export default function Reveal({ children, delay = 0, className }: RevealProps) {
+export default function Reveal({ children, delay = 0, mode = 'rise', className }: RevealProps) {
+  if (mode === 'mask') {
+    return (
+      <motion.div
+        initial={{ clipPath: 'inset(0 100% 0 0)', opacity: 0.4 }}
+        whileInView={{ clipPath: 'inset(0 0% 0 0)', opacity: 1 }}
+        viewport={VIEWPORT_ONCE}
+        transition={{ duration: DUR.slow, delay, ease: EASE_YOCA }}
+        className={className}
+      >
+        {children}
+      </motion.div>
+    );
+  }
   return (
     <motion.div
-      initial={{ opacity: 0, y: 24 }}
+      initial={{ opacity: 0, y: RISE }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-80px' }}
-      transition={{ duration: 0.55, delay, ease: [0.21, 0.6, 0.35, 1] }}
+      viewport={VIEWPORT_ONCE}
+      transition={{ duration: DUR.reveal, delay, ease: EASE_YOCA }}
       className={className}
     >
       {children}

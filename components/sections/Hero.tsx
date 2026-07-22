@@ -5,6 +5,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 import HeroSystemDiagram from '@/components/ui/HeroSystemDiagram';
 import MovingIndex from '@/components/ui/MovingIndex';
 import type { Dict } from '@/lib/i18n';
+import { DUR, EASE_YOCA } from '@/lib/motion';
 
 /**
  * Yoca — homepage hero.
@@ -67,7 +68,7 @@ export default function Hero({ t, base }: HeroProps) {
   const item = (delay: number) => ({
     initial: { opacity: prefersReducedMotion ? 1 : 0, y: prefersReducedMotion ? 0 : 22 },
     animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.7, delay, ease: [0.22, 0.8, 0.3, 1] as const },
+    transition: { duration: DUR.slow, delay, ease: EASE_YOCA },
   });
 
   return (

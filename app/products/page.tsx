@@ -208,7 +208,7 @@ export default async function ProductsPage() {
                         className="mt-6 inline-flex min-h-12 w-fit items-center gap-2 rounded-full border border-line px-6 py-2.5 text-[14px] font-bold text-soft transition-colors hover:border-yoca-green/60 hover:text-yoca-green"
                       >
                         {p.overviewCta}
-                        <span aria-hidden="true" className="rtl:rotate-180">→</span>
+                        <span aria-hidden="true" className="icon-arrow">→</span>
                       </Link>
                     )}
                   </article>

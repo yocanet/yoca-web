@@ -1,6 +1,7 @@
 'use client';
 
 import { motion, useReducedMotion } from 'framer-motion';
+import { DUR, EASE_YOCA } from '@/lib/motion';
 
 /**
  * Yoca — page transition (App Router template).
@@ -16,7 +17,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3, ease: [0.22, 0.8, 0.3, 1] }}
+      transition={{ duration: DUR.ui, ease: EASE_YOCA }}
     >
       {children}
     </motion.div>

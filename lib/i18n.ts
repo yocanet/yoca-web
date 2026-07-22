@@ -47,6 +47,7 @@ export interface Dict {
     statusSoon: string;
     statusExp: string;
     liveDemo: string;
+    overviewCta: string;
     items: Array<{
       key: string;
       name: string;
@@ -255,7 +256,8 @@ const en: Dict = {
     process: [
       { name: 'Understand', desc: 'We map your market, audience and current setup — decisions start from evidence, not assumptions.' },
       { name: 'Define', desc: 'Together we agree on the change that matters most and the clearest route to it.' },
-      { name: 'Build', desc: 'Strategy, design and engineering work side by side — from first prototype to production launch — in short, reviewable cycles.' },
+      { name: 'Build', desc: 'Strategy, design and engineering work side by side in short, reviewable cycles.' },
+      { name: 'Launch', desc: 'Nothing ships by accident: staging review, content checks and a clean production release.' },
       { name: 'Grow', desc: 'We measure, report openly and keep optimising what the data proves is working.' },
     ],
     tabs: { problem: 'The problem it solves', deliverables: 'Deliverables', stack: 'Tech stack', changes: 'What changes' },
@@ -269,7 +271,7 @@ const en: Dict = {
         problem: 'The brand is invisible or interchangeable: unclear positioning, an inconsistent identity and creative work that fails to earn attention.',
         deliverables: ['Positioning & brand architecture', 'Naming & verbal identity', 'Visual identity systems', 'Campaign concepts & art direction', 'Social content systems', 'Ad creatives & motion'],
         stack: ['Figma', 'Adobe Creative Cloud', 'Notion', 'Frontify'],
-        changes: 'You become impossible to confuse with competitors.',
+        changes: 'A clearer market position, a more recognisable identity and a consistent creative foundation.',
       },
       {
         key: 'growth',
@@ -279,7 +281,7 @@ const en: Dict = {
         problem: 'Traffic without conversion, ads without tracking — a website that looks fine but does not sell, and no single number that tells the truth.',
         deliverables: ['UX architecture & conversion-focused websites', 'E-commerce experiences', 'Google / Meta / TikTok campaigns', 'Tracking, analytics & attribution', 'SEO & content strategy', 'CRO & landing page optimisation'],
         stack: ['Next.js', 'GA4', 'Google Tag Manager', 'Meta CAPI', 'Semrush', 'Hotjar'],
-        changes: 'Every unit of spend gets a job, a number and a verdict.',
+        changes: 'A more measurable path from attention to action, with clearer journeys and stronger optimisation signals.',
       },
       {
         key: 'scale',
@@ -289,7 +291,7 @@ const en: Dict = {
         problem: 'Operations drown in repetition and good ideas never ship: no MVP discipline, no automation, no product ecosystem.',
         deliverables: ['Workflow automation', 'AI-assisted content pipelines', 'Chat & support assistants', 'Idea validation & MVP development', 'Product iteration & analytics', 'Launch & growth support'],
         stack: ['Supabase', 'Vercel', 'OpenAI API', 'Zapier / Make', 'Cloudflare'],
-        changes: 'The business grows without growing its chaos.',
+        changes: 'A more scalable operating model with fewer repetitive tasks and a stronger digital product foundation.',
       },
     ],
   },
@@ -303,6 +305,7 @@ const en: Dict = {
     statusSoon: 'In Development',
     statusExp: 'Experimental',
     liveDemo: 'Live Demo',
+    overviewCta: 'View Product Overview',
     items: [
       {
         key: 'yocaserve',
@@ -320,7 +323,7 @@ const en: Dict = {
         desc: 'A football arcade hub where fans build squads, solve daily football challenges and compete through interactive game modes.',
         status: 'soon',
         cta: 'Explore WonKick',
-        capabilities: ['Daily Challenges', 'Squad Builder', 'Interactive Challenges'],
+        capabilities: ['Daily Challenges', 'Squad Builder', 'Interactive Game Modes'],
       },
       {
         key: 'demo-hub',
@@ -362,14 +365,14 @@ const en: Dict = {
     ],
     manifesto: ['Think clearly.', 'Build deliberately.', 'Measure honestly.', 'Improve continuously.'],
     stackTitle: 'The tools change. The system stays connected.',
-    stackSub: 'We select the right tools for each project, then connect them through a clear measurement and operating model.',
+    stackSub: 'The platform mix may change from project to project. What stays consistent is the way strategy, execution and measurement connect.',
   },
   work: {
     metaTitle: 'Selected Work — Brands and Digital Experiences | Yoca',
     metaDescription: 'Selected brands, websites, platforms and digital experiences created by Yoca across different sectors and markets.',
     eyebrow: 'Selected Work',
     heading: 'Different challenges. Clear decisions. Work designed to move.',
-    sub: 'Explore selected brands, websites, platforms and digital experiences created across different sectors and markets.',
+    sub: 'Selected concepts created to explore how strategy, identity and digital experience can work together across different sectors.',
     sector: 'Sector',
     market: 'Market',
     year: 'Year',
@@ -487,7 +490,7 @@ const en: Dict = {
       { name: 'Build', tools: ['Next.js', 'Vercel', 'Supabase', 'Cloudflare'] },
     ],
   },
-  clocks: { heading: 'Working across markets and time zones.', sub: 'Based in Türkiye. Connected to projects across Europe, the Caucasus, MENA and beyond.', active: 'Actively working for our clients right now.', istanbul: 'Istanbul', baku: 'Baku', london: 'London', dubai: 'Dubai' },
+  clocks: { heading: 'Working across markets and time zones.', sub: 'Based in Türkiye. Connected to projects across Europe, the Caucasus, MENA and beyond.', active: 'Current local times across our working regions.', istanbul: 'Istanbul', baku: 'Baku', london: 'London', dubai: 'Dubai' },
   team: {
     heading: 'The people behind the system.',
     sub: 'A compact senior team — strategy, creative, engineering and growth working side by side, without layers.',
@@ -527,7 +530,7 @@ const en: Dict = {
       { key: 'business', label: 'Business' },
       { key: 'website', label: 'Website' },
       { key: 'marketing', label: 'Marketing' },
-      { key: 'content', label: 'Content & SEO' },
+      { key: 'brand', label: 'Brand' },
       { key: 'measurement', label: 'Measurement' },
       { key: 'goals', label: 'Goals' },
     ],
@@ -602,7 +605,8 @@ const tr: Dict = {
     process: [
       { name: 'Anla', desc: 'Pazarınızı, hedef kitlenizi ve mevcut yapınızı haritalarız — kararlar varsayımdan değil, veriden başlar.' },
       { name: 'Tanımla', desc: 'En kritik değişimi ve ona giden en net rotayı birlikte belirleriz.' },
-      { name: 'İnşa Et', desc: 'Strateji, tasarım ve yazılım; ilk prototipten canlı yayına kadar kısa, incelenebilir döngülerle yan yana çalışır.' },
+      { name: 'İnşa Et', desc: 'Strateji, tasarım ve yazılım; kısa ve incelenebilir döngülerle yan yana çalışır.' },
+      { name: 'Yayına Al', desc: 'Hiçbir şey tesadüfen yayına çıkmaz: Ön izleme incelemesi, içerik kontrolleri ve temiz bir canlıya alma.' },
       { name: 'Büyüt', desc: 'Ölçer, şeffaf raporlar ve verinin işe yaradığını kanıtladığı noktaları optimize etmeye devam ederiz.' },
     ],
     tabs: { problem: 'Hangi problemi çözer?', deliverables: 'Neler teslim edilir?', stack: 'Teknoloji altyapısı', changes: 'Ne değişir?' },
@@ -616,7 +620,7 @@ const tr: Dict = {
         problem: 'Marka görünmez veya sıradan: Belirsiz konumlandırma, tutarsız kimlik ve dikkat kazanamayan kreatif işler.',
         deliverables: ['Konumlandırma ve marka mimarisi', 'İsimlendirme ve marka dili', 'Görsel kimlik sistemleri', 'Kampanya konseptleri ve sanat yönetimi', 'Sosyal medya içerik sistemleri', 'Reklam kreatifleri ve motion'],
         stack: ['Figma', 'Adobe Creative Cloud', 'Notion', 'Frontify'],
-        changes: 'Rakiplerinizle karıştırılmanız imkânsız hâle gelir.',
+        changes: 'Daha net bir pazar konumu, daha tanınır bir kimlik ve tutarlı bir yaratıcı temel.',
       },
       {
         key: 'growth',
@@ -626,7 +630,7 @@ const tr: Dict = {
         problem: 'Dönüşümsüz trafik, takipsiz reklam — güzel görünen ama satmayan bir site ve gerçeği söyleyen tek bir metrik bile yok.',
         deliverables: ['UX mimarisi ve dönüşüm odaklı siteler', 'E-ticaret deneyimleri', 'Google / Meta / TikTok kampanyaları', 'Takip, analitik ve atıflama', 'SEO ve içerik stratejisi', 'CRO ve açılış sayfası optimizasyonu'],
         stack: ['Next.js', 'GA4', 'Google Tag Manager', 'Meta CAPI', 'Semrush', 'Hotjar'],
-        changes: 'Harcanan her kuruşun bir görevi, bir sayısı ve bir hükmü olur.',
+        changes: 'Dikkatten aksiyona daha ölçülebilir bir yol; daha net yolculuklar ve daha güçlü optimizasyon sinyalleri.',
       },
       {
         key: 'scale',
@@ -636,7 +640,7 @@ const tr: Dict = {
         problem: 'Operasyon tekrarda boğuluyor, iyi fikirler asla yayına çıkmıyor: MVP disiplini yok, otomasyon yok, ürün ekosistemi yok.',
         deliverables: ['İş akışı otomasyonu', 'Yapay zekâ destekli içerik süreçleri', 'Sohbet ve destek asistanları', 'Fikir doğrulama ve MVP geliştirme', 'Ürün iterasyonu ve analitik', 'Lansman ve büyüme desteği'],
         stack: ['Supabase', 'Vercel', 'OpenAI API', 'Zapier / Make', 'Cloudflare'],
-        changes: 'İşletme, kaosu büyümeden büyür.',
+        changes: 'Daha az tekrarlayan iş ve daha güçlü bir dijital ürün temeliyle daha ölçeklenebilir bir işletim modeli.',
       },
     ],
   },
@@ -650,6 +654,7 @@ const tr: Dict = {
     statusSoon: 'Geliştiriliyor',
     statusExp: 'Deneysel',
     liveDemo: 'Canlı Demo',
+    overviewCta: 'Ürün Özetini Gör',
     items: [
       {
         key: 'yocaserve',
@@ -667,7 +672,7 @@ const tr: Dict = {
         desc: 'Futbolseverlerin kadro kurduğu, günlük futbol görevlerini çözdüğü ve interaktif oyun modlarında yarıştığı bir futbol arcade merkezi.',
         status: 'soon',
         cta: 'WonKick’i Keşfet',
-        capabilities: ['Günlük Görevler', 'Kadro Kurucu', 'İnteraktif Görevler'],
+        capabilities: ['Günlük Görevler', 'Kadro Kurucu', 'İnteraktif Oyun Modları'],
       },
       {
         key: 'demo-hub',
@@ -709,14 +714,14 @@ const tr: Dict = {
     ],
     manifesto: ['Net düşün.', 'Bilinçli inşa et.', 'Dürüstçe ölç.', 'Sürekli geliştir.'],
     stackTitle: 'Araçlar değişir. Sistem bağlı kalır.',
-    stackSub: 'Her proje için doğru araçları seçer, sonra bunları net bir ölçüm ve işletim modeliyle birbirine bağlarız.',
+    stackSub: 'Platform karması projeden projeye değişebilir. Değişmeyen şey; strateji, uygulama ve ölçümün birbirine bağlanma biçimidir.',
   },
   work: {
     metaTitle: 'Seçili Projeler — Markalar ve Dijital Deneyimler | Yoca',
     metaDescription: 'Yoca tarafından farklı sektörler ve pazarlar için geliştirilen seçili markalar, internet siteleri, platformlar ve dijital deneyimler.',
     eyebrow: 'Seçili Projeler',
     heading: 'Farklı ihtiyaçlar. Net kararlar. Harekete geçiren işler.',
-    sub: 'Farklı sektörler ve pazarlar için geliştirilen seçili markaları, internet sitelerini, platformları ve dijital deneyimleri inceleyin.',
+    sub: 'Strateji, kimlik ve dijital deneyimin farklı sektörlerde birlikte nasıl çalışabileceğini keşfetmek için üretilmiş seçili konseptler.',
     sector: 'Sektör',
     market: 'Pazar',
     year: 'Yıl',
@@ -834,7 +839,7 @@ const tr: Dict = {
       { name: 'İnşa Et', tools: ['Next.js', 'Vercel', 'Supabase', 'Cloudflare'] },
     ],
   },
-  clocks: { heading: 'Farklı pazarlar ve saat dilimlerinde çalışıyoruz.', sub: 'Türkiye merkezli; Avrupa, Kafkasya, MENA ve ötesindeki projelere bağlıyız.', active: 'Şu an müşterilerimiz için aktif çalışıyoruz.', istanbul: 'İstanbul', baku: 'Bakü', london: 'Londra', dubai: 'Dubai' },
+  clocks: { heading: 'Farklı pazarlar ve saat dilimlerinde çalışıyoruz.', sub: 'Türkiye merkezli; Avrupa, Kafkasya, MENA ve ötesindeki projelere bağlıyız.', active: 'Çalıştığımız bölgelerdeki güncel yerel saatler.', istanbul: 'İstanbul', baku: 'Bakü', london: 'Londra', dubai: 'Dubai' },
   team: {
     heading: 'Sistemin arkasındaki insanlar.',
     sub: 'Katmansız çalışan kompakt bir kıdemli ekip — strateji, kreatif, yazılım ve büyüme yan yana.',
@@ -874,7 +879,7 @@ const tr: Dict = {
       { key: 'business', label: 'İşletme' },
       { key: 'website', label: 'Web Sitesi' },
       { key: 'marketing', label: 'Pazarlama' },
-      { key: 'content', label: 'İçerik ve SEO' },
+      { key: 'brand', label: 'Marka' },
       { key: 'measurement', label: 'Ölçümleme' },
       { key: 'goals', label: 'Hedefler' },
     ],
@@ -949,7 +954,8 @@ const az: Dict = {
     process: [
       { name: 'Anla', desc: 'Bazarınızı, auditoriyanızı və mövcud quruluşunuzu xəritələyirik — qərarlar fərziyyədən deyil, faktlardan başlayır.' },
       { name: 'Müəyyən et', desc: 'Ən vacib dəyişikliyi və ona gedən ən aydın yolu birlikdə müəyyən edirik.' },
-      { name: 'Qur', desc: 'Strategiya, dizayn və proqramlaşdırma ilk prototipdən canlı buraxılışa qədər qısa, izlənə bilən dövrlərlə yan-yana işləyir.' },
+      { name: 'Qur', desc: 'Strategiya, dizayn və proqramlaşdırma qısa, izlənə bilən dövrlərlə yan-yana işləyir.' },
+      { name: 'Buraxılış', desc: 'Heç nə təsadüfən yayımlanmır: ilkin baxış, məzmun yoxlamaları və təmiz produksiya buraxılışı.' },
       { name: 'Böyüt', desc: 'Ölçürük, şəffaf hesabat veririk və datanın işlədiyini sübut etdiyi nöqtələri optimallaşdırmağa davam edirik.' },
     ],
     tabs: { problem: 'Hansı problemi həll edir?', deliverables: 'Nələr təhvil verilir?', stack: 'Texnologiya dəsti', changes: 'Nə dəyişir?' },
@@ -963,7 +969,7 @@ const az: Dict = {
         problem: 'Brend görünmür və ya adiləşib: qeyri-müəyyən mövqeləndirmə, ziddiyyətli kimlik və diqqət qazana bilməyən kreativ işlər.',
         deliverables: ['Mövqeləndirmə və brend arxitekturası', 'Adlandırma və verbal kimlik', 'Vizual kimlik sistemləri', 'Kampaniya konseptləri və art direksiya', 'Sosial media məzmun sistemləri', 'Reklam kreativləri və motion'],
         stack: ['Figma', 'Adobe Creative Cloud', 'Notion', 'Frontify'],
-        changes: 'Rəqiblərinizlə qarışdırılmağınız mümkünsüz olur.',
+        changes: 'Daha aydın bazar mövqeyi, daha tanınan kimlik və ardıcıl kreativ təməl.',
       },
       {
         key: 'growth',
@@ -973,7 +979,7 @@ const az: Dict = {
         problem: 'Konversiyasız trafik, izlənməyən reklamlar — yaxşı görünən, amma satmayan sayt və həqiqəti deyən heç bir göstərici yoxdur.',
         deliverables: ['UX arxitekturası və konversiya yönümlü saytlar', 'E-ticarət təcrübələri', 'Google / Meta / TikTok kampaniyaları', 'İzləmə, analitika və atribusiya', 'SEO və məzmun strategiyası', 'CRO və açılış səhifəsi optimizasiyası'],
         stack: ['Next.js', 'GA4', 'Google Tag Manager', 'Meta CAPI', 'Semrush', 'Hotjar'],
-        changes: 'Xərclənən hər manatın bir vəzifəsi, bir rəqəmi və bir nəticəsi olur.',
+        changes: 'Diqqətdən hərəkətə daha ölçülə bilən yol; daha aydın istifadəçi yolları və daha güclü optimizasiya siqnalları.',
       },
       {
         key: 'scale',
@@ -983,7 +989,7 @@ const az: Dict = {
         problem: 'Əməliyyatlar təkrarda boğulur, yaxşı ideyalar heç vaxt işə düşmür: MVP intizamı yox, avtomatlaşdırma yox, məhsul ekosistemi yox.',
         deliverables: ['İş axını avtomatlaşdırması', 'Sİ dəstəkli məzmun prosesləri', 'Söhbət və dəstək asistentləri', 'İdeyanın təsdiqi və MVP inkişafı', 'Məhsul iterasiyası və analitika', 'Buraxılış və inkişaf dəstəyi'],
         stack: ['Supabase', 'Vercel', 'OpenAI API', 'Zapier / Make', 'Cloudflare'],
-        changes: 'Biznes xaosu böyümədən böyüyür.',
+        changes: 'Daha az təkrarlanan iş və daha güclü rəqəmsal məhsul təməli ilə daha miqyaslana bilən idarəetmə modeli.',
       },
     ],
   },
@@ -997,6 +1003,7 @@ const az: Dict = {
     statusSoon: 'Hazırlanır',
     statusExp: 'Eksperimental',
     liveDemo: 'Canlı Demo',
+    overviewCta: 'Məhsul Xülasəsinə Bax',
     items: [
       {
         key: 'yocaserve',
@@ -1014,7 +1021,7 @@ const az: Dict = {
         desc: 'Futbol azarkeşlərinin heyət qurduğu, gündəlik futbol tapşırıqlarını həll etdiyi və interaktiv oyun rejimlərində yarışdığı futbol arcade mərkəzi.',
         status: 'soon',
         cta: 'WonKick-i Kəşf Et',
-        capabilities: ['Gündəlik Tapşırıqlar', 'Heyət Qurucusu', 'İnteraktiv Tapşırıqlar'],
+        capabilities: ['Gündəlik Tapşırıqlar', 'Heyət Qurucusu', 'İnteraktiv Oyun Rejimləri'],
       },
       {
         key: 'demo-hub',
@@ -1056,14 +1063,14 @@ const az: Dict = {
     ],
     manifesto: ['Aydın düşün.', 'Şüurlu qur.', 'Dürüst ölç.', 'Daim təkmilləşdir.'],
     stackTitle: 'Alətlər dəyişir. Sistem bağlı qalır.',
-    stackSub: 'Hər layihə üçün doğru alətləri seçir, sonra onları aydın ölçmə və idarəetmə modeli ilə birləşdiririk.',
+    stackSub: 'Platform tərkibi layihədən layihəyə dəyişə bilər. Dəyişməyən isə strategiya, icra və ölçmənin bir-birinə bağlanma tərzidir.',
   },
   work: {
     metaTitle: 'Seçilmiş Layihələr — Brendlər və Rəqəmsal Təcrübələr | Yoca',
     metaDescription: 'Yoca tərəfindən müxtəlif sektorlar və bazarlar üçün hazırlanmış seçilmiş brendlər, saytlar, platformalar və rəqəmsal təcrübələr.',
     eyebrow: 'Seçilmiş Layihələr',
     heading: 'Fərqli ehtiyaclar. Aydın qərarlar. Hərəkət yaradan işlər.',
-    sub: 'Müxtəlif sektorlar və bazarlar üçün hazırlanmış seçilmiş brendləri, saytları, platformaları və rəqəmsal təcrübələri kəşf edin.',
+    sub: 'Strategiya, kimlik və rəqəmsal təcrübənin müxtəlif sektorlarda birlikdə necə işləyə biləcəyini kəşf etmək üçün yaradılmış seçilmiş konseptlər.',
     sector: 'Sektor',
     market: 'Bazar',
     year: 'İl',
@@ -1181,7 +1188,7 @@ const az: Dict = {
       { name: 'Qur', tools: ['Next.js', 'Vercel', 'Supabase', 'Cloudflare'] },
     ],
   },
-  clocks: { heading: 'Müxtəlif bazarlar və saat qurşaqlarında işləyirik.', sub: 'Türkiyə mərkəzli; Avropa, Qafqaz, MENA və daha geniş coğrafiyadakı layihələrə bağlıyıq.', active: 'Hazırda müştərilərimiz üçün aktiv işləyirik.', istanbul: 'İstanbul', baku: 'Bakı', london: 'London', dubai: 'Dubay' },
+  clocks: { heading: 'Müxtəlif bazarlar və saat qurşaqlarında işləyirik.', sub: 'Türkiyə mərkəzli; Avropa, Qafqaz, MENA və daha geniş coğrafiyadakı layihələrə bağlıyıq.', active: 'İşlədiyimiz regionlarda cari yerli vaxtlar.', istanbul: 'İstanbul', baku: 'Bakı', london: 'London', dubai: 'Dubay' },
   team: {
     heading: 'Sistemin arxasındakı insanlar.',
     sub: 'Mərhələsiz işləyən yığcam təcrübəli komanda — strategiya, kreativ, proqramlaşdırma və inkişaf yan-yana.',
@@ -1221,7 +1228,7 @@ const az: Dict = {
       { key: 'business', label: 'Biznes' },
       { key: 'website', label: 'Veb sayt' },
       { key: 'marketing', label: 'Marketinq' },
-      { key: 'content', label: 'Məzmun və SEO' },
+      { key: 'brand', label: 'Brend' },
       { key: 'measurement', label: 'Ölçmə' },
       { key: 'goals', label: 'Hədəflər' },
     ],
@@ -1296,7 +1303,8 @@ const ar: Dict = {
     process: [
       { name: 'افهم', desc: 'نرسم خريطة سوقك وجمهورك وبنيتك الحالية — تبدأ القرارات من الأدلة لا الافتراضات.' },
       { name: 'حدد', desc: 'نتفق معًا على التغيير الأهم وأوضح طريق للوصول إليه.' },
-      { name: 'ابنِ', desc: 'تعمل الاستراتيجية والتصميم والهندسة جنبًا إلى جنب — من النموذج الأولي حتى الإطلاق الفعلي — في دورات قصيرة قابلة للمراجعة.' },
+      { name: 'ابنِ', desc: 'تعمل الاستراتيجية والتصميم والهندسة جنبًا إلى جنب في دورات قصيرة قابلة للمراجعة.' },
+      { name: 'أطلِق', desc: 'لا شيء يُنشر مصادفة: مراجعة تجريبية وفحوصات للمحتوى وإطلاق نظيف للإنتاج.' },
       { name: 'انمُ', desc: 'نقيس ونقدم تقارير مفتوحة ونواصل تحسين ما تثبت البيانات نجاحه.' },
     ],
     tabs: { problem: 'ما المشكلة التي يحلها؟', deliverables: 'المخرجات', stack: 'البنية التقنية', changes: 'ما الذي يتغير؟' },
@@ -1310,7 +1318,7 @@ const ar: Dict = {
         problem: 'العلامة غير مرئية أو قابلة للاستبدال: تموضع غامض، هوية غير متسقة، وأعمال إبداعية لا تكسب الانتباه.',
         deliverables: ['التموضع وبنية العلامة', 'التسمية والهوية اللفظية', 'أنظمة الهوية البصرية', 'مفاهيم الحملات والإدارة الفنية', 'أنظمة محتوى وسائل التواصل', 'الإبداعات الإعلانية والموشن'],
         stack: ['Figma', 'Adobe Creative Cloud', 'Notion', 'Frontify'],
-        changes: 'يصبح الخلط بينك وبين منافسيك مستحيلًا.',
+        changes: 'موقع سوقي أوضح، وهوية أكثر تميّزًا، وأساس إبداعي متسق.',
       },
       {
         key: 'growth',
@@ -1320,7 +1328,7 @@ const ar: Dict = {
         problem: 'زيارات بلا تحويل، إعلانات بلا تتبع — موقع يبدو جيدًا لكنه لا يبيع، ولا رقم واحد يقول الحقيقة.',
         deliverables: ['بنية UX ومواقع تركز على التحويل', 'تجارب التجارة الإلكترونية', 'حملات Google / Meta / TikTok', 'التتبع والتحليلات والإسناد', 'استراتيجية SEO والمحتوى', 'تحسين معدل التحويل وصفحات الهبوط'],
         stack: ['Next.js', 'GA4', 'Google Tag Manager', 'Meta CAPI', 'Semrush', 'Hotjar'],
-        changes: 'كل وحدة إنفاق تحصل على مهمة ورقم وحكم.',
+        changes: 'مسار أكثر قابلية للقياس من الانتباه إلى الفعل، مع رحلات أوضح وإشارات تحسين أقوى.',
       },
       {
         key: 'scale',
@@ -1330,7 +1338,7 @@ const ar: Dict = {
         problem: 'العمليات تغرق في التكرار والأفكار الجيدة لا ترى النور: لا انضباط MVP، لا أتمتة، لا نظام منتجات.',
         deliverables: ['أتمتة تدفقات العمل', 'خطوط محتوى مدعومة بالذكاء الاصطناعي', 'مساعدو الدردشة والدعم', 'التحقق من الفكرة وتطوير MVP', 'تكرار المنتج والتحليلات', 'دعم الإطلاق والنمو'],
         stack: ['Supabase', 'Vercel', 'OpenAI API', 'Zapier / Make', 'Cloudflare'],
-        changes: 'ينمو العمل دون أن تنمو فوضاه.',
+        changes: 'نموذج تشغيل أكثر قابلية للتوسع، بمهام متكررة أقل وأساس أقوى للمنتجات الرقمية.',
       },
     ],
   },
@@ -1344,6 +1352,7 @@ const ar: Dict = {
     statusSoon: 'قيد التطوير',
     statusExp: 'تجريبي',
     liveDemo: 'عرض مباشر',
+    overviewCta: 'عرض لمحة المنتج',
     items: [
       {
         key: 'yocaserve',
@@ -1361,7 +1370,7 @@ const ar: Dict = {
         desc: 'مركز ألعاب كروية تفاعلي يتيح للمشجعين بناء التشكيلات وحل تحديات كرة القدم اليومية والمنافسة عبر أنماط لعب متنوعة.',
         status: 'soon',
         cta: 'استكشف WonKick',
-        capabilities: ['تحديات يومية', 'بناء التشكيلات', 'تحديات تفاعلية'],
+        capabilities: ['تحديات يومية', 'بناء التشكيلات', 'أنماط لعب تفاعلية'],
       },
       {
         key: 'demo-hub',
@@ -1388,7 +1397,7 @@ const ar: Dict = {
     metaDescription: 'علامات ومواقع ومنصات وتجارب رقمية مختارة أنشأتها Yoca عبر قطاعات وأسواق مختلفة.',
     eyebrow: 'أعمال مختارة',
     heading: 'تحديات مختلفة. قرارات واضحة. أعمال صُممت لتُحرّك.',
-    sub: 'استكشف علامات ومواقع ومنصات وتجارب رقمية مختارة عبر قطاعات وأسواق مختلفة.',
+    sub: 'مفاهيم مختارة أُنشئت لاستكشاف كيف يمكن للاستراتيجية والهوية والتجربة الرقمية أن تعمل معًا عبر قطاعات مختلفة.',
     sector: 'القطاع',
     market: 'السوق',
     year: 'السنة',
@@ -1506,7 +1515,7 @@ const ar: Dict = {
       { name: 'ابنِ', tools: ['Next.js', 'Vercel', 'Supabase', 'Cloudflare'] },
     ],
   },
-  clocks: { heading: 'نعمل عبر أسواق ومناطق زمنية متعددة.', sub: 'مقرنا في تركيا، ومتصلون بمشاريع في أوروبا والقوقاز ومنطقة الشرق الأوسط وشمال أفريقيا وما بعدها.', active: 'نعمل الآن بنشاط من أجل عملائنا.', istanbul: 'إسطنبول', baku: 'باكو', london: 'لندن', dubai: 'دبي' },
+  clocks: { heading: 'نعمل عبر أسواق ومناطق زمنية متعددة.', sub: 'مقرنا في تركيا، ومتصلون بمشاريع في أوروبا والقوقاز ومنطقة الشرق الأوسط وشمال أفريقيا وما بعدها.', active: 'التوقيتات المحلية الحالية في مناطق عملنا.', istanbul: 'إسطنبول', baku: 'باكو', london: 'لندن', dubai: 'دبي' },
   team: {
     heading: 'الأشخاص خلف النظام.',
     sub: 'فريق صغير من الخبراء يعمل دون طبقات — الاستراتيجية والإبداع والهندسة والنمو جنبًا إلى جنب.',
@@ -1551,7 +1560,7 @@ const ar: Dict = {
     ],
     manifesto: ['فكّر بوضوح.', 'ابنِ بقصد.', 'قِس بصدق.', 'حسّن باستمرار.'],
     stackTitle: 'الأدوات تتغير. النظام يبقى مترابطًا.',
-    stackSub: 'نختار الأدوات المناسبة لكل مشروع، ثم نربطها عبر نموذج واضح للقياس والتشغيل.',
+    stackSub: 'قد يتغير مزيج المنصات من مشروع لآخر. ما يبقى ثابتًا هو طريقة ترابط الاستراتيجية والتنفيذ والقياس.',
   },
   checkup: {
     eyebrow: 'الفحص الرقمي',
@@ -1568,7 +1577,7 @@ const ar: Dict = {
       { key: 'business', label: 'العمل' },
       { key: 'website', label: 'الموقع' },
       { key: 'marketing', label: 'التسويق' },
-      { key: 'content', label: 'المحتوى وSEO' },
+      { key: 'brand', label: 'العلامة' },
       { key: 'measurement', label: 'القياس' },
       { key: 'goals', label: 'الأهداف' },
     ],

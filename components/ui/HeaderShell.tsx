@@ -27,7 +27,7 @@ export default function HeaderShell({ children }: { children: ReactNode }) {
       }`}
     >
       <div
-        className={`container-y flex items-center justify-between gap-4 transition-[height] duration-300 min-[1440px]:gap-8 ${
+        className={`container-y flex items-center justify-between gap-4 transition-[height] duration-300 min-[1280px]:gap-8 ${
           scrolled ? 'h-[62px]' : 'h-[72px]'
         }`}
       >

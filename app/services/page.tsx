@@ -84,7 +84,7 @@ export default async function ServicesPage() {
                 <p className="mt-4 text-[16px] leading-relaxed text-muted">{sp.processSub}</p>
               </div>
             </Reveal>
-            <ol className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            <ol className="grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
               {sp.process.map((step, index) => (
                 <Reveal key={step.name} delay={index * 0.08}>
                   <li className="relative h-full rounded-md border border-line bg-surface p-6">

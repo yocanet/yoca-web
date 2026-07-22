@@ -199,10 +199,9 @@ export default function ContactForm({
         </label>
         <input
           id="cf-website"
-          type="url"
+          type="text"
           maxLength={300}
           autoComplete="url"
-          placeholder="https://"
           value={form.website}
           onChange={(e) => setForm((f) => ({ ...f, website: e.target.value }))}
           className={inputClass}

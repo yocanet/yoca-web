@@ -6,9 +6,9 @@ import type { Dict } from '@/lib/i18n';
 
 /**
  * Yoca — site footer.
- * Giant closing hook ("Ready to Engineer Your Growth?") with a full-width
- * Electric Lime CTA, followed by a 4-column system breakdown
- * (Systems · Company · Products · Connect) and the oversized wordmark.
+ * Giant closing hook ("What should we build together next?") with a
+ * three-card action gateway (Start a Project · Digital Check-Up · Explore
+ * Yoca Products), a 4-column breakdown and the oversized wordmark.
  */
 
 interface SiteFooterProps {
@@ -37,7 +37,7 @@ export default async function SiteFooter({ t }: SiteFooterProps) {
   ];
   const productsCol = t.products.items.map((product) => ({
     title: product.name,
-    url: `${base}/products`,
+    url: `${base}/products#${product.key}`,
   }));
   // Connect column: external links from the CMS menu + brand contacts.
   const connectCol = (rows ?? [])

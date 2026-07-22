@@ -45,9 +45,12 @@ export default async function CheckupPage() {
         >
           <div className="container-y">
             <p className="eyebrow">{t.checkup.eyebrow}</p>
-            <h1 className="mt-5 max-w-[22ch] text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl">
-              {t.checkup.title}
+            <h1 className="mt-5 max-w-[26ch] text-4xl font-extrabold leading-[1.12] tracking-tight sm:text-5xl">
+              {t.checkup.introTitle}
             </h1>
+            <p className="mt-5 max-w-[62ch] text-[17px] leading-relaxed text-muted">
+              {t.checkup.introSub}
+            </p>
           </div>
         </section>
 

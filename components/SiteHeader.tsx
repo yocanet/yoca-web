@@ -16,8 +16,8 @@ import type { MenuItem } from '@/types';
  * - Home and Contact are NOT nav items (logo = home; Start a Project → contact).
  * - Digital Check-Up is a bordered utility action with a lime square icon —
  *   it never competes with the solid-lime primary CTA.
- * - Breakpoints: ≥1440 full · 1180–1439 compressed (nowrap, tighter gaps)
- *   · ≤1179 overlay menu.
+ * - Breakpoints: ≥1280 full · 1120–1279 compact (nowrap, tighter gaps)
+ *   · ≤1119 overlay menu.
  * - Active page: 2px lime underline under the current nav link.
  */
 
@@ -91,14 +91,14 @@ export default async function SiteHeader({ t, path = '/' }: SiteHeaderProps) {
         </Link>
 
         {/* Main nav — desktop only (≥1180px), never wraps */}
-        <nav aria-label="Main" className="hidden min-[1180px]:block">
-          <ul className="flex items-center gap-0.5 whitespace-nowrap min-[1440px]:gap-1.5">
+        <nav aria-label="Main" className="hidden min-[1120px]:block">
+          <ul className="flex items-center gap-0.5 whitespace-nowrap min-[1280px]:gap-1.5">
             {items.map((item) => (
               <li key={item.url + item.title}>
                 {item.external ? (
                   <a
                     href={item.url}
-                    className="inline-block whitespace-nowrap rounded-sm px-3 py-2 text-[14px] font-semibold text-muted transition-colors hover:text-white min-[1440px]:px-4"
+                    className="inline-block whitespace-nowrap rounded-sm px-3 py-2 text-[14px] font-semibold text-muted transition-colors hover:text-white min-[1280px]:px-4"
                     {...(item.url.startsWith('http')
                       ? { target: '_blank', rel: 'noopener noreferrer' }
                       : {})}
@@ -109,7 +109,7 @@ export default async function SiteHeader({ t, path = '/' }: SiteHeaderProps) {
                   <Link
                     href={item.url}
                     aria-current={isActive(item.logical) ? 'page' : undefined}
-                    className={`relative inline-block whitespace-nowrap rounded-sm px-3 py-2 text-[14px] font-semibold transition-colors min-[1440px]:px-4 ${
+                    className={`relative inline-block whitespace-nowrap rounded-sm px-3 py-2 text-[14px] font-semibold transition-colors min-[1280px]:px-4 ${
                       isActive(item.logical) ? 'text-white' : 'text-muted hover:text-white'
                     }`}
                   >
@@ -117,7 +117,7 @@ export default async function SiteHeader({ t, path = '/' }: SiteHeaderProps) {
                     {isActive(item.logical) && (
                       <span
                         aria-hidden="true"
-                        className="absolute inset-x-3 bottom-0 h-[2px] bg-yoca-lime min-[1440px]:inset-x-4"
+                        className="absolute inset-x-3 bottom-0 h-[2px] bg-yoca-lime min-[1280px]:inset-x-4"
                       />
                     )}
                   </Link>
@@ -128,13 +128,14 @@ export default async function SiteHeader({ t, path = '/' }: SiteHeaderProps) {
         </nav>
 
         {/* Utility action group */}
-        <div className="flex items-center gap-2.5 min-[1440px]:gap-4">
+        <div className="flex items-center gap-2.5 min-[1280px]:gap-4">
           <Link
             href={`${base}/checkup`}
-            className="hidden items-center gap-2 whitespace-nowrap rounded-sm border border-line bg-white/[0.02] px-3.5 py-2 text-[13px] font-bold text-soft transition-colors hover:border-yoca-lime/60 hover:text-yoca-lime min-[1180px]:inline-flex"
+            className="hidden items-center gap-2 whitespace-nowrap rounded-sm border border-line bg-white/[0.02] px-3 py-2 text-[13px] font-bold text-soft transition-colors hover:border-yoca-lime/60 hover:text-yoca-lime min-[1120px]:inline-flex min-[1280px]:px-3.5"
           >
             <span aria-hidden="true" className="block h-2 w-2 flex-none bg-yoca-lime" />
-            {t.nav.checkup}
+            <span className="hidden min-[1280px]:inline">{t.nav.checkup}</span>
+            <span className="sr-only min-[1280px]:hidden">{t.nav.checkup}</span>
           </Link>
           <div className="max-[359px]:hidden">
             <LanguageSwitcher
@@ -145,11 +146,11 @@ export default async function SiteHeader({ t, path = '/' }: SiteHeaderProps) {
           </div>
           <Link
             href={`${base}/contact`}
-            className="btn-primary hidden shrink-0 whitespace-nowrap !px-5 min-[1180px]:inline-flex min-[1440px]:!px-7"
+            className="btn-primary hidden shrink-0 whitespace-nowrap !px-5 min-[1120px]:inline-flex min-[1280px]:!px-7"
           >
             {t.hero.primaryCta}
           </Link>
-          <div className="min-[1180px]:hidden">
+          <div className="min-[1120px]:hidden">
             <MobileMenu
               items={overlayItems}
               cta={{ title: t.hero.primaryCta, url: `${base}/contact` }}

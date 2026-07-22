@@ -23,12 +23,12 @@ type Status = 'idle' | 'submitting' | 'success' | 'error';
 
 /** Question keys grouped into the six logical check-up sections (in flow order). */
 const SECTION_KEYS: string[][] = [
-  ['sector', 'audience', 'size'], // business
-  ['website', 'mobile', 'ecommerce'], // website
-  ['google_ads', 'meta_ads', 'other_channels'], // marketing
-  ['seo', 'content', 'social'], // content & SEO
-  ['analytics', 'crm'], // measurement
-  ['budget', 'goal'], // goals
+  ['sector', 'audience', 'size'], // 1 · Business
+  ['social', 'content'], // 2 · Brand (presence & content)
+  ['website', 'mobile', 'ecommerce'], // 3 · Website
+  ['google_ads', 'meta_ads', 'other_channels', 'seo'], // 4 · Marketing (incl. SEO)
+  ['analytics', 'crm'], // 5 · Measurement
+  ['budget', 'goal'], // 6 · Goals
 ];
 
 export default function CheckUpWizard({ locale, t }: CheckUpWizardProps) {
@@ -172,14 +172,11 @@ export default function CheckUpWizard({ locale, t }: CheckUpWizardProps) {
           transition={{ duration: 0.5, ease: [0.22, 0.8, 0.3, 1] }}
           className="glass rounded-md p-8 lg:p-12"
         >
-          <span className="inline-block rounded-sm border border-line px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.1em] text-yoca-lime">
-            {t.eyebrow}
-          </span>
-          <h2 className="mt-5 max-w-[24ch] text-2xl font-extrabold leading-snug tracking-tight sm:text-3xl">
-            {t.introTitle}
+          {/* Helper question — deliberately secondary; the page H1 leads. */}
+          <h2 className="max-w-[32ch] text-lg font-bold leading-snug text-soft sm:text-xl">
+            {t.title}
           </h2>
-          <p className="mt-4 max-w-[58ch] text-[16px] leading-relaxed text-muted">{t.introSub}</p>
-          <ul className="mt-7 grid gap-3">
+          <ul className="mt-6 grid gap-3">
             {t.introPoints.map((point) => (
               <li key={point} className="flex items-start gap-3 text-[15px] font-semibold text-soft">
                 <span
@@ -235,9 +232,17 @@ export default function CheckUpWizard({ locale, t }: CheckUpWizardProps) {
                   t.sections[sectionIndexOf(questions[step].key)]?.label ?? ''
                 }`}
           </span>
-          <span>
-            {t.step} {step + 1} {t.of} {totalSteps}
-          </span>
+          {/* Honest counter: answered questions, never "Step 1 of 17" */}
+          {Object.keys(answers).length > 0 && !isContactStep && (
+            <span>
+              {Object.keys(answers).length} / {questions.length}
+            </span>
+          )}
+          {isContactStep && (
+            <span>
+              {questions.length} / {questions.length}
+            </span>
+          )}
         </div>
         <div className="flex gap-1.5">
           {SECTION_KEYS.map((keys, sectionIndex) => {

@@ -146,7 +146,10 @@ export default async function ProductsPage() {
                 const variant = index === 0 || index === 3 ? 'md:col-span-2' : '';
                 return (
                 <Reveal key={product.key} delay={(index % 2) * 0.08}>
-                  <article className={`glass group flex h-full flex-col rounded-md p-7 transition-colors duration-300 hover:border-yoca-lime/40 lg:p-9 ${variant}`}>
+                  <article
+                    id={product.key}
+                    className={`glass group flex h-full scroll-mt-28 flex-col rounded-md p-7 transition-colors duration-300 hover:border-yoca-lime/40 lg:p-9 ${variant}`}
+                  >
                     <div className="flex items-start justify-between gap-4">
                       {LOGOS[product.key] ? (
                         <img
@@ -187,15 +190,26 @@ export default async function ProductsPage() {
                       ))}
                     </ul>
 
-                    {product.url && (
+                    {/* Product CTA — visually distinct from Work's "View Project":
+                        pill-shaped, green-bordered, product-labelled. External URL
+                        when live; internal overview anchor until then (no dead links). */}
+                    {product.url ? (
                       <a
                         href={product.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="btn-ghost mt-6 w-fit"
+                        className="mt-6 inline-flex min-h-12 w-fit items-center gap-2 rounded-full border border-yoca-green/60 px-6 py-2.5 text-[14px] font-bold text-yoca-green transition-colors hover:bg-yoca-green hover:text-black"
                       >
                         {product.cta} ↗
                       </a>
+                    ) : (
+                      <Link
+                        href={`${base}/products#${product.key}`}
+                        className="mt-6 inline-flex min-h-12 w-fit items-center gap-2 rounded-full border border-line px-6 py-2.5 text-[14px] font-bold text-soft transition-colors hover:border-yoca-green/60 hover:text-yoca-green"
+                      >
+                        {p.overviewCta}
+                        <span aria-hidden="true" className="rtl:rotate-180">→</span>
+                      </Link>
                     )}
                   </article>
                 </Reveal>

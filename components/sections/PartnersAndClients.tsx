@@ -38,9 +38,10 @@ export default function PartnersAndClients({
       {showClients && (
         <section className="relative z-[7] overflow-hidden py-14 lg:py-20" aria-label={t.clients.heading}>
           <div className="container-y">
-            <p className="mb-8 flex items-center gap-3 text-[13px] font-bold uppercase tracking-[0.14em] text-subtle after:h-px after:flex-1 after:bg-line">
+            <p className="flex items-center gap-3 text-[13px] font-bold uppercase tracking-[0.14em] text-subtle after:h-px after:flex-1 after:bg-line">
               {t.clients.heading}
             </p>
+            <p className="mb-8 mt-2 max-w-[64ch] text-[13px] text-subtle">{t.clients.sub}</p>
           </div>
           <div className="marquee-mask relative overflow-hidden">
             <div className="group flex w-max animate-marquee hover:[animation-play-state:paused] motion-reduce:w-full motion-reduce:animate-none motion-reduce:flex-wrap">

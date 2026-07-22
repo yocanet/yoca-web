@@ -11,6 +11,8 @@ import type { CityClock, Locale } from '@/types';
 
 interface LiveStatusProps {
   locale: Locale;
+  heading: string;
+  sub: string;
   activeLabel: string;
   cityLabels: { istanbul: string; baku: string; london: string; dubai: string };
 }
@@ -22,7 +24,7 @@ const CITIES: CityClock[] = [
   { key: 'dubai', label: 'Dubai', timeZone: 'Asia/Dubai' },
 ];
 
-export default function LiveStatus({ locale, activeLabel, cityLabels }: LiveStatusProps) {
+export default function LiveStatus({ locale, heading, sub, activeLabel, cityLabels }: LiveStatusProps) {
   // Initialize with the real time so no "--:--" flash appears; the server/client
   // minute difference is covered by suppressHydrationWarning on <time>.
   const [now, setNow] = useState<Date>(() => new Date());
@@ -50,8 +52,12 @@ export default function LiveStatus({ locale, activeLabel, cityLabels }: LiveStat
   }, [locale]);
 
   return (
-    <div className="relative z-[7] border-t border-line bg-surface py-4">
-      <div className="container-y flex flex-wrap items-center justify-between gap-x-8 gap-y-4 max-md:justify-center max-md:text-center">
+    <div className="relative z-[7] border-t border-line bg-surface py-10">
+      <div className="container-y mb-6">
+        <h2 className="text-xl font-extrabold tracking-tight sm:text-2xl">{heading}</h2>
+        <p className="mt-1.5 max-w-[64ch] text-[14px] text-muted">{sub}</p>
+      </div>
+      <div className="container-y flex flex-wrap items-center justify-between gap-x-8 gap-y-4 border-t border-line pt-5 max-md:justify-center max-md:text-center">
         <p className="flex items-center gap-2.5 text-[13px] font-semibold text-muted">
           <span className="relative inline-flex h-2.5 w-2.5 flex-none">
             <span className="absolute inset-0 rounded-full bg-yoca-green" />

@@ -144,19 +144,23 @@ export default async function AboutPage() {
               'radial-gradient(ellipse 50% 60% at 10% 100%, rgba(64,196,1,0.05), transparent 70%), #0D0E12',
           }}
         >
-          <div className="container-y">
-            <Reveal>
-              <div className="mb-12 max-w-2xl">
+          <div className="container-y grid gap-10 lg:grid-cols-[2fr_3fr] lg:gap-20">
+            {/* Sticky title (desktop only; plain flow on mobile) */}
+            <div className="lg:sticky lg:top-32 lg:self-start">
+              <Reveal>
                 <h2 className="text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl">
                   {a.valuesTitle}
                 </h2>
-                <p className="mt-4 text-[16px] leading-relaxed text-muted">{a.valuesSub}</p>
-              </div>
-            </Reveal>
-            <div className="grid gap-5 sm:grid-cols-2">
+                <p className="mt-4 max-w-[44ch] text-[16px] leading-relaxed text-muted">
+                  {a.valuesSub}
+                </p>
+              </Reveal>
+            </div>
+            {/* Flowing principles */}
+            <div className="grid content-start gap-5">
               {a.values.map((value, index) => (
-                <Reveal key={value.title} delay={index * 0.07}>
-                  <article className="glass group h-full rounded-md p-7 transition-colors duration-300 hover:border-yoca-lime/40 lg:p-9">
+                <Reveal key={value.title} delay={index * 0.06}>
+                  <article className="glass rounded-md p-7 transition-colors duration-300 hover:border-yoca-lime/40 lg:p-9">
                     <span className="text-[13px] font-extrabold tracking-[0.1em] text-yoca-lime">
                       {String(index + 1).padStart(2, '0')}
                     </span>

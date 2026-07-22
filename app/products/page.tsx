@@ -135,13 +135,18 @@ export default async function ProductsPage() {
           </div>
         </section>
 
-        {/* ── Product cards ─────────────────────────────────────── */}
+        {/* ── Product cards — each with its own scale & character ── */}
         <section className="relative z-[7] bg-surface py-16">
           <div className="container-y">
             <div className="grid gap-5 md:grid-cols-2">
-              {p.items.map((product, index) => (
+              {p.items.map((product, index) => {
+                // Layout variants: featured full-width / technical / vertical showcase / editorial strip
+                // 0: featured full-width · 1: technical grid card · 2: vertical
+                // showcase · 3: experimental editorial strip
+                const variant = index === 0 || index === 3 ? 'md:col-span-2' : '';
+                return (
                 <Reveal key={product.key} delay={(index % 2) * 0.08}>
-                  <article className="glass group flex h-full flex-col rounded-md p-7 transition-colors duration-300 hover:border-yoca-lime/40 lg:p-9">
+                  <article className={`glass group flex h-full flex-col rounded-md p-7 transition-colors duration-300 hover:border-yoca-lime/40 lg:p-9 ${variant}`}>
                     <div className="flex items-start justify-between gap-4">
                       {LOGOS[product.key] ? (
                         <img
@@ -166,7 +171,7 @@ export default async function ProductsPage() {
                     <p className="mt-4 text-[15px] leading-relaxed text-muted">{product.desc}</p>
 
                     {/* Product-specific visual motif */}
-                    <div className="mt-6" aria-hidden="true">
+                    <div className={index === 0 || index === 3 ? 'mt-6 [&_svg]:md:h-20' : 'mt-6'} aria-hidden="true">
                       <ProductMotif productKey={product.key} />
                     </div>
 
@@ -189,12 +194,13 @@ export default async function ProductsPage() {
                         rel="noopener noreferrer"
                         className="btn-ghost mt-6 w-fit"
                       >
-                        {p.liveDemo} ↗
+                        {product.cta} ↗
                       </a>
                     )}
                   </article>
                 </Reveal>
-              ))}
+                );
+              })}
             </div>
           </div>
         </section>

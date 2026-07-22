@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 import ContactForm from '@/components/ContactForm';
+import CopyEmail from '@/components/ui/CopyEmail';
 import { getDict } from '@/lib/i18n';
 import { getContent } from '@/lib/content';
 import { buildMetadata, breadcrumbSchema, getRequestContext, jsonLdString } from '@/lib/seo';
@@ -78,12 +79,7 @@ export default async function ContactPage() {
             />
             <aside className="glass grid justify-items-start gap-3 rounded-md p-7 lg:sticky lg:top-28">
               <h2 className="text-[17px] font-extrabold">{t.contact.direct}</h2>
-              <a
-                href="mailto:connect@yoca.net"
-                className="break-all text-[17px] font-bold text-yoca-lime transition-colors hover:text-yoca-green"
-              >
-                connect@yoca.net
-              </a>
+              <CopyEmail email="connect@yoca.net" />
               <a
                 href="https://instagram.com/thisisyoca"
                 target="_blank"

@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import type { Dict } from '@/lib/i18n';
 
@@ -22,7 +23,12 @@ interface SystemPillarsProps {
 const GROUP_ANCHORS = ['brand', 'growth', 'scale'];
 
 /** 01 — Brand: type fragment + architecture grid */
-function BrandVisual({ reduced }: { reduced: boolean }) {
+interface VisualProps {
+  reduced: boolean;
+  active: boolean;
+}
+
+function BrandVisual({ reduced, active }: VisualProps) {
   return (
     <svg viewBox="0 0 220 84" className="h-auto w-full" aria-hidden="true">
       {Array.from({ length: 3 }).map((_, row) =>
@@ -61,7 +67,12 @@ function BrandVisual({ reduced }: { reduced: boolean }) {
         initial={reduced ? false : { opacity: 0, scale: 0.6 }}
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.4, delay: 0.35 }}
+        animate={active && !reduced ? { x: [88, 116, 88] } : undefined}
+        transition={
+          active && !reduced
+            ? { duration: 2.2, repeat: Infinity, ease: 'easeInOut' }
+            : { duration: 0.4, delay: 0.35 }
+        }
       />
       <motion.rect
         x="144"
@@ -90,7 +101,7 @@ function BrandVisual({ reduced }: { reduced: boolean }) {
 }
 
 /** 02 — Growth: funnel lines + performance nodes */
-function GrowthVisual({ reduced }: { reduced: boolean }) {
+function GrowthVisual({ reduced, active }: VisualProps) {
   const bars = [64, 46, 30, 18];
   return (
     <svg viewBox="0 0 220 84" className="h-auto w-full" aria-hidden="true">
@@ -119,6 +130,19 @@ function GrowthVisual({ reduced }: { reduced: boolean }) {
         viewport={{ once: true }}
         transition={{ duration: 1, delay: 0.5 }}
       />
+      {/* Hover: a signal travels through the system and activates nodes */}
+      {active && !reduced && (
+        <motion.rect
+          width="7"
+          height="7"
+          fill="#050505"
+          stroke="#A2FF00"
+          strokeWidth="1.5"
+          initial={{ x: 16, y: 66 }}
+          animate={{ x: [16, 66, 116, 166, 202], y: [66, 50, 56, 26, 10] }}
+          transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
+        />
+      )}
       {[
         [70, 54],
         [170, 30],
@@ -141,7 +165,7 @@ function GrowthVisual({ reduced }: { reduced: boolean }) {
 }
 
 /** 03 — Scale: expanding modular blocks */
-function ScaleVisual({ reduced }: { reduced: boolean }) {
+function ScaleVisual({ reduced, active }: VisualProps) {
   const blocks = [
     { x: 12, y: 48, s: 16, fill: '#050505' },
     { x: 36, y: 48, s: 16, fill: '#050505' },
@@ -168,7 +192,16 @@ function ScaleVisual({ reduced }: { reduced: boolean }) {
           initial={reduced ? false : { opacity: 0, scale: 0.5 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.45, delay: 0.15 + index * 0.09 }}
+          animate={
+            active && !reduced && block.fill === 'none'
+              ? { opacity: [1, 0.4, 1], scale: [1, 1.06, 1] }
+              : undefined
+          }
+          transition={
+            active && !reduced && block.fill === 'none'
+              ? { duration: 1.6, repeat: Infinity, ease: 'easeInOut' }
+              : { duration: 0.45, delay: 0.15 + index * 0.09 }
+          }
           style={{ transformOrigin: `${block.x + block.s / 2}px ${block.y + block.s / 2}px` }}
         />
       ))}
@@ -180,6 +213,7 @@ const VISUALS = [BrandVisual, GrowthVisual, ScaleVisual];
 
 export default function SystemPillars({ t, base }: SystemPillarsProps) {
   const prefersReducedMotion = useReducedMotion();
+  const [hovered, setHovered] = useState<number | null>(null);
 
   return (
     <section className="section-light relative z-[7] py-20 lg:py-28" aria-label={t.heading}>
@@ -204,7 +238,9 @@ export default function SystemPillars({ t, base }: SystemPillarsProps) {
               >
                 <Link
                   href={`${base}/services#${GROUP_ANCHORS[index] ?? ''}`}
-                  className="light-card group flex h-full flex-col rounded-md p-7 transition-all duration-300 hover:-translate-y-1.5 hover:border-[#40C401] lg:p-8"
+                  onMouseEnter={() => setHovered(index)}
+                  onMouseLeave={() => setHovered(null)}
+                  className="light-card group flex h-full flex-col rounded-md p-7 transition-colors duration-300 hover:border-[#40C401] lg:p-8"
                 >
                   <div className="flex items-start justify-between gap-4">
                     <span className="text-[13px] font-extrabold tracking-[0.1em] text-[#267800]">
@@ -217,7 +253,7 @@ export default function SystemPillars({ t, base }: SystemPillarsProps) {
                   </div>
 
                   <div className="mt-5">
-                    <Visual reduced={!!prefersReducedMotion} />
+                    <Visual reduced={!!prefersReducedMotion} active={hovered === index} />
                   </div>
 
                   <h3 className="mt-5 text-xl font-extrabold tracking-tight">{system.name}</h3>

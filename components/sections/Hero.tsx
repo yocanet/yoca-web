@@ -21,6 +21,46 @@ interface HeroProps {
   base: string;
 }
 
+/**
+ * Controlled typographic emphasis: the key words ("brands", "systems" and
+ * their localized equivalents) get a thin lime underline — no neon, no loop.
+ */
+function EmphasisTitle({ title, words }: { title: string; words: string[] }) {
+  let parts: Array<{ text: string; hit: boolean }> = [{ text: title, hit: false }];
+  for (const word of words) {
+    const next: typeof parts = [];
+    for (const part of parts) {
+      if (part.hit || !part.text.includes(word)) {
+        next.push(part);
+        continue;
+      }
+      const at = part.text.indexOf(word);
+      if (at > 0) next.push({ text: part.text.slice(0, at), hit: false });
+      next.push({ text: word, hit: true });
+      if (at + word.length < part.text.length) {
+        next.push({ text: part.text.slice(at + word.length), hit: false });
+      }
+    }
+    parts = next;
+  }
+  return (
+    <>
+      {parts.map((part, index) =>
+        part.hit ? (
+          <span
+            key={index}
+            className="underline decoration-yoca-lime/80 decoration-[3px] underline-offset-[10px]"
+          >
+            {part.text}
+          </span>
+        ) : (
+          <span key={index}>{part.text}</span>
+        ),
+      )}
+    </>
+  );
+}
+
 export default function Hero({ t, base }: HeroProps) {
   const prefersReducedMotion = useReducedMotion();
 
@@ -55,7 +95,7 @@ export default function Hero({ t, base }: HeroProps) {
             {...item(0.1)}
             className="mt-6 max-w-[18ch] text-4xl font-extrabold leading-[1.06] tracking-tight sm:text-5xl lg:text-6xl xl:text-7xl"
           >
-            {t.title}
+            <EmphasisTitle title={t.title} words={t.emphasis} />
           </motion.h1>
           <motion.p
             {...item(0.2)}

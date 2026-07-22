@@ -86,6 +86,7 @@ export default async function WorkPage() {
               labels={{
                 all: t.work.filterAll,
                 clients: t.work.filterClients,
+                concepts: t.work.filterConcepts,
                 products: t.work.filterProducts,
                 viewCase: t.work.viewCase,
                 metricNote: t.work.metricNote,

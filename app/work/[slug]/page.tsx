@@ -258,36 +258,50 @@ export default async function CaseStudyPage({ params }: PageProps) {
           </section>
         )}
 
-        <nav
-          aria-label="Case studies"
-          className="container-y relative z-[7] flex justify-between gap-5 border-t border-line py-10 max-sm:flex-col"
-        >
-          {prev ? (
-            <Link href={`${base}/work/${prev.slug}`} className="group grid gap-1.5">
-              <span className="text-[12px] font-bold uppercase tracking-[0.1em] text-subtle">
-                ← {t.work.backToWork}
-              </span>
-              <span className="text-lg font-extrabold transition-colors group-hover:text-yoca-lime">
-                {prev.name}
-              </span>
-            </Link>
-          ) : (
-            <span />
-          )}
-          {next ? (
+        {/* Project navigation: Previous / All Work / Next (visual preview) */}
+        <nav aria-label="Case studies" className="container-y relative z-[7] border-t border-line py-12">
+          <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
+            {prev ? (
+              <Link href={`${base}/work/${prev.slug}`} className="group grid gap-1">
+                <span className="text-[12px] font-bold uppercase tracking-[0.1em] text-subtle">
+                  ← {t.work.backToWork}
+                </span>
+                <span className="text-lg font-extrabold transition-colors group-hover:text-yoca-lime">
+                  {prev.name}
+                </span>
+              </Link>
+            ) : (
+              <span />
+            )}
             <Link
-              href={`${base}/work/${next.slug}`}
-              className="group grid gap-1.5 text-right max-sm:text-left"
+              href={`${base}/work`}
+              className="rounded-sm border border-line px-4 py-2.5 text-[13px] font-bold text-muted transition-colors hover:border-yoca-lime hover:text-yoca-lime"
             >
-              <span className="text-[12px] font-bold uppercase tracking-[0.1em] text-subtle">
-                {t.work.allWork} →
-              </span>
-              <span className="text-lg font-extrabold transition-colors group-hover:text-yoca-lime">
-                {next.name}
+              {t.work.allWork}
+            </Link>
+          </div>
+          {next && (
+            <Link href={`${base}/work/${next.slug}`} className="group block" aria-label={next.name}>
+              <span className="relative block aspect-[21/7] overflow-hidden rounded-sm border border-line max-md:aspect-[11/7]">
+                <img
+                  src={next.image}
+                  alt=""
+                  width={1400}
+                  height={470}
+                  loading="lazy"
+                  className="h-full w-full object-cover opacity-60 transition-all duration-500 ease-out group-hover:scale-[1.03] group-hover:opacity-90"
+                />
+                <span className="absolute inset-0 bg-gradient-to-t from-surface-deep/90 via-surface-deep/30 to-transparent" />
+                <span className="absolute bottom-6 start-6">
+                  <span className="block text-[12px] font-bold uppercase tracking-[0.1em] text-yoca-lime">
+                    {t.work.allWork} →
+                  </span>
+                  <span className="mt-1 block text-2xl font-extrabold tracking-tight sm:text-3xl">
+                    {next.name}
+                  </span>
+                </span>
               </span>
             </Link>
-          ) : (
-            <span />
           )}
         </nav>
 

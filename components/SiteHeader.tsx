@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import { fetchMenu } from '@/lib/supabase';
 import { getRequestContext } from '@/lib/seo';
+import HeaderShell from '@/components/ui/HeaderShell';
 import LanguageSwitcher from '@/components/ui/LanguageSwitcher';
 import MobileMenu from '@/components/ui/MobileMenu';
 import type { Dict } from '@/lib/i18n';
@@ -78,9 +79,8 @@ export default async function SiteHeader({ t, path = '/' }: SiteHeaderProps) {
   ];
 
   return (
-    <header className="fixed inset-x-0 top-0 z-[100] border-b border-line/60 bg-[rgba(5,5,5,0.82)] backdrop-blur-xl">
-      <div className="container-y flex h-[72px] items-center justify-between gap-4 min-[1440px]:gap-8">
-        <Link href={base} aria-label="Yoca — Home" className="flex-none">
+    <HeaderShell>
+        <Link href={base} aria-label="Yoca — Home" className="flex-none shrink-0">
           <img
             src="/brand/yoca-logo-primary.svg"
             alt="Yoca"
@@ -136,7 +136,7 @@ export default async function SiteHeader({ t, path = '/' }: SiteHeaderProps) {
             <span aria-hidden="true" className="block h-2 w-2 flex-none bg-yoca-lime" />
             {t.nav.checkup}
           </Link>
-          <div className="hidden min-[1180px]:block">
+          <div className="max-[359px]:hidden">
             <LanguageSwitcher
               current={ctx.locale}
               path={path}
@@ -145,7 +145,7 @@ export default async function SiteHeader({ t, path = '/' }: SiteHeaderProps) {
           </div>
           <Link
             href={`${base}/contact`}
-            className="btn-primary hidden whitespace-nowrap !px-5 min-[1180px]:inline-flex min-[1440px]:!px-7"
+            className="btn-primary hidden shrink-0 whitespace-nowrap !px-5 min-[1180px]:inline-flex min-[1440px]:!px-7"
           >
             {t.hero.primaryCta}
           </Link>
@@ -153,13 +153,13 @@ export default async function SiteHeader({ t, path = '/' }: SiteHeaderProps) {
             <MobileMenu
               items={overlayItems}
               cta={{ title: t.hero.primaryCta, url: `${base}/contact` }}
+              secondaryCta={{ title: t.nav.checkup, url: `${base}/checkup` }}
               locale={ctx.locale}
               path={path}
               languageLabel={t.common.languageSwitcher}
             />
           </div>
         </div>
-      </div>
-    </header>
+    </HeaderShell>
   );
 }

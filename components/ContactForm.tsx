@@ -23,7 +23,7 @@ export default function ContactForm({
   errorEmail,
   errorGeneric,
 }: ContactFormProps) {
-  const [form, setForm] = useState({ name: '', email: '', company: '', message: '', phone: '' });
+  const [form, setForm] = useState({ name: '', email: '', company: '', message: '', phone: '', website: '' });
   const [selectedSystems, setSelectedSystems] = useState<string[]>([]);
   const [budget, setBudget] = useState<string>('');
   const [launch, setLaunch] = useState<string>('');
@@ -63,6 +63,9 @@ export default function ContactForm({
     }
     if (launch) {
       plannerLines.push(`[${t.launchLabel}] ${launch}`);
+    }
+    if (form.website.trim()) {
+      plannerLines.push(`[${t.website}] ${form.website.trim()}`);
     }
     if (form.phone.trim()) {
       plannerLines.push(`[${t.phone}] ${form.phone.trim()}`);
@@ -190,6 +193,22 @@ export default function ContactForm({
           />
         </div>
       </div>
+      <div className="grid gap-2">
+        <label htmlFor="cf-website" className="text-[13px] font-bold text-soft">
+          {t.website}
+        </label>
+        <input
+          id="cf-website"
+          type="url"
+          maxLength={300}
+          autoComplete="url"
+          placeholder="https://"
+          value={form.website}
+          onChange={(e) => setForm((f) => ({ ...f, website: e.target.value }))}
+          className={inputClass}
+        />
+      </div>
+
       {/* ── Interactive Project Planner ─────────────────────────── */}
       <fieldset className="grid gap-3 border-0 p-0">
         <legend className="text-[13px] font-bold text-soft">{t.plannerSystems}</legend>

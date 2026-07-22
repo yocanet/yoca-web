@@ -15,12 +15,13 @@ import type { Locale, MenuItem } from '@/types';
 interface MobileMenuProps {
   items: MenuItem[];
   cta: { title: string; url: string };
+  secondaryCta?: { title: string; url: string };
   locale: Locale;
   path: string;
   languageLabel: string;
 }
 
-export default function MobileMenu({ items, cta, locale, path, languageLabel }: MobileMenuProps) {
+export default function MobileMenu({ items, cta, secondaryCta, locale, path, languageLabel }: MobileMenuProps) {
   const [open, setOpen] = useState(false);
 
   // Lock body scroll while the panel is open.
@@ -106,8 +107,18 @@ export default function MobileMenu({ items, cta, locale, path, languageLabel }: 
                 ))}
               </ul>
 
-              <div className="grid gap-5">
+              <div className="grid gap-4">
                 <LanguageSwitcher current={locale} path={path} ariaLabel={languageLabel} />
+                {secondaryCta && (
+                  <Link
+                    href={secondaryCta.url}
+                    onClick={() => setOpen(false)}
+                    className="btn-ghost justify-center gap-2 text-center"
+                  >
+                    <span aria-hidden="true" className="block h-2 w-2 flex-none bg-yoca-lime" />
+                    {secondaryCta.title}
+                  </Link>
+                )}
                 <Link
                   href={cta.url}
                   onClick={() => setOpen(false)}

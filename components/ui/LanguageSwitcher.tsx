@@ -28,7 +28,7 @@ export default function LanguageSwitcher({ current, path, ariaLabel }: LanguageS
             href={localizePath(locale, path)}
             hrefLang={locale}
             aria-current={isActive ? 'true' : undefined}
-            className={`flex items-center justify-center rounded-sm px-2.5 py-1 text-[12px] font-bold tracking-wide transition-colors max-md:min-h-[44px] max-md:min-w-[44px] ${
+            className={`flex items-center justify-center rounded-sm px-2.5 py-1 text-[12px] font-bold tracking-wide transition-colors max-md:min-h-[38px] max-md:min-w-[34px] ${
               isActive ? 'bg-yoca-lime text-black' : 'text-subtle hover:text-white'
             }`}
           >

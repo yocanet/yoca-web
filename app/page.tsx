@@ -118,6 +118,8 @@ export default async function HomePage() {
       <SectionWrapper sectionKey="clocks">
         <LiveStatus
           locale={ctx.locale}
+          heading={t.clocks.heading}
+          sub={t.clocks.sub}
           activeLabel={t.clocks.active}
           cityLabels={{
             istanbul: t.clocks.istanbul,

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
+import PageIntro from '@/components/ui/PageIntro';
 import CheckUpWizard from '@/components/checkup/CheckUpWizard';
 import { getDict } from '@/lib/i18n';
 import { getContent } from '@/lib/content';
@@ -36,19 +37,7 @@ export default async function CheckupPage() {
       />
       <SiteHeader t={t} path="/checkup" />
       <main id="main">
-        <section
-          className="intro-slab relative z-[7] bg-surface-deep pb-10 pt-44"
-        >
-          <div className="container-y">
-            <p className="eyebrow">{t.checkup.eyebrow}</p>
-            <h1 className="mt-5 max-w-[26ch] text-4xl font-extrabold leading-[1.12] tracking-tight sm:text-5xl">
-              {t.checkup.introTitle}
-            </h1>
-            <p className="mt-5 max-w-[62ch] text-[17px] leading-relaxed text-muted">
-              {t.checkup.introSub}
-            </p>
-          </div>
-        </section>
+        <PageIntro eyebrow={t.checkup.eyebrow} title={t.checkup.introTitle} sub={t.checkup.introSub} compact titleMax="max-w-[22ch]" />
 
         <section className="relative z-[7] bg-surface py-16 lg:py-20">
           <div className="container-y">

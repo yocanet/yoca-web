@@ -26,7 +26,7 @@ export default async function TeamSection({ t }: TeamSectionProps) {
     >
       <div className="container-y">
         <div className="mb-12 max-w-2xl lg:mb-16">
-          <h2 className="text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl">
+          <h2 className="text-[clamp(32px,4.2vw,56px)] font-extrabold leading-[1.04] tracking-[-0.03em]">
             {t.heading}
           </h2>
           <p className="mt-4 text-[16px] leading-relaxed text-muted">{t.sub}</p>

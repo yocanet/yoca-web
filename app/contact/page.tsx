@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
+import PageIntro from '@/components/ui/PageIntro';
 import ContactForm from '@/components/ContactForm';
 import CopyEmail from '@/components/ui/CopyEmail';
 import { getDict } from '@/lib/i18n';
@@ -50,19 +51,7 @@ export default async function ContactPage() {
       />
       <SiteHeader t={t} path="/contact" />
       <main id="main">
-        <section
-          className="intro-slab relative z-[7] bg-surface-deep pb-14 pt-44"
-        >
-          <div className="container-y">
-            <p className="eyebrow">{t.contact.eyebrow}</p>
-            <h1 className="mt-5 max-w-[20ch] text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl">
-              {t.contact.heading}
-            </h1>
-            <p className="mt-5 max-w-[60ch] text-[17px] leading-relaxed text-muted">
-              {t.contact.description}
-            </p>
-          </div>
-        </section>
+        <PageIntro eyebrow={t.contact.eyebrow} title={t.contact.heading} sub={t.contact.description} compact />
 
         <section className="relative z-[7] py-16 lg:py-20">
           <div className="container-y grid items-start gap-10 lg:grid-cols-[7fr_4fr] lg:gap-16">
@@ -109,7 +98,7 @@ export default async function ContactPage() {
           <section className="relative z-[7] border-t border-line bg-surface py-16">
             <div className="container-y">
               <div className="mb-8 max-w-2xl">
-                <h2 className="text-2xl font-extrabold leading-tight tracking-tight sm:text-3xl">
+                <h2 className="text-[clamp(26px,3vw,40px)] font-extrabold leading-[1.08] tracking-[-0.02em]">
                   {t.contact.scheduleTitle}
                 </h2>
                 <p className="mt-3 text-[15px] leading-relaxed text-muted">

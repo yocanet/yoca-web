@@ -19,7 +19,7 @@ export default function CtaSection({ t, base }: CtaSectionProps) {
       />
       <div className="container-y relative grid justify-items-center">
         <BrandMark variant="modules" className="mb-7 h-9 w-auto" />
-        <h2 className="max-w-[22ch] text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl lg:text-5xl">
+        <h2 className="max-w-[18ch] text-[clamp(34px,4.6vw,64px)] font-extrabold leading-[1.02] tracking-[-0.03em]">
           {t.heading}
         </h2>
         <p className="mt-5 max-w-[54ch] text-[17px] leading-relaxed text-muted">{t.body}</p>

@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
+import PageIntro from '@/components/ui/PageIntro';
 import CtaSection from '@/components/sections/CtaSection';
 import Reveal from '@/components/ui/Reveal';
 import { getDict } from '@/lib/i18n';
@@ -119,17 +120,22 @@ export default async function ProductsPage() {
       <SiteHeader t={t} path="/products" />
       <main id="main">
         {/* ── Intro ─────────────────────────────────────────────── */}
-        <section
-          className="intro-slab relative z-[7] bg-surface-deep pb-14 pt-44"
-        >
-          <div className="container-y">
-            <p className="eyebrow">{p.eyebrow}</p>
-            <h1 className="mt-5 max-w-[20ch] text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl">
-              {p.heading}
-            </h1>
-            <p className="mt-5 max-w-[60ch] text-[17px] leading-relaxed text-muted">{p.sub}</p>
-          </div>
-        </section>
+        <PageIntro
+          eyebrow={p.eyebrow}
+          title={p.heading}
+          sub={p.sub}
+          compact
+          rail={p.items.map((product) => (
+            <a
+              key={product.key}
+              href={`#${product.key}`}
+              className="flex items-center gap-2 text-[12px] font-bold uppercase tracking-[0.12em] text-subtle transition-colors hover:text-yoca-lime"
+            >
+              <span aria-hidden="true" className="slant block h-2 w-2.5 bg-yoca-green" />
+              {product.name}
+            </a>
+          ))}
+        />
 
         {/* ── Product cards — each with its own scale & character ── */}
         <section className="relative z-[7] bg-surface py-16">

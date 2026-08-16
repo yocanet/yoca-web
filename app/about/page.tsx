@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
+import PageIntro from '@/components/ui/PageIntro';
 import TeamSection from '@/components/sections/TeamSection';
 import CtaSection from '@/components/sections/CtaSection';
 import SectionWrapper from '@/components/SectionWrapper';
@@ -60,19 +61,7 @@ export default async function AboutPage() {
       <SiteHeader t={t} path="/about" />
       <main id="main">
         {/* ── Intro ─────────────────────────────────────────────── */}
-        <section
-          className="intro-slab relative z-[7] bg-surface-deep pb-16 pt-44"
-        >
-          <div className="container-y">
-            <p className="eyebrow">{a.eyebrow}</p>
-            <h1 className="mt-5 max-w-[24ch] text-4xl font-extrabold leading-[1.12] tracking-tight sm:text-5xl lg:text-6xl">
-              {a.heading}
-            </h1>
-            <p className="mt-6 text-[17px] font-extrabold uppercase tracking-[0.14em] text-yoca-lime">
-              {a.sub}
-            </p>
-          </div>
-        </section>
+        <PageIntro eyebrow={a.eyebrow} title={a.heading} sub={a.sub} subTone="lime" titleMax="max-w-[22ch]" />
 
         {/* ── Editorial spread: sticky manifesto + flowing methodology ── */}
         <section className="relative z-[7] border-t border-line bg-surface py-16 lg:py-28">
@@ -140,7 +129,7 @@ export default async function AboutPage() {
             {/* Sticky title (desktop only; plain flow on mobile) */}
             <div className="lg:sticky lg:top-32 lg:self-start">
               <Reveal>
-                <h2 className="text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl">
+                <h2 className="text-[clamp(32px,4.2vw,56px)] font-extrabold leading-[1.04] tracking-[-0.03em]">
                   {a.valuesTitle}
                 </h2>
                 <p className="mt-4 max-w-[44ch] text-[16px] leading-relaxed text-muted">
@@ -175,7 +164,7 @@ export default async function AboutPage() {
           <div className="container-y">
             <Reveal>
               <div className="mb-9 max-w-2xl">
-                <h2 className="text-2xl font-extrabold leading-tight tracking-tight sm:text-3xl">
+                <h2 className="text-[clamp(26px,3vw,40px)] font-extrabold leading-[1.08] tracking-[-0.02em]">
                   {a.stackTitle}
                 </h2>
                 <p className="mt-3 text-[15px] leading-relaxed text-muted">{a.stackSub}</p>

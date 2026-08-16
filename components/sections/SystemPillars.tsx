@@ -68,8 +68,8 @@ function BrandVisual({ reduced, active, points }: VisualProps) {
           <text x="154" y={y + 4} style={LABEL}>{points[index] ?? ''}</text>
         </motion.g>
       ))}
-      {/* Hover: signal leaves the core and reaches every touchpoint */}
-      {active && !reduced &&
+      {/* Signal leaves the core and reaches every touchpoint — always; faster on hover */}
+      {!reduced &&
         nodes.map((y, index) => (
           <motion.rect
             key={`pulse-${y}`}
@@ -80,21 +80,23 @@ function BrandVisual({ reduced, active, points }: VisualProps) {
             strokeWidth="1"
             initial={{ x: 73, y: 87 }}
             animate={{ x: [73, 93, 93, 123], y: [87, 87, y - 3, y - 3] }}
-            transition={{ duration: 1.4, delay: index * 0.18, repeat: Infinity, repeatDelay: 0.4, ease: 'easeInOut' }}
+            transition={{ duration: active ? 1.2 : 2.4, delay: index * 0.22, repeat: Infinity, repeatDelay: active ? 0.3 : 1.2, ease: 'easeInOut' }}
           />
         ))}
     </svg>
   );
 }
 
-/** 02 — Growth Engine: a closed loop that repeats */
+/** 02 — Growth Engine: a closed loop that repeats (labels never collide:
+ *  apex label above, base labels below, one per side) */
 function GrowthVisual({ reduced, active, points }: VisualProps) {
-  const stations: Array<{ x: number; y: number; anchor: 'start' | 'middle' | 'end'; dy: number }> = [
-    { x: 60, y: 44, anchor: 'start', dy: -16 },
-    { x: 260, y: 44, anchor: 'end', dy: -16 },
-    { x: 160, y: 138, anchor: 'middle', dy: 26 },
+  const stations: Array<{ x: number; y: number; anchor: 'start' | 'middle' | 'end'; dy: number; fill: string }> = [
+    { x: 160, y: 30, anchor: 'middle', dy: -14, fill: '#A2FF00' },
+    { x: 278, y: 132, anchor: 'end', dy: 26, fill: INK },
+    { x: 42, y: 132, anchor: 'start', dy: 26, fill: '#40C401' },
   ];
-  const loop = 'M 60 44 L 260 44 L 160 138 Z';
+  const loop = 'M 160 30 L 278 132 L 42 132 Z';
+  const speed = active ? 2.2 : 5.5;
   return (
     <svg viewBox="0 0 320 180" className="h-auto w-full" aria-hidden="true">
       <motion.path
@@ -109,16 +111,11 @@ function GrowthVisual({ reduced, active, points }: VisualProps) {
       />
       {/* Direction ticks — the loop turns clockwise */}
       {[
-        [160, 44, 0],
-        [210, 91, 137],
-        [110, 91, -137],
+        [219, 81, 41],
+        [160, 132, 180],
+        [101, 81, -41],
       ].map(([x, y, r], index) => (
-        <polygon
-          key={index}
-          points="-4,-4 4,0 -4,4"
-          fill={MID}
-          transform={`translate(${x} ${y}) rotate(${r})`}
-        />
+        <polygon key={index} points="-4,-4 4,0 -4,4" fill={MID} transform={`translate(${x} ${y}) rotate(${r})`} />
       ))}
       {stations.map((station, index) => (
         <motion.g
@@ -129,59 +126,55 @@ function GrowthVisual({ reduced, active, points }: VisualProps) {
           transition={{ duration: 0.4, delay: 0.5 + index * 0.15 }}
           style={{ transformOrigin: `${station.x}px ${station.y}px` }}
         >
-          <rect x={station.x - 10} y={station.y - 10} width="20" height="20" fill={index === 0 ? '#A2FF00' : index === 1 ? INK : '#40C401'} />
+          <rect x={station.x - 10} y={station.y - 10} width="20" height="20" fill={station.fill} />
           <text x={station.x} y={station.y + station.dy} textAnchor={station.anchor} style={LABEL}>
             {points[index] ?? ''}
           </text>
         </motion.g>
       ))}
-      {/* Centre readout: momentum bars — grow while the loop runs */}
-      <g>
-        {[0, 1, 2, 3].map((index) => (
-          <motion.rect
-            key={index}
-            x={140 + index * 11}
-            y={94 - index * 5}
-            width="7"
-            height={10 + index * 5}
-            fill={index === 3 ? '#40C401' : FAINT}
-            initial={reduced ? false : { scaleY: 0 }}
-            whileInView={{ scaleY: 1 }}
-            viewport={{ once: true }}
-            animate={active && !reduced ? { scaleY: [1, 1.25, 1] } : undefined}
-            transition={
-              active && !reduced
-                ? { duration: 1.2, delay: index * 0.1, repeat: Infinity, ease: 'easeInOut' }
-                : { duration: 0.4, delay: 0.9 + index * 0.08 }
-            }
-            style={{ transformOrigin: `${143 + index * 11}px 104px` }}
-          />
-        ))}
-      </g>
-      {/* Hover: a signal circulates the loop */}
-      {active && !reduced && (
+      {/* Centre readout: momentum bars — breathe while the loop runs */}
+      {[0, 1, 2, 3].map((index) => (
+        <motion.rect
+          key={index}
+          x={140 + index * 11}
+          y={104 - index * 5}
+          width="7"
+          height={12 + index * 5}
+          fill={index === 3 ? '#40C401' : FAINT}
+          initial={reduced ? false : { scaleY: 0 }}
+          whileInView={{ scaleY: 1 }}
+          viewport={{ once: true }}
+          animate={reduced ? undefined : { scaleY: [1, 1.22, 1] }}
+          transition={{ duration: active ? 1.1 : 2.6, delay: index * 0.12, repeat: Infinity, ease: 'easeInOut' }}
+          style={{ transformOrigin: `${143 + index * 11}px 116px` }}
+        />
+      ))}
+      {/* A signal circulates the loop — always; faster on hover */}
+      {!reduced && (
         <motion.rect
           width="7"
           height="7"
           fill="#A2FF00"
           stroke={INK}
           strokeWidth="1"
-          initial={{ x: 56, y: 40 }}
-          animate={{ x: [56, 256, 156, 56], y: [40, 40, 134, 40] }}
-          transition={{ duration: 2.4, repeat: Infinity, ease: 'linear' }}
+          initial={{ x: 156, y: 26 }}
+          animate={{ x: [156, 274, 38, 156], y: [26, 128, 128, 26] }}
+          transition={{ duration: speed, repeat: Infinity, ease: 'linear' }}
         />
       )}
     </svg>
   );
 }
 
-/** 03 — Scale Framework: layers whose capacity compounds upward */
+/** 03 — Scale Framework: layers whose capacity compounds upward — alive
+ *  at rest (blocks light up bottom → top, the feed lines flow), faster on hover */
 function ScaleVisual({ reduced, active, points }: VisualProps) {
   const layers = [
-    { y: 128, blocks: 1 },
-    { y: 84, blocks: 2 },
-    { y: 40, blocks: 4 },
+    { y: 128, blocks: 1, fill: INK },
+    { y: 84, blocks: 2, fill: '#40C401' },
+    { y: 40, blocks: 4, fill: '#A2FF00' },
   ];
+  const cycle = active ? 1.6 : 3.6;
   return (
     <svg viewBox="0 0 320 180" className="h-auto w-full" aria-hidden="true">
       {layers.map((layer, index) => (
@@ -192,11 +185,9 @@ function ScaleVisual({ reduced, active, points }: VisualProps) {
           viewport={{ once: true }}
           transition={{ duration: 0.45, delay: 0.15 + index * 0.16 }}
         >
-          {/* Layer plate */}
           <rect x="24" y={layer.y} width="272" height="30" fill="none" stroke={FAINT} strokeWidth="1.5" />
-          <rect x="24" y={layer.y} width="4" height="30" fill={index === 2 ? '#A2FF00' : index === 1 ? '#40C401' : INK} />
+          <rect x="24" y={layer.y} width="4" height="30" fill={layer.fill} />
           <text x="40" y={layer.y + 19} style={LABEL}>{points[index] ?? ''}</text>
-          {/* Capacity blocks: 1 → 2 → 4 */}
           {Array.from({ length: layer.blocks }).map((_, block) => (
             <motion.rect
               key={block}
@@ -204,32 +195,46 @@ function ScaleVisual({ reduced, active, points }: VisualProps) {
               y={layer.y + 7}
               width="16"
               height="16"
-              fill={index === 2 ? '#A2FF00' : index === 1 ? '#40C401' : INK}
-              initial={reduced ? false : { opacity: 0, scale: 0.4 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              animate={active && !reduced ? { opacity: [1, 0.35, 1] } : undefined}
-              transition={
-                active && !reduced
-                  ? { duration: 1.4, delay: block * 0.12 + index * 0.1, repeat: Infinity, ease: 'easeInOut' }
-                  : { duration: 0.35, delay: 0.5 + index * 0.16 + block * 0.08 }
+              fill={layer.fill}
+              initial={reduced ? false : { opacity: 0.25 }}
+              animate={
+                reduced
+                  ? { opacity: 1 }
+                  : { opacity: [0.25, 1, 1, 0.25] }
               }
-              style={{ transformOrigin: `${296 - 16 - block * 24}px ${layer.y + 15}px` }}
+              transition={{
+                duration: cycle,
+                delay: index * (cycle / 4) + block * 0.08,
+                repeat: Infinity,
+                ease: 'easeInOut',
+              }}
             />
           ))}
         </motion.g>
       ))}
-      {/* Rising connector: bottom layer feeds the next */}
+      {/* Feed lines: capacity rises from one layer to the next */}
       <motion.path
         d="M 160 128 L 160 114 M 160 84 L 160 70"
         stroke={MID}
         strokeWidth="1.5"
         strokeDasharray="3 3"
-        initial={reduced ? false : { pathLength: 0 }}
-        whileInView={{ pathLength: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8, delay: 0.7 }}
+        fill="none"
+        animate={reduced ? undefined : { strokeDashoffset: [12, 0] }}
+        transition={{ duration: active ? 0.6 : 1.4, repeat: Infinity, ease: 'linear' }}
       />
+      {/* Rising signal on the feed line */}
+      {!reduced && (
+        <motion.rect
+          width="6"
+          height="6"
+          fill="#A2FF00"
+          stroke={INK}
+          strokeWidth="1"
+          initial={{ x: 157, y: 140 }}
+          animate={{ x: 157, y: [140, 100, 56, 56], opacity: [0, 1, 1, 0] }}
+          transition={{ duration: cycle, repeat: Infinity, ease: 'easeInOut' }}
+        />
+      )}
     </svg>
   );
 }

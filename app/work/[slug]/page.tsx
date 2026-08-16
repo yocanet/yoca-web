@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
+import PageIntro from '@/components/ui/PageIntro';
 import CtaSection from '@/components/sections/CtaSection';
 import Reveal from '@/components/ui/Reveal';
 import { getDict } from '@/lib/i18n';
@@ -101,58 +102,41 @@ export default async function CaseStudyPage({ params }: PageProps) {
       />
       <SiteHeader t={t} path={`/work/${study.slug}`} />
       <main id="main">
-        <section
-          className="intro-slab relative z-[7] bg-surface-deep pb-10 pt-44"
+        <PageIntro
+          crumbs={[
+            { label: t.nav.home, href: base },
+            { label: t.nav.work, href: `${base}/work` },
+            { label: study.name },
+          ]}
+          title={study.name}
+          sub={study.summary}
+          titleMax="max-w-[16ch]"
+          compact
+          rail={[
+            [t.work.sector, study.sector],
+            [t.work.market, study.market],
+            [t.work.year, study.year],
+            [t.work.servicesLabel, study.services.join(', ')],
+          ].map(([label, value]) => (
+            <span key={label} className="grid gap-1">
+              <span className="text-[11px] font-bold uppercase tracking-[0.1em] text-subtle">{label}</span>
+              <span className="text-[14px] font-semibold text-soft">{value}</span>
+            </span>
+          ))}
         >
-          <div className="container-y">
-            <nav aria-label="Breadcrumb" className="flex flex-wrap gap-2.5 text-[13px] text-subtle">
-              <Link href={base} className="transition-colors hover:text-yoca-lime">
-                {t.nav.home}
-              </Link>
-              <span aria-hidden="true">/</span>
-              <Link href={`${base}/work`} className="transition-colors hover:text-yoca-lime">
-                {t.nav.work}
-              </Link>
-              <span aria-hidden="true">/</span>
-              <span aria-current="page" className="text-muted">
-                {study.name}
+          <div className="mt-6 flex flex-wrap items-center gap-3">
+            <span className="slant bg-surface-elevated px-3 py-1 text-[11px] font-extrabold uppercase tracking-[0.06em] text-soft">
+              {statusLabel}
+            </span>
+            {study.metricBadge && (
+              <span className="slant bg-yoca-lime px-3.5 py-1.5 text-[13px] font-extrabold text-black">
+                {study.metricBadge}
               </span>
-            </nav>
-            <div className="mt-6 flex flex-wrap items-center gap-4">
-              <h1 className="text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl">
-                {study.name}
-              </h1>
-              <span className="slant bg-surface-elevated px-3 py-1 text-[11px] font-extrabold uppercase tracking-[0.06em] text-soft">
-                {statusLabel}
-              </span>
-              {study.metricBadge && (
-                <span className="slant bg-yoca-lime px-3.5 py-1.5 text-[13px] font-extrabold text-black">
-                  {study.metricBadge}
-                </span>
-              )}
-            </div>
-            <p className="mt-5 max-w-[60ch] text-[17px] leading-relaxed text-muted">
-              {study.summary}
-            </p>
-            <dl className="mt-9 flex flex-wrap gap-x-12 gap-y-4 border-t border-line pt-6">
-              {[
-                [t.work.sector, study.sector],
-                [t.work.market, study.market],
-                [t.work.year, study.year],
-                [t.work.servicesLabel, study.services.join(', ')],
-              ].map(([label, value]) => (
-                <div key={label}>
-                  <dt className="text-[11px] font-bold uppercase tracking-[0.1em] text-subtle">
-                    {label}
-                  </dt>
-                  <dd className="mt-1 text-[15px] font-semibold">{value}</dd>
-                </div>
-              ))}
-            </dl>
+            )}
           </div>
-        </section>
+        </PageIntro>
 
-        <div className="container-y relative z-[7]">
+        <div className="container-y relative z-[7] pt-8">
           <figure className="overflow-hidden rounded-sm border border-line">
             <img
               src={study.image}

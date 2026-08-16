@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
+import PageIntro from '@/components/ui/PageIntro';
 import CtaSection from '@/components/sections/CtaSection';
 import ServiceUmbrellas from '@/components/sections/ServiceUmbrellas';
 import Reveal from '@/components/ui/Reveal';
@@ -42,19 +43,18 @@ export default async function ServicesPage() {
       <SiteHeader t={t} path="/services" />
       <main id="main">
         {/* ── Intro ─────────────────────────────────────────────── */}
-        <section
-          className="intro-slab relative z-[7] bg-surface-deep pb-14 pt-44"
-        >
-          <div className="container-y">
-            <p className="eyebrow">{sp.eyebrow}</p>
-            <h1 className="mt-5 max-w-[24ch] text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl">
-              {t.services.heading}
-            </h1>
-            <p className="mt-5 max-w-[60ch] text-[17px] leading-relaxed text-muted">
-              {t.services.sub}
-            </p>
-          </div>
-        </section>
+        <PageIntro
+          eyebrow={sp.eyebrow}
+          title={t.services.heading}
+          sub={t.services.sub}
+          compact
+          rail={t.services.items.map((item, index) => (
+            <span key={item.name} className="flex items-center gap-2 text-[12px] font-bold uppercase tracking-[0.12em] text-subtle">
+              <span className="text-yoca-lime">{String(index + 1).padStart(2, '0')}</span>
+              {item.name}
+            </span>
+          ))}
+        />
 
         {/* ── Three umbrellas with problem/deliverables/stack tabs ─ */}
         <section className="relative z-[7] bg-surface py-16">
@@ -70,7 +70,7 @@ export default async function ServicesPage() {
           <div className="container-y">
             <Reveal>
               <div className="mb-12 max-w-2xl">
-                <h2 className="text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl">
+                <h2 className="text-[clamp(32px,4.2vw,56px)] font-extrabold leading-[1.04] tracking-[-0.03em]">
                   {sp.processTitle}
                 </h2>
                 <p className="mt-4 text-[16px] leading-relaxed text-muted">{sp.processSub}</p>

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
+import PageIntro from '@/components/ui/PageIntro';
 import CtaSection from '@/components/sections/CtaSection';
 import WorkGrid from '@/components/sections/WorkGrid';
 import { getDict } from '@/lib/i18n';
@@ -62,17 +63,7 @@ export default async function WorkPage() {
       ))}
       <SiteHeader t={t} path="/work" />
       <main id="main">
-        <section
-          className="intro-slab relative z-[7] bg-surface-deep pb-14 pt-44"
-        >
-          <div className="container-y">
-            <p className="eyebrow">{t.work.eyebrow}</p>
-            <h1 className="mt-5 max-w-[22ch] text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl">
-              {t.work.heading}
-            </h1>
-            <p className="mt-5 max-w-[60ch] text-[17px] leading-relaxed text-muted">{t.work.sub}</p>
-          </div>
-        </section>
+        <PageIntro eyebrow={t.work.eyebrow} title={t.work.heading} sub={t.work.sub} compact />
 
         <section className="section-light relative z-[7] py-16 lg:py-20">
           <div className="container-y">

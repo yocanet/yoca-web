@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
+import PageIntro from '@/components/ui/PageIntro';
 import CtaSection from '@/components/sections/CtaSection';
 import Reveal from '@/components/ui/Reveal';
 import { getDict } from '@/lib/i18n';
@@ -84,34 +85,18 @@ export default async function ServiceDetailPage({ params }: PageProps) {
       />
       <SiteHeader t={t} path={`/services/${entry.slug}`} />
       <main id="main">
-        <section
-          className="intro-slab relative z-[7] bg-surface-deep pb-14 pt-44"
-        >
-          <div className="container-y">
-            <nav aria-label="Breadcrumb" className="flex flex-wrap gap-2.5 text-[13px] text-subtle">
-              <Link href={base} className="transition-colors hover:text-yoca-lime">
-                {t.nav.home}
-              </Link>
-              <span aria-hidden="true">/</span>
-              <Link href={`${base}/services`} className="transition-colors hover:text-yoca-lime">
-                {t.nav.services}
-              </Link>
-              <span aria-hidden="true">/</span>
-              <span aria-current="page" className="text-muted">
-                {service.name}
-              </span>
-            </nav>
-            <p className="mt-6 text-[13px] font-extrabold tracking-[0.1em] text-yoca-lime">
-              {String(entry.group + 1).padStart(2, '0')} · {group.system}
-            </p>
-            <h1 className="mt-3 max-w-[22ch] text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl">
-              {service.name}
-            </h1>
-            <p className="mt-5 max-w-[60ch] text-[17px] leading-relaxed text-muted">
-              {service.desc}
-            </p>
-          </div>
-        </section>
+        <PageIntro
+          crumbs={[
+            { label: t.nav.home, href: base },
+            { label: t.nav.services, href: `${base}/services` },
+            { label: service.name },
+          ]}
+          eyebrow={`${String(entry.group + 1).padStart(2, '0')} · ${group.system}`}
+          title={service.name}
+          sub={service.desc}
+          titleMax="max-w-[20ch]"
+          compact
+        />
 
         {/* The problem it solves */}
         <section className="relative z-[7] border-t border-line bg-surface py-16">

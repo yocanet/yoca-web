@@ -191,7 +191,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
                 </div>
               )}
               {media.interaction && (
-                <ParallaxMedia src={media.interaction.poster} video={media.interaction} width={1600} height={1000} />
+                <ParallaxMedia src={media.interaction.poster} video={{ src: media.interaction.video, poster: media.interaction.poster }} width={1600} height={1000} />
               )}
             </div>
           </section>

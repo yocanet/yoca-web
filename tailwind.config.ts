@@ -47,6 +47,10 @@ const config: Config = {
           from: { transform: 'translateX(0)' },
           to: { transform: 'translateX(-50%)' },
         },
+        'grow-y': {
+          from: { transform: 'scaleY(0)' },
+          to: { transform: 'scaleY(1)' },
+        },
         'pulse-ring': {
           '0%': { transform: 'scale(0.5)', opacity: '0.9' },
           '100%': { transform: 'scale(1.8)', opacity: '0' },

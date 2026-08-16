@@ -2,16 +2,16 @@
 
 import Link from 'next/link';
 import { motion, useReducedMotion } from 'framer-motion';
-import HeroSystemDiagram from '@/components/ui/HeroSystemDiagram';
-import MovingIndex from '@/components/ui/MovingIndex';
+import HeroSymbol from '@/components/ui/HeroSymbol';
 import type { Dict } from '@/lib/i18n';
 import { DUR, EASE_YOCA } from '@/lib/motion';
 
 /**
  * Yoca — homepage hero.
- * Two-column editorial layout: staggered copy on the start side, the living
- * system diagram (Brand → Identity → Experience → Growth → Scale) on the end
- * side. The bottom index line highlights each word in Electric Lime in turn.
+ * Full-viewport, type-led. Staggered copy on the start side; the real Yoca
+ * mark at architectural scale on the end side, assembling itself on load.
+ * A bottom rail carries the three-system order (01 → 02 → 03) and a scroll
+ * pulse; the index line lives in the lime brand band directly below.
  * CTA hierarchy: Start a Project (solid lime, → contact) is primary;
  * the free Digital Check-Up (border) is the secondary lead magnet.
  */
@@ -20,6 +20,8 @@ interface HeroProps {
   t: Dict['hero'];
   /** Locale base path, e.g. "/tr". */
   base: string;
+  /** System names for the bottom rail (01 → 02 → 03). */
+  rail?: string[];
 }
 
 /**
@@ -50,7 +52,7 @@ function EmphasisTitle({ title, words }: { title: string; words: string[] }) {
         part.hit ? (
           <span
             key={index}
-            className="underline decoration-yoca-lime/80 decoration-[3px] underline-offset-[10px]"
+            className="underline decoration-yoca-lime decoration-[0.05em] underline-offset-[0.14em]"
           >
             {part.text}
           </span>
@@ -62,7 +64,7 @@ function EmphasisTitle({ title, words }: { title: string; words: string[] }) {
   );
 }
 
-export default function Hero({ t, base }: HeroProps) {
+export default function Hero({ t, base, rail = [] }: HeroProps) {
   const prefersReducedMotion = useReducedMotion();
 
   const item = (delay: number) => ({
@@ -72,8 +74,8 @@ export default function Hero({ t, base }: HeroProps) {
   });
 
   return (
-    <section className="relative z-[7] flex min-h-[92vh] items-center overflow-hidden bg-surface-deep pb-20 pt-40">
-      {/* Grid lines backdrop */}
+    <section className="relative z-[7] flex min-h-[100svh] flex-col overflow-hidden bg-surface-deep pt-32 lg:pt-36">
+      {/* Grid lines backdrop — fades toward the rail */}
       <div
         aria-hidden="true"
         className="absolute inset-0 opacity-50"
@@ -86,20 +88,20 @@ export default function Hero({ t, base }: HeroProps) {
         }}
       />
 
-      <div className="container-y relative grid items-center gap-14 lg:grid-cols-[7fr_4fr]">
-        <div>
+      <div className="container-y relative grid flex-1 items-center gap-12 py-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-8">
+        <div className="relative z-10">
           <motion.p {...item(0)} className="eyebrow">
             {t.eyebrow}
           </motion.p>
           <motion.h1
             {...item(0.1)}
-            className="mt-6 max-w-[18ch] text-4xl font-extrabold leading-[1.06] tracking-tight sm:text-5xl lg:text-6xl xl:text-7xl"
+            className="mt-7 max-w-[15ch] text-[clamp(42px,5.8vw,86px)] font-extrabold leading-[0.98] tracking-[-0.03em]"
           >
             <EmphasisTitle title={t.title} words={t.emphasis} />
           </motion.h1>
           <motion.p
             {...item(0.2)}
-            className="mt-6 max-w-[58ch] text-base leading-relaxed text-muted lg:text-[19px]"
+            className="mt-8 max-w-[52ch] text-[17px] leading-relaxed text-muted lg:text-[19px]"
           >
             {t.description}
           </motion.p>
@@ -111,15 +113,43 @@ export default function Hero({ t, base }: HeroProps) {
               {t.secondaryCta}
             </Link>
           </motion.div>
-          <motion.div {...item(0.4)} className="mt-11">
-            <MovingIndex line={t.line} />
-          </motion.div>
         </div>
 
-        <motion.div {...item(0.25)} className="max-lg:hidden">
-          <HeroSystemDiagram />
+        {/* The mark — allowed to run past the container edge on wide screens */}
+        <motion.div
+          {...item(0.15)}
+          className="relative max-lg:mx-auto max-lg:w-[min(70vw,340px)] lg:-me-[6vw] lg:justify-self-end lg:w-[min(38vw,560px)]"
+        >
+          <HeroSymbol />
         </motion.div>
       </div>
+
+      {/* Bottom rail: index line · system order · scroll hint */}
+      <motion.div {...item(0.45)} className="container-y relative">
+        <div className="module-rule" />
+        <div className="flex flex-wrap items-center justify-between gap-x-10 gap-y-4 py-6">
+          {rail.length > 0 && (
+            <ol className="flex flex-wrap items-center gap-x-6 gap-y-2 text-[12px] font-bold uppercase tracking-[0.12em] text-subtle">
+              {rail.map((name, index) => (
+                <li key={name} className="flex items-center gap-2">
+                  <span className="text-yoca-lime">{String(index + 1).padStart(2, '0')}</span>
+                  <span>{name}</span>
+                  {index < rail.length - 1 && (
+                    <span aria-hidden="true" className="ms-4 block h-px w-6 bg-line" />
+                  )}
+                </li>
+              ))}
+            </ol>
+          )}
+          <span aria-hidden="true" className="hidden h-8 w-px overflow-hidden bg-line lg:block">
+            <motion.span
+              className="block h-full w-full bg-yoca-lime"
+              animate={prefersReducedMotion ? undefined : { y: ['-100%', '100%'] }}
+              transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut', repeatDelay: 0.6 }}
+            />
+          </span>
+        </div>
+      </motion.div>
     </section>
   );
 }

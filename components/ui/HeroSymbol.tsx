@@ -2,13 +2,15 @@
 
 import { useRef } from 'react';
 import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from 'framer-motion';
+import { EASE_YOCA } from '@/lib/motion';
 
 /**
- * Yoca — interactive hero symbol.
- * The fragmented "Y" mark, exploded into its four brand fragments and driven
- * by pointer parallax: each fragment lives on its own depth layer, drifts
- * gently while idle and leans toward the cursor. Honors reduced motion.
- * (Faithful to the logo geometry — fragments are never redrawn or distorted.)
+ * Yoca — the hero mark.
+ * The real Yoca "Y" (exact logo geometry, never redrawn) at architectural
+ * scale. On load its three fragments travel in from off-axis positions and
+ * lock into the mark — ideas becoming a system. Once assembled the mark
+ * breathes very slowly and leans toward the pointer on separate depth layers.
+ * Fully static under prefers-reduced-motion.
  */
 
 /** Exact geometry of the Yoca mark (logo file, viewBox 0 0 250 69.05 → symbol crop). */
@@ -18,10 +20,20 @@ export const MARK = {
   y: '50.92,0.62 67.43,0.62 42.59,69.04 26.18,69.04 33.49,48.91 15.43,48.91 16.66,32.8 39.56,32.8',
 } as const;
 
-const FRAGMENTS: Array<{ points: string; fill: string; depth: number; delay: number }> = [
-  { points: MARK.lime, fill: '#A2FF00', depth: 26, delay: 0 },
-  { points: MARK.green, fill: '#40C401', depth: 40, delay: 0.9 },
-  { points: MARK.y, fill: '#FFFFFF', depth: 14, delay: 0.4 },
+interface FragmentSpec {
+  points: string;
+  fill: string;
+  /** Parallax depth — larger moves more. */
+  depth: number;
+  /** Entry offset (x, y, rotate) before locking into place. */
+  from: { x: number; y: number; r: number };
+  delay: number;
+}
+
+const FRAGMENTS: FragmentSpec[] = [
+  { points: MARK.y, fill: '#FFFFFF', depth: 10, from: { x: 26, y: -18, r: 6 }, delay: 0 },
+  { points: MARK.lime, fill: '#A2FF00', depth: 30, from: { x: -34, y: -26, r: -10 }, delay: 0.32 },
+  { points: MARK.green, fill: '#40C401', depth: 44, from: { x: -30, y: 30, r: 8 }, delay: 0.5 },
 ];
 
 export default function HeroSymbol() {
@@ -30,9 +42,8 @@ export default function HeroSymbol() {
 
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
-  const sx = useSpring(mx, { stiffness: 60, damping: 18, mass: 0.6 });
-  const sy = useSpring(my, { stiffness: 60, damping: 18, mass: 0.6 });
-  const rotate = useTransform(sx, [-1, 1], [-4, 4]);
+  const sx = useSpring(mx, { stiffness: 50, damping: 20, mass: 0.7 });
+  const sy = useSpring(my, { stiffness: 50, damping: 20, mass: 0.7 });
 
   const handlePointer = (event: React.PointerEvent) => {
     if (prefersReducedMotion || !ref.current) return;
@@ -52,13 +63,18 @@ export default function HeroSymbol() {
       onPointerMove={handlePointer}
       onPointerLeave={reset}
       aria-hidden="true"
-      className="relative mx-auto w-full max-w-[420px] select-none"
+      className="relative mx-auto w-full max-w-[560px] select-none"
     >
-      <motion.svg
-        viewBox="-12 -8 92 88"
-        className="h-auto w-full"
-        style={{ rotate: prefersReducedMotion ? 0 : rotate }}
-      >
+      <svg viewBox="-6 -4 80 78" className="h-auto w-full overflow-visible">
+        {/* Construction guides — the mark's own slant, drawn once as hairlines */}
+        <g stroke="rgba(255,255,255,0.09)" strokeWidth="0.35" fill="none">
+          <line x1="-6" y1="16.71" x2="74" y2="16.71" />
+          <line x1="-6" y1="32.8" x2="74" y2="32.8" />
+          <line x1="-6" y1="48.91" x2="74" y2="48.91" />
+          <line x1="-6" y1="69.04" x2="74" y2="69.04" />
+          <line x1="1.36" y1="-4" x2="-4.6" y2="74" />
+          <line x1="67.43" y1="-4" x2="61.4" y2="74" />
+        </g>
         {FRAGMENTS.map((fragment, index) => (
           <Fragment
             key={index}
@@ -68,7 +84,7 @@ export default function HeroSymbol() {
             reduced={!!prefersReducedMotion}
           />
         ))}
-      </motion.svg>
+      </svg>
     </div>
   );
 }
@@ -79,13 +95,13 @@ function Fragment({
   sy,
   reduced,
 }: {
-  fragment: (typeof FRAGMENTS)[number];
+  fragment: FragmentSpec;
   sx: ReturnType<typeof useSpring>;
   sy: ReturnType<typeof useSpring>;
   reduced: boolean;
 }) {
-  const x = useTransform(sx, [-1, 1], [fragment.depth / 2.4, -fragment.depth / 2.4]);
-  const y = useTransform(sy, [-1, 1], [fragment.depth / 3, -fragment.depth / 3]);
+  const x = useTransform(sx, [-1, 1], [fragment.depth / 14, -fragment.depth / 14]);
+  const y = useTransform(sy, [-1, 1], [fragment.depth / 18, -fragment.depth / 18]);
 
   if (reduced) {
     return <polygon points={fragment.points} fill={fragment.fill} />;
@@ -96,19 +112,10 @@ function Fragment({
       <motion.polygon
         points={fragment.points}
         fill={fragment.fill}
-        initial={{ opacity: 0, scale: 0.86 }}
-        animate={{ opacity: 1, scale: 1, y: [0, -3.5, 0] }}
-        transition={{
-          opacity: { duration: 0.7, delay: fragment.delay * 0.22 },
-          scale: { duration: 0.7, delay: fragment.delay * 0.22 },
-          y: {
-            duration: 6.5,
-            delay: fragment.delay,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          },
-        }}
-        style={{ transformOrigin: 'center' }}
+        initial={{ opacity: 0, x: fragment.from.x, y: fragment.from.y, rotate: fragment.from.r }}
+        animate={{ opacity: 1, x: 0, y: 0, rotate: 0 }}
+        transition={{ duration: 1.1, delay: 0.25 + fragment.delay, ease: EASE_YOCA }}
+        style={{ transformOrigin: 'center', transformBox: 'fill-box' }}
       />
     </motion.g>
   );

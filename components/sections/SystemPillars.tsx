@@ -217,67 +217,84 @@ export default function SystemPillars({ t, base }: SystemPillarsProps) {
   const [hovered, setHovered] = useState<number | null>(null);
 
   return (
-    <section className="section-light relative z-[7] py-20 lg:py-28" aria-label={t.heading}>
+    <section className="section-light relative z-[7] py-20 lg:py-32" aria-label={t.heading}>
       <div className="container-y">
-        <div className="mb-12 max-w-2xl lg:mb-16">
-          <h2 className="text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl">
+        {/* Section head — heading start, sub end (editorial spread) */}
+        <div className="grid gap-6 border-b border-[rgba(5,5,5,0.16)] pb-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:items-end lg:gap-16">
+          <h2 className="max-w-[16ch] text-[clamp(34px,4.6vw,64px)] font-extrabold leading-[1.02] tracking-[-0.03em]">
             {t.heading}
           </h2>
-          <p className="light-muted mt-4 text-[16px] leading-relaxed">{t.sub}</p>
+          <p className="light-muted max-w-[46ch] text-[16px] leading-relaxed lg:justify-self-end lg:text-[17px]">
+            {t.sub}
+          </p>
         </div>
 
-        <div className="grid gap-5 md:grid-cols-3">
+        {/* Three systems as full-width numbered rows — one sequence, read top to bottom */}
+        <ol>
           {t.items.map((system, index) => {
             const Visual = VISUALS[index] ?? BrandVisual;
+            const active = hovered === index;
             return (
-              <motion.div
+              <motion.li
                 key={system.name}
                 initial={{ opacity: 0, y: 26 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-60px' }}
-                transition={{ duration: 0.55, delay: index * 0.1, ease: EASE_YOCA }}
+                transition={{ duration: 0.55, delay: index * 0.08, ease: EASE_YOCA }}
+                className="border-b border-[rgba(5,5,5,0.16)]"
               >
                 <Link
                   href={`${base}/services#${GROUP_ANCHORS[index] ?? ''}`}
                   onMouseEnter={() => setHovered(index)}
                   onMouseLeave={() => setHovered(null)}
-                  className="light-card group flex h-full flex-col rounded-md p-7 transition-colors duration-300 hover:border-[#40C401] lg:p-8"
+                  onFocus={() => setHovered(index)}
+                  onBlur={() => setHovered(null)}
+                  className="group grid gap-8 py-10 transition-colors duration-300 lg:grid-cols-[minmax(0,2fr)_minmax(0,5fr)_minmax(0,5fr)] lg:gap-10 lg:py-14"
                 >
-                  <div className="flex items-start justify-between gap-4">
-                    <span className="text-[13px] font-extrabold tracking-[0.1em] text-[#267800]">
+                  {/* Giant numeral — outlined at rest, filled lime on hover */}
+                  <div className="flex items-start justify-between lg:block">
+                    <span
+                      aria-hidden="true"
+                      className={`block text-[clamp(64px,8vw,120px)] font-extrabold leading-[0.85] tracking-[-0.05em] transition-colors duration-300 ${
+                        active ? 'text-yoca-green' : 'text-[rgba(5,5,5,0.16)]'
+                      }`}
+                    >
                       {String(index + 1).padStart(2, '0')}
                     </span>
                     <span
                       aria-hidden="true"
-                      className="block h-2.5 w-2.5 bg-[rgba(5,5,5,0.14)] transition-colors duration-300 group-hover:bg-yoca-lime"
+                      className={`slant mt-1 block h-3.5 w-4 transition-colors duration-300 lg:mt-6 ${
+                        active ? 'bg-yoca-lime' : 'bg-[rgba(5,5,5,0.16)]'
+                      }`}
                     />
                   </div>
 
-                  <div className="mt-5">
-                    <Visual reduced={!!prefersReducedMotion} active={hovered === index} />
+                  <div>
+                    <h3 className="text-[clamp(24px,2.4vw,34px)] font-extrabold leading-tight tracking-[-0.02em]">
+                      {system.name}
+                    </h3>
+                    <p className="light-subtle mt-2 text-[12px] font-bold uppercase tracking-[0.14em]">
+                      {system.tagline}
+                    </p>
+                    <p className="light-muted mt-5 max-w-[46ch] text-[16px] leading-relaxed">{system.body}</p>
+                    <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-2">
+                      {system.points.map((point) => (
+                        <li key={point} className="flex items-center gap-2 text-[13px] font-bold">
+                          <span aria-hidden="true" className="slant block h-2 w-2.5 flex-none bg-yoca-green" />
+                          {point}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
 
-                  <h3 className="mt-5 text-xl font-extrabold tracking-tight">{system.name}</h3>
-                  <p className="light-subtle mt-1 text-[12px] font-bold uppercase tracking-[0.12em]">
-                    {system.tagline}
-                  </p>
-                  <p className="light-muted mt-4 text-[15px] leading-relaxed">{system.body}</p>
-                  <ul className="mt-6 grid gap-2 border-t border-[rgba(5,5,5,0.12)] pt-5">
-                    {system.points.map((point) => (
-                      <li key={point} className="flex items-start gap-2.5 text-[13px] font-semibold">
-                        <span
-                          aria-hidden="true"
-                          className="mt-[6px] block h-1.5 w-1.5 flex-none bg-yoca-green"
-                        />
-                        {point}
-                      </li>
-                    ))}
-                  </ul>
+                  <div className="light-card p-6 lg:p-8">
+                    <Visual reduced={!!prefersReducedMotion} active={active} />
+                  </div>
                 </Link>
-              </motion.div>
+              </motion.li>
             );
           })}
-        </div>
+        </ol>
       </div>
     </section>
   );

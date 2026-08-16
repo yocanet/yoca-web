@@ -52,7 +52,7 @@ function EmphasisTitle({ title, words }: { title: string; words: string[] }) {
         part.hit ? (
           <span
             key={index}
-            className="underline decoration-yoca-lime decoration-[0.05em] underline-offset-[0.14em]"
+            className="underline decoration-yoca-lime decoration-[0.045em] underline-offset-[0.06em]"
           >
             {part.text}
           </span>
@@ -74,7 +74,7 @@ export default function Hero({ t, base, rail = [] }: HeroProps) {
   });
 
   return (
-    <section className="relative z-[7] flex min-h-[100svh] flex-col overflow-hidden bg-surface-deep pt-32 lg:pt-36">
+    <section className="relative z-[7] flex min-h-[100svh] flex-col overflow-hidden bg-surface-deep pt-28 lg:min-h-[92svh] lg:pt-32">
       {/* Grid lines backdrop — fades toward the rail */}
       <div
         aria-hidden="true"
@@ -88,20 +88,20 @@ export default function Hero({ t, base, rail = [] }: HeroProps) {
         }}
       />
 
-      <div className="container-y relative grid flex-1 items-center gap-12 py-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-8">
+      <div className="container-y relative grid flex-1 items-center gap-10 py-6 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-8 lg:py-8">
         <div className="relative z-10">
           <motion.p {...item(0)} className="eyebrow">
             {t.eyebrow}
           </motion.p>
           <motion.h1
             {...item(0.1)}
-            className="mt-7 max-w-[15ch] text-[clamp(42px,5.8vw,86px)] font-extrabold leading-[0.98] tracking-[-0.03em]"
+            className="mt-6 max-w-[16ch] text-[clamp(38px,5vw,76px)] font-extrabold leading-[1.04] tracking-[-0.03em]"
           >
             <EmphasisTitle title={t.title} words={t.emphasis} />
           </motion.h1>
           <motion.p
             {...item(0.2)}
-            className="mt-8 max-w-[52ch] text-[17px] leading-relaxed text-muted lg:text-[19px]"
+            className="mt-7 max-w-[52ch] text-[16px] leading-relaxed text-muted lg:text-[18px]"
           >
             {t.description}
           </motion.p>

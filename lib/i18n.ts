@@ -26,6 +26,9 @@ export interface Dict {
     process: Array<{ name: string; desc: string }>;
     tabs: { problem: string; deliverables: string; stack: string; changes: string };
     stackNote: string;
+    /** "How this becomes real" — per-service step flow (index = services.items order). */
+    flowTitle: string;
+    flows: string[][];
     groups: Array<{
       key: string;
       system: string;
@@ -200,6 +203,10 @@ export interface Dict {
     description: string;
     introTitle: string;
     introSub: string;
+    /** Sample score visualisation (clearly labelled as an example). */
+    sampleTitle: string;
+    sampleLabel: string;
+    sampleNote: string;
     introStart: string;
     introPoints: string[];
     sectionWord: string;
@@ -263,6 +270,8 @@ const en: Dict = {
     ],
     tabs: { problem: 'The problem it solves', deliverables: 'Deliverables', stack: 'Tech stack', changes: 'What changes' },
     stackNote: 'Tools are chosen for the problem — never the other way around.',
+    flowTitle: 'How this becomes real.',
+    flows: [['Position', 'Language', 'Identity', 'Experience'], ['Strategy', 'UX', 'Interface', 'Development', 'Measurement'], ['Attention', 'Landing', 'Conversion', 'Measure', 'Optimise'], ['Idea', 'Concept', 'Production', 'Distribution'], ['Trigger', 'Process', 'AI', 'Review', 'Action'], ['Problem', 'Flow', 'Product', 'Iterate']],
     groups: [
       {
         key: 'brand',
@@ -523,6 +532,9 @@ const en: Dict = {
     description:
       'Answer a few short questions about your brand, channels and goals. We will review your answers and prepare a personal digital analysis with clear next steps.',
     introTitle: 'Get a clear view of your digital health in about three minutes.',
+    sampleTitle: 'Digital health',
+    sampleLabel: 'Sample result',
+    sampleNote: 'Example values for illustration — your real report is prepared from your own answers.',
     introSub:
       'Answer 16 focused questions about your brand, website, channels, measurement and growth readiness. We review your answers and send you a prioritised assessment with clear next steps.',
     introStart: 'Start My Check-Up',
@@ -613,6 +625,8 @@ const tr: Dict = {
     ],
     tabs: { problem: 'Hangi problemi çözer?', deliverables: 'Neler teslim edilir?', stack: 'Teknoloji altyapısı', changes: 'Ne değişir?' },
     stackNote: 'Araçlar probleme göre seçilir — asla tersi değil.',
+    flowTitle: 'Bu nasıl gerçeğe dönüşür.',
+    flows: [['Konum', 'Dil', 'Kimlik', 'Deneyim'], ['Strateji', 'UX', 'Arayüz', 'Geliştirme', 'Ölçüm'], ['Dikkat', 'Açılış', 'Dönüşüm', 'Ölçüm', 'Optimizasyon'], ['Fikir', 'Konsept', 'Üretim', 'Dağıtım'], ['Tetik', 'Süreç', 'Yapay zekâ', 'İnceleme', 'Aksiyon'], ['Problem', 'Akış', 'Ürün', 'İterasyon']],
     groups: [
       {
         key: 'brand',
@@ -873,6 +887,9 @@ const tr: Dict = {
     description:
       'Markanız, kanallarınız ve hedefleriniz hakkında birkaç kısa soruyu yanıtlayın. Yanıtlarınızı inceleyip net adımlar içeren kişisel bir dijital analiz hazırlayalım.',
     introTitle: 'Yaklaşık üç dakikada dijital sağlığınızın net bir görüntüsünü alın.',
+    sampleTitle: 'Dijital sağlık',
+    sampleLabel: 'Örnek sonuç',
+    sampleNote: 'Gösterim amaçlı örnek değerler — gerçek raporunuz kendi yanıtlarınızdan hazırlanır.',
     introSub:
       'Markanız, web siteniz, kanallarınız, ölçümleme yapınız ve büyüme hazırlığınız hakkında 16 odaklı soruyu yanıtlayın. Yanıtlarınızı inceliyor, önceliklendirilmiş bir değerlendirme ve net sonraki adımlar gönderiyoruz.',
     introStart: 'Check-Up’ımı Başlat',
@@ -963,6 +980,8 @@ const az: Dict = {
     ],
     tabs: { problem: 'Hansı problemi həll edir?', deliverables: 'Nələr təhvil verilir?', stack: 'Texnologiya dəsti', changes: 'Nə dəyişir?' },
     stackNote: 'Alətlər problemə görə seçilir — heç vaxt əksinə yox.',
+    flowTitle: 'Bu necə reallaşır.',
+    flows: [['Mövqe', 'Dil', 'Kimlik', 'Təcrübə'], ['Strategiya', 'UX', 'İnterfeys', 'Tərtibat', 'Ölçmə'], ['Diqqət', 'Açılış', 'Konversiya', 'Ölçmə', 'Optimallaşdırma'], ['İdeya', 'Konsept', 'İstehsal', 'Yayım'], ['Tətik', 'Proses', 'Süni intellekt', 'Baxış', 'Hərəkət'], ['Problem', 'Axın', 'Məhsul', 'İterasiya']],
     groups: [
       {
         key: 'brand',
@@ -1223,6 +1242,9 @@ const az: Dict = {
     description:
       'Brendiniz, kanallarınız və hədəfləriniz haqqında bir neçə qısa suala cavab verin. Cavablarınızı nəzərdən keçirib aydın addımlar içərən fərdi rəqəmsal analiz hazırlayaq.',
     introTitle: 'Təxminən üç dəqiqəyə rəqəmsal sağlamlığınızın aydın görüntüsünü əldə edin.',
+    sampleTitle: 'Rəqəmsal sağlamlıq',
+    sampleLabel: 'Nümunə nəticə',
+    sampleNote: 'Nümayiş üçün nümunə dəyərlər — real hesabatınız öz cavablarınız əsasında hazırlanır.',
     introSub:
       'Brendiniz, saytınız, kanallarınız, ölçmə quruluşunuz və inkişaf hazırlığınız haqqında 16 fokuslu suala cavab verin. Cavablarınızı nəzərdən keçirir, prioritetləşdirilmiş qiymətləndirmə və aydın növbəti addımlar göndəririk.',
     introStart: 'Check-Up-ımı Başlat',
@@ -1313,6 +1335,8 @@ const ar: Dict = {
     ],
     tabs: { problem: 'ما المشكلة التي يحلها؟', deliverables: 'المخرجات', stack: 'البنية التقنية', changes: 'ما الذي يتغير؟' },
     stackNote: 'تُختار الأدوات وفق المشكلة — وليس العكس أبدًا.',
+    flowTitle: 'كيف يتحوّل هذا إلى واقع.',
+    flows: [['الموقع', 'اللغة', 'الهوية', 'التجربة'], ['الاستراتيجية', 'تجربة المستخدم', 'الواجهة', 'التطوير', 'القياس'], ['الانتباه', 'صفحة الهبوط', 'التحويل', 'القياس', 'التحسين'], ['الفكرة', 'المفهوم', 'الإنتاج', 'التوزيع'], ['المُحفِّز', 'المعالجة', 'الذكاء الاصطناعي', 'المراجعة', 'الإجراء'], ['المشكلة', 'التدفق', 'المنتج', 'التكرار']],
     groups: [
       {
         key: 'brand',
@@ -1573,6 +1597,9 @@ const ar: Dict = {
     description:
       'أجب عن بضعة أسئلة قصيرة حول علامتك وقنواتك وأهدافك. سنراجع إجاباتك ونعد تحليلًا رقميًا شخصيًا بخطوات واضحة.',
     introTitle: 'احصل على صورة واضحة لصحتك الرقمية خلال نحو ثلاث دقائق.',
+    sampleTitle: 'الصحة الرقمية',
+    sampleLabel: 'نتيجة نموذجية',
+    sampleNote: 'قيم توضيحية للعرض فقط — يُعدّ تقريرك الحقيقي من إجاباتك الخاصة.',
     introSub:
       'أجب عن 16 سؤالًا مركزًا حول علامتك وموقعك وقنواتك وقياسك وجاهزيتك للنمو. نراجع إجاباتك ونرسل لك تقييمًا مرتّبًا بالأولوية مع خطوات تالية واضحة.',
     introStart: 'ابدأ فحصي',

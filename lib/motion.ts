@@ -53,3 +53,12 @@ export const lineDraw = (delay = 0) => ({
   delay,
   ease: EASE_YOCA,
 });
+
+/** Structured alias of the same tokens (fast / normal / editorial vocabulary). */
+export const MOTION = {
+  duration: { fast: DUR.micro, normal: DUR.ui, editorial: DUR.slow },
+  ease: { standard: EASE_YOCA, enter: EASE_YOCA, exit: [0.4, 0, 0.6, 1] as const },
+  distance: { xs: 6, sm: 12, md: RISE },
+  /** Maximum pointer-driven displacement (px) for reactive layers. */
+  pointer: { max: 10 },
+} as const;

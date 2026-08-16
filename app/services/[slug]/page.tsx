@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 import PageIntro from '@/components/ui/PageIntro';
+import FlowDiagram from '@/components/ui/FlowDiagram';
 import CtaSection from '@/components/sections/CtaSection';
 import Reveal from '@/components/ui/Reveal';
 import { getDict } from '@/lib/i18n';
@@ -125,6 +126,20 @@ export default async function ServiceDetailPage({ params }: PageProps) {
             </Reveal>
           </div>
         </section>
+
+        {/* How this becomes real — one localized flow, animates once */}
+        {t.servicesPage.flows?.[entry.item] && (
+          <section className="relative z-[7] border-t border-line bg-surface py-16 lg:py-24">
+            <div className="container-y">
+              <h2 className="max-w-[16ch] text-[clamp(26px,3vw,40px)] font-extrabold leading-[1.08] tracking-[-0.02em]">
+                {t.servicesPage.flowTitle}
+              </h2>
+              <div className="mt-10 lg:mt-14">
+                <FlowDiagram steps={t.servicesPage.flows[entry.item]} />
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* Deliverables index + stack */}
         <section className="relative z-[7] bg-surface-deep py-16 lg:py-28">

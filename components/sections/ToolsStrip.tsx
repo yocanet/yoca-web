@@ -21,7 +21,11 @@ export default function ToolsStrip({ t }: ToolsStripProps) {
           </h2>
           <p className="mt-4 max-w-[44ch] text-[15px] leading-relaxed text-muted">{t.sub}</p>
         </div>
-        <dl className="grid divide-y divide-line border-y border-line">
+        <dl className="relative grid divide-y divide-line border-y border-line">
+          {/* Connector: one thin line links the three layers — the system stays connected */}
+          <span aria-hidden="true" className="absolute bottom-6 start-[5px] top-6 hidden w-px bg-line sm:block">
+            <span className="absolute inset-0 origin-top bg-yoca-green/70 motion-safe:animate-[grow-y_1.6s_cubic-bezier(0.22,0.72,0.32,1)_forwards]" />
+          </span>
           {t.categories.map((category, index) => (
             <div key={category.name} className="grid gap-2 py-5 sm:grid-cols-[120px_minmax(0,1fr)] sm:gap-8">
               <dt className="flex items-center gap-2.5 text-[12px] font-extrabold uppercase tracking-[0.14em] text-soft">

@@ -8,6 +8,7 @@ import SystemPillars from '@/components/sections/SystemPillars';
 import BrandBand from '@/components/sections/BrandBand';
 import WorkIndex from '@/components/sections/WorkIndex';
 import ToolsStrip from '@/components/sections/ToolsStrip';
+import CheckupSample from '@/components/checkup/CheckupSample';
 import TeamSection from '@/components/sections/TeamSection';
 import ServicesGrid from '@/components/sections/ServicesGrid';
 import CtaSection from '@/components/sections/CtaSection';
@@ -86,15 +87,18 @@ export default async function HomePage() {
                 </p>
               </div>
               <div className="grid justify-items-start gap-8 lg:justify-items-end">
-                <div aria-hidden="true" className="flex h-[96px] items-end gap-2">
-                  {[34, 58, 44, 76, 100].map((height, index) => (
-                    <span
-                      key={index}
-                      className={`w-[22px] ${index === 4 ? 'bg-black' : 'bg-black/20'}`}
-                      style={{ height: `${height}%` }}
-                    />
-                  ))}
-                </div>
+                <CheckupSample
+                  title={t.checkup.sampleTitle}
+                  sampleLabel={t.checkup.sampleLabel}
+                  note={t.checkup.sampleNote}
+                  total={72}
+                  categories={[
+                    { label: t.checkup.sections[3]?.label ?? 'Brand', value: 84 },
+                    { label: t.checkup.sections[1]?.label ?? 'Website', value: 61 },
+                    { label: t.checkup.sections[2]?.label ?? 'Marketing', value: 58 },
+                    { label: t.checkup.sections[4]?.label ?? 'Measurement', value: 73 },
+                  ]}
+                />
                 <Link
                   href={`${base}/checkup`}
                   className="inline-flex min-h-12 items-center gap-2 bg-black px-8 py-4 text-[15px] font-bold text-white transition-colors hover:bg-[#1a1a1a]"

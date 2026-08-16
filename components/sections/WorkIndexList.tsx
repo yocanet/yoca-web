@@ -1,11 +1,11 @@
 'use client';
 
-/* eslint-disable @next/next/no-img-element */
 import Link from 'next/link';
 import { useRef, useState } from 'react';
 import { motion, useMotionValue, useReducedMotion, useSpring } from 'framer-motion';
 import type { CaseStudy } from '@/lib/workData';
 import { EASE_YOCA, VIEWPORT_ONCE } from '@/lib/motion';
+import ProjectCover from '@/components/work/ProjectCover';
 
 /**
  * Yoca — work index rows (client half of WorkIndex).
@@ -107,7 +107,11 @@ export default function WorkIndexList({ studies, base, viewCase, status }: WorkI
         animate={active && !reduced ? { opacity: 1, rotate: 0, scale: 1 } : { opacity: 0, rotate: -4.83, scale: 0.92 }}
         transition={{ duration: 0.35, ease: EASE_YOCA }}
       >
-        {active && <img src={active.image} alt="" width={520} height={331} className="block h-auto w-full" />}
+        {active && (
+          <span className="block aspect-[11/7] w-full">
+            <ProjectCover slug={active.slug} name={active.name} sector={active.sector} size="sm" />
+          </span>
+        )}
       </motion.span>
     </ol>
   );

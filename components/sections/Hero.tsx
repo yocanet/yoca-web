@@ -2,12 +2,12 @@
 
 import Link from 'next/link';
 import { useRef } from 'react';
-import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import { motion, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion';
 import HeroSymbol from '@/components/ui/HeroSymbol';
 import SplitWords from '@/components/ui/SplitWords';
 import Magnetic from '@/components/ui/Magnetic';
 import type { Dict } from '@/lib/i18n';
-import { DUR, EASE_YOCA } from '@/lib/motion';
+import { DUR, EASE_YOCA, MOTION } from '@/lib/motion';
 
 /**
  * Yoca — homepage hero.
@@ -35,6 +35,18 @@ export default function Hero({ t, base, rail = [] }: HeroProps) {
   const markY = useTransform(scrollYProgress, [0, 1], [0, -120]);
   const markRotate = useTransform(scrollYProgress, [0, 1], [0, -4.83]);
   const copyY = useTransform(scrollYProgress, [0, 1], [0, 60]);
+  // Pointer displacement of the structural grid — architectural, max ~10px.
+  const gx = useMotionValue(0);
+  const gy = useMotionValue(0);
+  const gridX = useSpring(gx, { stiffness: 60, damping: 20 });
+  const gridY = useSpring(gy, { stiffness: 60, damping: 20 });
+  const onPointer = (event: React.PointerEvent) => {
+    if (prefersReducedMotion || event.pointerType !== 'mouse') return;
+    const nx = event.clientX / window.innerWidth - 0.5;
+    const ny = event.clientY / window.innerHeight - 0.5;
+    gx.set(-nx * MOTION.pointer.max * 2);
+    gy.set(-ny * MOTION.pointer.max * 2);
+  };
 
   const item = (delay: number) => ({
     initial: { opacity: prefersReducedMotion ? 1 : 0, y: prefersReducedMotion ? 0 : 22 },
@@ -43,12 +55,14 @@ export default function Hero({ t, base, rail = [] }: HeroProps) {
   });
 
   return (
-    <section ref={sectionRef} className="relative z-[7] flex min-h-[100svh] flex-col overflow-hidden bg-surface-deep pt-28 lg:min-h-[92svh] lg:pt-32">
+    <section ref={sectionRef} onPointerMove={onPointer} className="relative z-[7] flex min-h-[100svh] flex-col overflow-hidden bg-surface-deep pt-28 lg:min-h-[92svh] lg:pt-32">
       {/* Grid lines backdrop — fades toward the rail */}
-      <div
+      <motion.div
         aria-hidden="true"
-        className="absolute inset-0 opacity-50"
+        className="absolute -inset-4 opacity-50"
         style={{
+          x: gridX,
+          y: gridY,
           backgroundImage:
             'linear-gradient(#1A1E26 1px, transparent 1px), linear-gradient(90deg, #1A1E26 1px, transparent 1px)',
           backgroundSize: '72px 72px',

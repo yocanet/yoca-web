@@ -4,6 +4,7 @@ import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 import PageIntro from '@/components/ui/PageIntro';
 import SplitWords from '@/components/ui/SplitWords';
+import ProcessTimeline from '@/components/ui/ProcessTimeline';
 import CtaSection from '@/components/sections/CtaSection';
 import ServiceUmbrellas from '@/components/sections/ServiceUmbrellas';
 import Reveal from '@/components/ui/Reveal';
@@ -75,25 +76,7 @@ export default async function ServicesPage() {
                 <p className="light-muted max-w-[46ch] text-[16px] leading-relaxed lg:justify-self-end">{sp.processSub}</p>
               </div>
             </Reveal>
-            <ol className="relative mt-14 grid gap-10 sm:grid-cols-2 lg:mt-20 lg:grid-cols-5 lg:gap-6">
-              {/* Connecting rail (desktop) */}
-              <span aria-hidden="true" className="absolute inset-x-0 top-[9px] hidden h-px bg-[rgba(5,5,5,0.16)] lg:block" />
-              {sp.process.map((step, index) => (
-                <Reveal key={step.name} delay={index * 0.1}>
-                  <li className="relative">
-                    <span
-                      aria-hidden="true"
-                      className={`slant relative z-10 block h-[19px] w-[22px] ${index === sp.process.length - 1 ? 'bg-yoca-lime' : index === 0 ? 'bg-[#050505]' : 'bg-yoca-green'}`}
-                    />
-                    <span className="mt-6 block text-[clamp(44px,5vw,72px)] font-extrabold leading-none tracking-[-0.05em] text-[rgba(5,5,5,0.14)]">
-                      {String(index + 1).padStart(2, '0')}
-                    </span>
-                    <h3 className="mt-3 text-[20px] font-extrabold tracking-[-0.02em]">{step.name}</h3>
-                    <p className="light-muted mt-2 max-w-[30ch] text-[14px] leading-relaxed">{step.desc}</p>
-                  </li>
-                </Reveal>
-              ))}
-            </ol>
+            <ProcessTimeline steps={sp.process} />
             <Reveal delay={0.2}>
               <div className="mt-16 flex flex-wrap gap-4">
                 <Link href={`${base}/contact`} className="btn-primary">

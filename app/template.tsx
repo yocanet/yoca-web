@@ -31,7 +31,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
           className="pointer-events-none fixed inset-0 z-[95] bg-yoca-lime"
           initial={{ clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)' }}
           animate={{ clipPath: 'polygon(100% 0, 108% 0, 100% 100%, 92% 100%)' }}
-          transition={{ duration: 0.62, ease: EASE_YOCA }}
+          transition={{ duration: 0.48, ease: EASE_YOCA }}
           onAnimationComplete={() => setWipeDone(true)}
           style={{ willChange: 'clip-path' }}
         />
@@ -39,7 +39,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
       <motion.div
         initial={{ opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.18, ease: EASE_YOCA }}
+        transition={{ duration: 0.45, delay: 0.14, ease: EASE_YOCA }}
       >
         {children}
       </motion.div>

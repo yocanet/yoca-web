@@ -2,10 +2,11 @@
 
 /* eslint-disable @next/next/no-img-element */
 import Link from 'next/link';
-import { useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { useRef, useState } from 'react';
+import { AnimatePresence, motion, useMotionValue, useSpring } from 'framer-motion';
 import type { CaseStudy } from '@/lib/workData';
 import { DUR, EASE_YOCA } from '@/lib/motion';
+import ProjectCover from '@/components/work/ProjectCover';
 
 /**
  * Yoca — editorial Work grid (soft-white section).
@@ -54,6 +55,18 @@ const STATUS_STYLE: Record<CaseStudy['kind'], string> = {
 export default function WorkGrid({ studies, base, labels }: WorkGridProps) {
   const [filter, setFilter] = useState<Filter>('all');
   const [hovered, setHovered] = useState<string | null>(null);
+  // Contextual cursor ("View Project ↗") — pointer devices only, inside the grid.
+  const gridRef = useRef<HTMLDivElement>(null);
+  const cx = useMotionValue(0);
+  const cy = useMotionValue(0);
+  const sx = useSpring(cx, { stiffness: 320, damping: 28, mass: 0.4 });
+  const sy = useSpring(cy, { stiffness: 320, damping: 28, mass: 0.4 });
+  const onPointerMove = (event: React.PointerEvent) => {
+    if (event.pointerType !== 'mouse' || !gridRef.current) return;
+    const rect = gridRef.current.getBoundingClientRect();
+    cx.set(event.clientX - rect.left);
+    cy.set(event.clientY - rect.top);
+  };
 
   const filtered = studies.filter((study) => {
     if (filter === 'all') return true;
@@ -104,7 +117,17 @@ export default function WorkGrid({ studies, base, labels }: WorkGridProps) {
       {filtered.length === 0 ? (
         <p className="light-muted py-10 text-[15px]">{labels.empty}</p>
       ) : (
-        <div className="grid gap-8 md:grid-cols-5">
+        <div ref={gridRef} onPointerMove={onPointerMove} className="relative grid gap-8 md:grid-cols-5">
+          {/* Contextual cursor label */}
+          <motion.span
+            aria-hidden="true"
+            className="hover-preview pointer-events-none absolute start-0 top-0 z-20 whitespace-nowrap bg-yoca-lime px-3.5 py-2 text-[12px] font-extrabold uppercase tracking-[0.1em] text-black"
+            style={{ x: sx, y: sy, translateX: 14, translateY: 14 }}
+            animate={{ opacity: hovered ? 1 : 0, scale: hovered ? 1 : 0.8 }}
+            transition={{ duration: DUR.micro, ease: EASE_YOCA }}
+          >
+            {labels.viewCase} ↗
+          </motion.span>
           <AnimatePresence mode="popLayout">
             {filtered.map((study, index) => {
               const slot = LAYOUT[index % LAYOUT.length];
@@ -129,14 +152,9 @@ export default function WorkGrid({ studies, base, labels }: WorkGridProps) {
                     <span
                       className={`relative block overflow-hidden rounded-sm border border-[rgba(5,5,5,0.14)] bg-white ${slot.aspect}`}
                     >
-                      <img
-                        src={study.image}
-                        alt=""
-                        width={featured ? 1400 : 880}
-                        height={featured ? 600 : 560}
-                        loading={featured ? 'eager' : 'lazy'}
-                        className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-                      />
+                      <span className="absolute inset-0 block transition-transform duration-700 ease-out group-hover:scale-[1.03]">
+                        <ProjectCover slug={study.slug} name={study.name} sector={study.sector} index={index} size={featured ? 'lg' : 'md'} priority={featured} />
+                      </span>
                       {study.videoUrl && hovered === study.slug && (
                         <video
                           src={study.videoUrl}
@@ -177,7 +195,7 @@ export default function WorkGrid({ studies, base, labels }: WorkGridProps) {
                         </span>
                       ))}
                     </span>
-                    <h2 className={`mt-3 font-extrabold ${featured ? 'text-[26px]' : 'text-[22px]'}`}>
+                    <h2 className={`mt-3 font-extrabold transition-transform duration-500 ease-out group-hover:translate-x-1 rtl:group-hover:-translate-x-1 ${featured ? 'text-[26px]' : 'text-[22px]'}`}>
                       {study.name}
                     </h2>
                     <p className="light-muted mt-2 max-w-[60ch] text-[15px]">{study.summary}</p>

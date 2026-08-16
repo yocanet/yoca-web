@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import type { Dict } from '@/lib/i18n';
 import type { Locale } from '@/types';
+import FlowDiagram from '@/components/ui/FlowDiagram';
 
 /** Yoca — contact form (client): validates, posts to /api/contact. */
 
@@ -104,18 +105,19 @@ export default function ContactForm({
   };
 
   if (status === 'success') {
+    // Stronger confirmation: message + the three next steps drawn as one short flow.
     return (
-      <div
-        role="status"
-        className="grid justify-items-start gap-4 rounded-md border border-yoca-green bg-yoca-green/5 p-9"
-      >
-        <span
-          aria-hidden="true"
-          className="grid h-10 w-10 place-items-center bg-yoca-green text-xl font-extrabold text-black"
-        >
+      <div role="status" className="grid justify-items-start gap-6 border border-yoca-green bg-yoca-green/5 p-8 lg:p-10">
+        <span aria-hidden="true" className="slant grid h-10 w-11 place-items-center bg-yoca-green text-xl font-extrabold text-black">
           ✓
         </span>
-        <p className="text-[16px] leading-relaxed text-soft">{successMessage}</p>
+        <p className="max-w-[40ch] text-[clamp(20px,2vw,26px)] font-extrabold leading-snug tracking-[-0.02em] text-white">{successMessage}</p>
+        <div className="w-full">
+          <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-subtle">{t.nextTitle}</p>
+          <div className="mt-4">
+            <FlowDiagram steps={t.nextSteps} />
+          </div>
+        </div>
       </div>
     );
   }

@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import type { Dict } from '@/lib/i18n';
 import { EASE_YOCA } from '@/lib/motion';
+import SystemsDiagram from '@/components/sections/SystemsDiagram';
 import SplitWords from '@/components/ui/SplitWords';
 
 /**
@@ -245,6 +246,8 @@ const VISUALS = [BrandVisual, GrowthVisual, ScaleVisual];
 export default function SystemPillars({ t, base }: SystemPillarsProps) {
   const prefersReducedMotion = useReducedMotion();
   const [hovered, setHovered] = useState<number | null>(null);
+  // Scroll position defines the active system (row centred in viewport).
+  const [scrolled, setScrolled] = useState(0);
 
   return (
     <section className="section-light relative z-[7] py-20 lg:py-32" aria-label={t.heading}>
@@ -259,7 +262,10 @@ export default function SystemPillars({ t, base }: SystemPillarsProps) {
           </p>
         </div>
 
-        {/* Three systems as full-width numbered rows — one sequence, read top to bottom */}
+
+        {/* Rows flow naturally on every size; on desktop ONE diagram sits sticky
+            beside them and evolves as rows enter view (or on hover). */}
+        <div className="lg:grid lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-16">
         <ol>
           {t.items.map((system, index) => {
             const Visual = VISUALS[index] ?? BrandVisual;
@@ -273,13 +279,14 @@ export default function SystemPillars({ t, base }: SystemPillarsProps) {
                 transition={{ duration: 0.55, delay: index * 0.08, ease: EASE_YOCA }}
                 className="border-b border-[rgba(5,5,5,0.16)]"
               >
+                <motion.div onViewportEnter={() => setScrolled(index)} viewport={{ margin: '-45% 0px -45% 0px' }}>
                 <Link
                   href={`${base}/services#${GROUP_ANCHORS[index] ?? ''}`}
                   onMouseEnter={() => setHovered(index)}
                   onMouseLeave={() => setHovered(null)}
                   onFocus={() => setHovered(index)}
                   onBlur={() => setHovered(null)}
-                  className="group grid gap-8 py-10 transition-colors duration-300 lg:grid-cols-[minmax(0,2fr)_minmax(0,5fr)_minmax(0,5fr)] lg:gap-10 lg:py-14"
+                  className="group grid gap-8 py-10 transition-colors duration-300 lg:grid-cols-[minmax(0,2fr)_minmax(0,8fr)] lg:gap-10 lg:py-14"
                 >
                   {/* Giant numeral — outlined at rest, filled lime on hover */}
                   <div className="flex items-start justify-between lg:block">
@@ -317,14 +324,24 @@ export default function SystemPillars({ t, base }: SystemPillarsProps) {
                     </ul>
                   </div>
 
-                  <div className="light-card p-6 lg:p-8">
+                  <div className="light-card p-6 lg:hidden">
                     <Visual reduced={!!prefersReducedMotion} active={active} points={system.points} />
                   </div>
                 </Link>
+                </motion.div>
               </motion.li>
             );
           })}
         </ol>
+        <div className="hidden lg:block">
+          <div className="light-card sticky top-28 p-8">
+            <SystemsDiagram
+              active={hovered ?? scrolled}
+              labels={[t.items[0]?.tagline ?? '', t.items[1]?.tagline ?? '', t.items[2]?.tagline ?? '']}
+            />
+          </div>
+        </div>
+        </div>
       </div>
     </section>
   );

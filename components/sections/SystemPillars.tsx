@@ -24,6 +24,18 @@ interface SystemPillarsProps {
 
 const GROUP_ANCHORS = ['brand', 'growth', 'scale'];
 
+interface VisualProps {
+  reduced: boolean;
+  active: boolean;
+  /** The system's three points — used as diagram labels. */
+  points: string[];
+}
+
+const LABEL = { fontSize: 10.5, fontWeight: 700, fill: '#050505', fontFamily: 'inherit' } as const;
+const INK = '#050505';
+const FAINT = 'rgba(5,5,5,0.14)';
+const MID = 'rgba(5,5,5,0.38)';
+
 /** 01 — Brand System: one core → three touchpoints */
 function BrandVisual({ reduced, active, points }: VisualProps) {
   const nodes = [46, 90, 134]; // y of the three touchpoints

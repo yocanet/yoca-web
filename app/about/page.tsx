@@ -160,6 +160,28 @@ export default async function AboutPage() {
           </div>
         </section>
 
+        {/* ── How we're built — compact operational layer (typographic; real
+            team/workspace photography can be added here when it exists) ── */}
+        {a.builtLines?.length > 0 && (
+          <section className="relative z-[7] border-t border-line bg-surface py-16 lg:py-24">
+            <div className="container-y grid gap-10 lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:gap-20">
+              <Reveal>
+                <p className="eyebrow">{a.builtTitle}</p>
+              </Reveal>
+              <ol className="grid gap-2 sm:grid-cols-2">
+                {a.builtLines.map((line, index) => (
+                  <Reveal key={line} delay={index * 0.06}>
+                    <li className="flex items-start gap-3 border-t border-line py-5">
+                      <span aria-hidden="true" className={`slant mt-2 block h-2.5 w-3 flex-none ${index === 3 ? 'bg-yoca-lime' : 'bg-yoca-green'}`} />
+                      <span className="text-[clamp(20px,2.2vw,30px)] font-extrabold leading-tight tracking-[-0.02em] text-soft">{line}</span>
+                    </li>
+                  </Reveal>
+                ))}
+              </ol>
+            </div>
+          </section>
+        )}
+
         {/* ── Team (Supabase-driven; hidden while empty) ────────── */}
         <SectionWrapper sectionKey="team">
           <TeamSection t={t.team} />

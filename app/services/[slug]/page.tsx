@@ -109,7 +109,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
                   {t.servicesPage.tabs.problem}
                 </p>
                 <p className="mt-6 max-w-[40ch] text-[clamp(22px,2.4vw,32px)] font-bold leading-[1.35] tracking-[-0.02em]">
-                  {group.problem}
+                  {service.problem ?? group.problem}
                 </p>
               </div>
             </Reveal>
@@ -166,7 +166,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
                   {t.servicesPage.tabs.stack}
                 </h2>
                 <p className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-[15px] font-semibold text-muted">
-                  {group.stack.map((tool) => (
+                  {(service.stack ?? group.stack).map((tool) => (
                     <span key={tool}>{tool}</span>
                   ))}
                 </p>

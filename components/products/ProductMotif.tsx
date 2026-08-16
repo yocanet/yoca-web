@@ -91,6 +91,33 @@ export default function ProductMotif({ productKey }: { productKey: string }) {
       </svg>
     );
   }
+  if (productKey === 'yocastudio') {
+    // Mobile game studio: a phone frame holding a small game world —
+    // ground line, platforms, a player block, a score bar. No gamepad cliché.
+    return (
+      <svg viewBox="0 0 200 88" className="h-11 w-auto" aria-hidden="true">
+        {/* phone */}
+        <rect x="70" y="2" width="60" height="84" rx="8" fill="none" stroke="rgba(5,5,5,0.35)" strokeWidth="1.5" />
+        <rect x="92" y="6" width="16" height="3" rx="1.5" fill="rgba(5,5,5,0.25)" />
+        {/* world */}
+        <rect x="76" y="70" width="48" height="8" fill="rgba(5,5,5,0.12)" />
+        <motion.rect x="82" y="52" width="14" height="4" fill="rgba(5,5,5,0.3)" initial={reduced ? false : { opacity: 0, y: 4 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: 0.1 }} />
+        <motion.rect x="104" y="40" width="14" height="4" fill="rgba(5,5,5,0.3)" initial={reduced ? false : { opacity: 0, y: 4 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: 0.2 }} />
+        <motion.rect x="86" y="60" width="9" height="9" fill="#A2FF00" initial={reduced ? false : { y: 6, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.45, delay: 0.3, ease: EASE_YOCA }} />
+        <rect x="110" y="30" width="6" height="6" fill="#40C401" />
+        {/* score bar */}
+        <rect x="76" y="14" width="48" height="4" fill="rgba(5,5,5,0.12)" />
+        <motion.rect x="76" y="14" width="30" height="4" fill="#40C401" initial={reduced ? false : { scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.35 }} style={{ transformOrigin: '76px 16px' }} />
+        {/* side: level tiles */}
+        {[0, 1, 2].map((i) => (
+          <rect key={i} x={12 + i * 16} y={62 - i * 12} width="12" height="12" fill={i === 2 ? '#A2FF00' : 'rgba(5,5,5,0.18)'} />
+        ))}
+        {[0, 1].map((i) => (
+          <rect key={i} x={146 + i * 20} y={30 + i * 20} width="14" height="14" fill="none" stroke="rgba(5,5,5,0.3)" strokeWidth="1.5" strokeDasharray="3 3" />
+        ))}
+      </svg>
+    );
+  }
   // labs — experiment modules
   return (
     <svg viewBox="0 0 200 44" className="h-11 w-auto">

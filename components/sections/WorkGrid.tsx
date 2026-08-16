@@ -91,7 +91,8 @@ export default function WorkGrid({ studies, base, labels }: WorkGridProps) {
 
   return (
     <div>
-      {/* Filter bar */}
+      {/* Filter bar — only when there is more than one real category to filter */}
+      {tabs.length > 2 && (
       <div
         role="tablist"
         aria-label={labels.all}
@@ -113,6 +114,7 @@ export default function WorkGrid({ studies, base, labels }: WorkGridProps) {
           </button>
         ))}
       </div>
+      )}
 
       {filtered.length === 0 ? (
         <p className="light-muted py-10 text-[15px]">{labels.empty}</p>

@@ -13,7 +13,7 @@ export interface Dict {
   services: {
     heading: string;
     sub: string;
-    items: Array<{ name: string; desc: string; points: string[]; changes: string }>;
+    items: Array<{ name: string; desc: string; points: string[]; changes: string; problem: string; stack: string[] }>;
     explore: string;
   };
   servicesPage: {
@@ -78,6 +78,9 @@ export interface Dict {
     manifesto: string[];
     stackTitle: string;
     stackSub: string;
+    /** "How we're built" — compact operational layer. */
+    builtTitle: string;
+    builtLines: string[];
   };
   work: {
     metaTitle: string;
@@ -245,12 +248,12 @@ const en: Dict = {
     heading: 'What we build around your next move.',
     sub: 'We do not begin by selling a predefined package. We identify what needs to change, then combine the right capabilities around it.',
     items: [
-      { name: 'Brand Strategy & Identity', desc: 'Positioning, naming, verbal identity and visual systems built to make the brand clear, relevant and recognisable.', points: ['Positioning & brand architecture', 'Naming & verbal identity', 'Visual identity systems', 'Brand guidelines & rollout'], changes: 'The brand stops blending in: one clear position, one voice, one identity everywhere.' },
-      { name: 'Web & Digital Experiences', desc: 'Corporate websites, platforms and conversion-focused digital experiences designed around real user behaviour.', points: ['UX architecture & prototyping', 'Corporate & campaign websites', 'E-commerce experiences', 'Performance, accessibility & SEO foundations'], changes: 'The website turns from a brochure into your best-performing salesperson.' },
-      { name: 'Growth & Performance', desc: 'Acquisition, performance marketing, analytics and optimisation connected through one measurable growth model.', points: ['Google, Meta & TikTok campaigns', 'Conversion tracking & analytics setup', 'SEO & content strategy', 'CRO & landing page optimisation'], changes: 'Marketing spend becomes a measured system, not a monthly gamble.' },
-      { name: 'Creative Production', desc: 'Campaign ideas, social content, advertising creatives and visual systems made to earn attention.', points: ['Campaign concepts', 'Social media content systems', 'Ad creatives & motion', 'Art direction'], changes: 'Content stops chasing trends and starts building recognition.' },
-      { name: 'AI & Automation', desc: 'Practical AI tools and automated workflows that reduce repetition, accelerate decisions and improve operations.', points: ['Workflow automation', 'AI-assisted content pipelines', 'Chat & support assistants', 'Internal tools & integrations'], changes: 'Hours of repetitive work shrink into automated, reliable flows.' },
-      { name: 'Digital Product Development', desc: 'From idea validation to MVP and launch, we design and develop useful digital products with room to scale.', points: ['Idea validation & scoping', 'MVP design & development', 'Product iteration & analytics', 'Launch & growth support'], changes: 'Ideas stop waiting: validated, built and launched with room to scale.' },
+      { name: 'Brand Strategy & Identity', desc: 'Positioning, naming, verbal identity and visual systems built to make the brand clear, relevant and recognisable.', points: ['Positioning & brand architecture', 'Naming & verbal identity', 'Visual identity systems', 'Brand guidelines & rollout'], changes: 'The brand stops blending in: one clear position, one voice, one identity everywhere.', problem: 'The brand blends in: positioning is unclear, the identity is applied inconsistently and the message changes with whoever is speaking.', stack: ['Figma', 'Frontify', 'Notion', 'Adobe Creative Cloud'] },
+      { name: 'Web & Digital Experiences', desc: 'Corporate websites, platforms and conversion-focused digital experiences designed around real user behaviour.', points: ['UX architecture & prototyping', 'Corporate & campaign websites', 'E-commerce experiences', 'Performance, accessibility & SEO foundations'], changes: 'The website turns from a brochure into your best-performing salesperson.', problem: 'Visitors arrive, but the journey is unclear: the website explains the brand without efficiently guiding people toward an action, and it is not built to be measured.', stack: ['Next.js', 'Vercel', 'Figma', 'GA4', 'Google Tag Manager'] },
+      { name: 'Growth & Performance', desc: 'Acquisition, performance marketing, analytics and optimisation connected through one measurable growth model.', points: ['Google, Meta & TikTok campaigns', 'Conversion tracking & analytics setup', 'SEO & content strategy', 'CRO & landing page optimisation'], changes: 'Marketing spend becomes a measured system, not a monthly gamble.', problem: 'Campaigns may bring traffic, but acquisition, conversion and measurement live in separate places — so growth is hard to read and harder to optimise.', stack: ['Google Ads', 'Meta Ads', 'GA4', 'Meta CAPI', 'Semrush', 'Hotjar'] },
+      { name: 'Creative Production', desc: 'Campaign ideas, social content, advertising creatives and visual systems made to earn attention.', points: ['Campaign concepts', 'Social media content systems', 'Ad creatives & motion', 'Art direction'], changes: 'Content stops chasing trends and starts building recognition.', problem: 'Creative output is inconsistent: formats are produced one by one, campaigns lack a system, and content cannot scale without losing quality.', stack: ['Adobe Creative Cloud', 'Figma', 'After Effects', 'Notion'] },
+      { name: 'AI & Automation', desc: 'Practical AI tools and automated workflows that reduce repetition, accelerate decisions and improve operations.', points: ['Workflow automation', 'AI-assisted content pipelines', 'Chat & support assistants', 'Internal tools & integrations'], changes: 'Hours of repetitive work shrink into automated, reliable flows.', problem: 'Repetitive manual work slows the team down: information moves between tools by hand, decisions wait for people, and nothing is automated with a review step.', stack: ['OpenAI API', 'Zapier / Make', 'Supabase', 'Cloudflare Workers'] },
+      { name: 'Digital Product Development', desc: 'From idea validation to MVP and launch, we design and develop useful digital products with room to scale.', points: ['Idea validation & scoping', 'MVP design & development', 'Product iteration & analytics', 'Launch & growth support'], changes: 'Ideas stop waiting: validated, built and launched with room to scale.', problem: 'Good product ideas stall: MVP scope is unclear, product, design and development decisions are disconnected, and the opportunity never becomes a shipped product.', stack: ['Next.js', 'Supabase', 'Vercel', 'Figma', 'Cloudflare'] },
     ],
     explore: 'Explore',
   },
@@ -271,7 +274,7 @@ const en: Dict = {
     tabs: { problem: 'The problem it solves', deliverables: 'Deliverables', stack: 'Tech stack', changes: 'What changes' },
     stackNote: 'Tools are chosen for the problem — never the other way around.',
     flowTitle: 'How this becomes real.',
-    flows: [['Position', 'Language', 'Identity', 'Experience'], ['Strategy', 'UX', 'Interface', 'Development', 'Measurement'], ['Attention', 'Landing', 'Conversion', 'Measure', 'Optimise'], ['Idea', 'Concept', 'Production', 'Distribution'], ['Trigger', 'Process', 'AI', 'Review', 'Action'], ['Problem', 'Flow', 'Product', 'Iterate']],
+    flows: [['Position', 'Language', 'Identity', 'Experience'], ['Strategy', 'UX', 'Interface', 'Build', 'Measure'], ['Acquire', 'Convert', 'Measure', 'Optimise'], ['Idea', 'System', 'Produce', 'Adapt', 'Deploy'], ['Trigger', 'Process', 'Intelligence', 'Review', 'Action'], ['Problem', 'Flow', 'Prototype', 'Build', 'Iterate']],
     groups: [
       {
         key: 'brand',
@@ -306,8 +309,8 @@ const en: Dict = {
     ],
   },
   products: {
-    metaTitle: 'Products — YocaServe, WonKick, Demo Hub & Labs | Yoca',
-    metaDescription: 'Yoca’s own product ecosystem: YocaServe, WonKick, Yoca Demo Hub and Yoca Labs — built and grown with the same systems we apply to client brands.',
+    metaTitle: 'Products — YocaServe, WonKick, YocaStudio, Demo Hub & Labs | Yoca',
+    metaDescription: 'Yoca’s own product ecosystem: YocaServe, WonKick, YocaStudio, Yoca Demo Hub and Yoca Labs — built and grown with the same systems we apply to client brands.',
     eyebrow: 'Yoca Products',
     heading: 'Products we build and grow ourselves.',
     sub: 'Our product ecosystem is where the Yoca methodology is tested in practice—the same strategic, creative and technical systems we bring to client work, applied to products we build ourselves.',
@@ -334,6 +337,15 @@ const en: Dict = {
         status: 'soon',
         cta: 'Explore WonKick',
         capabilities: ['Daily Challenges', 'Squad Builder', 'Interactive Game Modes'],
+      },
+      {
+        key: 'yocastudio',
+        name: 'YocaStudio',
+        category: 'Mobile Game Studio',
+        desc: 'An independent game studio within Yoca, building original, accessible and replayable mobile game experiences.',
+        status: 'soon',
+        cta: 'Explore YocaStudio',
+        capabilities: ['Mobile-First', 'Original IP', 'Rapid Prototyping'],
       },
       {
         key: 'demo-hub',
@@ -376,6 +388,8 @@ const en: Dict = {
     manifesto: ['Think clearly.', 'Build deliberately.', 'Measure honestly.', 'Improve continuously.'],
     stackTitle: 'The tools change. The system stays connected.',
     stackSub: 'The platform mix may change from project to project. What stays consistent is the way strategy, execution and measurement connect.',
+    builtTitle: 'How we’re built',
+    builtLines: ['Compact team.', 'Senior thinking.', 'One accountable system.', 'Built around the problem.'],
   },
   work: {
     metaTitle: 'Selected Work — Brands and Digital Experiences | Yoca',
@@ -405,7 +419,7 @@ const en: Dict = {
     statusConcept: 'Concept Project',
     statusProduct: 'Yoca Product',
     statusExp: 'Experimental',
-    designedOutcome: 'Designed Outcome',
+    designedOutcome: 'Intended Impact',
     liveLabel: 'View Live',
   },
   contact: {
@@ -600,12 +614,12 @@ const tr: Dict = {
     heading: 'Bir sonraki adımınızın ihtiyaç duyduğu yapıyı kuruyoruz.',
     sub: 'Önceden hazırlanmış bir paket satarak başlamayız. Değişmesi gereken noktayı belirler, doğru yetkinlikleri bunun etrafında birleştiririz.',
     items: [
-      { name: 'Marka Stratejisi ve Kimlik', desc: 'Markayı net, anlamlı ve ayırt edilebilir hâle getiren konumlandırma, isimlendirme, marka dili ve görsel kimlik sistemleri.', points: ['Konumlandırma ve marka mimarisi', 'İsimlendirme ve marka dili', 'Görsel kimlik sistemleri', 'Marka rehberi ve uygulama'], changes: 'Marka sıradanlıktan çıkar: her yerde tek net konum, tek ses, tek kimlik.' },
-      { name: 'Web ve Dijital Deneyimler', desc: 'Gerçek kullanıcı davranışlarına göre tasarlanan kurumsal siteler, platformlar ve dönüşüm odaklı dijital deneyimler.', points: ['UX mimarisi ve prototipleme', 'Kurumsal ve kampanya siteleri', 'E-ticaret deneyimleri', 'Performans, erişilebilirlik ve SEO altyapısı'], changes: 'Web sitesi broşür olmaktan çıkıp en iyi performans gösteren satışçınıza dönüşür.' },
-      { name: 'Büyüme ve Performans', desc: 'Tek bir ölçülebilir büyüme modeli altında birleştirilen müşteri kazanımı, performans pazarlaması, analiz ve optimizasyon.', points: ['Google, Meta ve TikTok kampanyaları', 'Dönüşüm takibi ve analitik kurulumu', 'SEO ve içerik stratejisi', 'CRO ve açılış sayfası optimizasyonu'], changes: 'Pazarlama harcaması aylık bir kumar değil, ölçülen bir sisteme dönüşür.' },
-      { name: 'Yaratıcı Üretim', desc: 'Dikkat kazanmak için geliştirilen kampanya fikirleri, sosyal medya içerikleri, reklam kreatifleri ve görsel sistemler.', points: ['Kampanya konseptleri', 'Sosyal medya içerik sistemleri', 'Reklam kreatifleri ve motion', 'Sanat yönetimi'], changes: 'İçerik trend kovalamayı bırakır, bilinirlik inşa etmeye başlar.' },
-      { name: 'Yapay Zekâ ve Otomasyon', desc: 'Tekrarlayan işleri azaltan, karar süreçlerini hızlandıran ve operasyonu geliştiren uygulanabilir yapay zekâ araçları ve otomasyonlar.', points: ['İş akışı otomasyonu', 'Yapay zekâ destekli içerik süreçleri', 'Sohbet ve destek asistanları', 'Kurum içi araçlar ve entegrasyonlar'], changes: 'Saatler süren tekrarlı işler otomatik ve güvenilir akışlara iner.' },
-      { name: 'Dijital Ürün Geliştirme', desc: 'Fikir doğrulamadan MVP ve yayına kadar ölçeklenebilir, kullanılabilir dijital ürünler tasarlar ve geliştiririz.', points: ['Fikir doğrulama ve kapsam', 'MVP tasarımı ve geliştirme', 'Ürün iterasyonu ve analitik', 'Lansman ve büyüme desteği'], changes: 'Fikirler beklemeyi bırakır: doğrulanır, inşa edilir ve ölçeklenebilir şekilde yayına alınır.' },
+      { name: 'Marka Stratejisi ve Kimlik', desc: 'Markayı net, anlamlı ve ayırt edilebilir hâle getiren konumlandırma, isimlendirme, marka dili ve görsel kimlik sistemleri.', points: ['Konumlandırma ve marka mimarisi', 'İsimlendirme ve marka dili', 'Görsel kimlik sistemleri', 'Marka rehberi ve uygulama'], changes: 'Marka sıradanlıktan çıkar: her yerde tek net konum, tek ses, tek kimlik.', problem: 'Marka kalabalığa karışıyor: konumlandırma net değil, kimlik tutarsız uygulanıyor ve mesaj konuşan kişiye göre değişiyor.', stack: ['Figma', 'Frontify', 'Notion', 'Adobe Creative Cloud'] },
+      { name: 'Web ve Dijital Deneyimler', desc: 'Gerçek kullanıcı davranışlarına göre tasarlanan kurumsal siteler, platformlar ve dönüşüm odaklı dijital deneyimler.', points: ['UX mimarisi ve prototipleme', 'Kurumsal ve kampanya siteleri', 'E-ticaret deneyimleri', 'Performans, erişilebilirlik ve SEO altyapısı'], changes: 'Web sitesi broşür olmaktan çıkıp en iyi performans gösteren satışçınıza dönüşür.', problem: 'Ziyaretçi geliyor ama yolculuk belirsiz: web sitesi markayı anlatıyor, ancak kullanıcıyı verimli biçimde aksiyona yönlendirmiyor ve ölçülebilir kurulmamış.', stack: ['Next.js', 'Vercel', 'Figma', 'GA4', 'Google Tag Manager'] },
+      { name: 'Büyüme ve Performans', desc: 'Tek bir ölçülebilir büyüme modeli altında birleştirilen müşteri kazanımı, performans pazarlaması, analiz ve optimizasyon.', points: ['Google, Meta ve TikTok kampanyaları', 'Dönüşüm takibi ve analitik kurulumu', 'SEO ve içerik stratejisi', 'CRO ve açılış sayfası optimizasyonu'], changes: 'Pazarlama harcaması aylık bir kumar değil, ölçülen bir sisteme dönüşür.', problem: 'Kampanyalar trafik getirebilir; ama edinim, dönüşüm ve ölçüm ayrı yerlerde yaşıyor — büyüme okunmuyor, optimize edilmesi daha da zor.', stack: ['Google Ads', 'Meta Ads', 'GA4', 'Meta CAPI', 'Semrush', 'Hotjar'] },
+      { name: 'Yaratıcı Üretim', desc: 'Dikkat kazanmak için geliştirilen kampanya fikirleri, sosyal medya içerikleri, reklam kreatifleri ve görsel sistemler.', points: ['Kampanya konseptleri', 'Sosyal medya içerik sistemleri', 'Reklam kreatifleri ve motion', 'Sanat yönetimi'], changes: 'İçerik trend kovalamayı bırakır, bilinirlik inşa etmeye başlar.', problem: 'Yaratıcı üretim tutarsız: formatlar tek tek üretiliyor, kampanyaların sistemi yok ve içerik kaliteyi kaybetmeden ölçeklenemiyor.', stack: ['Adobe Creative Cloud', 'Figma', 'After Effects', 'Notion'] },
+      { name: 'Yapay Zekâ ve Otomasyon', desc: 'Tekrarlayan işleri azaltan, karar süreçlerini hızlandıran ve operasyonu geliştiren uygulanabilir yapay zekâ araçları ve otomasyonlar.', points: ['İş akışı otomasyonu', 'Yapay zekâ destekli içerik süreçleri', 'Sohbet ve destek asistanları', 'Kurum içi araçlar ve entegrasyonlar'], changes: 'Saatler süren tekrarlı işler otomatik ve güvenilir akışlara iner.', problem: 'Tekrarlayan manuel işler ekibi yavaşlatıyor: bilgi araçlar arasında elle taşınıyor, kararlar insan bekliyor ve hiçbir şey inceleme adımıyla otomatikleşmemiş.', stack: ['OpenAI API', 'Zapier / Make', 'Supabase', 'Cloudflare Workers'] },
+      { name: 'Dijital Ürün Geliştirme', desc: 'Fikir doğrulamadan MVP ve yayına kadar ölçeklenebilir, kullanılabilir dijital ürünler tasarlar ve geliştiririz.', points: ['Fikir doğrulama ve kapsam', 'MVP tasarımı ve geliştirme', 'Ürün iterasyonu ve analitik', 'Lansman ve büyüme desteği'], changes: 'Fikirler beklemeyi bırakır: doğrulanır, inşa edilir ve ölçeklenebilir şekilde yayına alınır.', problem: 'İyi ürün fikirleri takılıyor: MVP kapsamı belirsiz, ürün-tasarım-geliştirme kararları kopuk ve fırsat hiçbir zaman yayınlanmış bir ürüne dönüşmüyor.', stack: ['Next.js', 'Supabase', 'Vercel', 'Figma', 'Cloudflare'] },
     ],
     explore: 'İncele',
   },
@@ -626,7 +640,7 @@ const tr: Dict = {
     tabs: { problem: 'Hangi problemi çözer?', deliverables: 'Neler teslim edilir?', stack: 'Teknoloji altyapısı', changes: 'Ne değişir?' },
     stackNote: 'Araçlar probleme göre seçilir — asla tersi değil.',
     flowTitle: 'Bu nasıl gerçeğe dönüşür.',
-    flows: [['Konum', 'Dil', 'Kimlik', 'Deneyim'], ['Strateji', 'UX', 'Arayüz', 'Geliştirme', 'Ölçüm'], ['Dikkat', 'Açılış', 'Dönüşüm', 'Ölçüm', 'Optimizasyon'], ['Fikir', 'Konsept', 'Üretim', 'Dağıtım'], ['Tetik', 'Süreç', 'Yapay zekâ', 'İnceleme', 'Aksiyon'], ['Problem', 'Akış', 'Ürün', 'İterasyon']],
+    flows: [['Konum', 'Dil', 'Kimlik', 'Deneyim'], ['Strateji', 'UX', 'Arayüz', 'Geliştirme', 'Ölçüm'], ['Edin', 'Dönüştür', 'Ölç', 'Optimize et'], ['Fikir', 'Sistem', 'Üret', 'Uyarla', 'Yayınla'], ['Tetik', 'Süreç', 'Zekâ', 'İnceleme', 'Aksiyon'], ['Problem', 'Akış', 'Prototip', 'Geliştirme', 'İterasyon']],
     groups: [
       {
         key: 'brand',
@@ -661,8 +675,8 @@ const tr: Dict = {
     ],
   },
   products: {
-    metaTitle: 'Ürünler — YocaServe, WonKick, Demo Hub ve Labs | Yoca',
-    metaDescription: 'Yoca’nın kendi ürün ekosistemi: YocaServe, WonKick, Yoca Demo Hub ve Yoca Labs — müşteri markalarına uyguladığımız sistemlerle inşa edilip büyütülüyor.',
+    metaTitle: 'Ürünler — YocaServe, WonKick, YocaStudio, Demo Hub ve Labs | Yoca',
+    metaDescription: 'Yoca’nın kendi ürün ekosistemi: YocaServe, WonKick, YocaStudio, Yoca Demo Hub ve Yoca Labs — müşteri markalarına uyguladığımız sistemlerle inşa edilip büyütülüyor.',
     eyebrow: 'Yoca Ürünleri',
     heading: 'Kendimiz inşa edip büyüttüğümüz ürünler.',
     sub: 'Ürün ekosistemimiz, Yoca metodolojisinin pratikte test edildiği yerdir — müşteri işlerine getirdiğimiz stratejik, yaratıcı ve teknik sistemlerin, kendi geliştirdiğimiz ürünlere uygulanmış hâli.',
@@ -689,6 +703,15 @@ const tr: Dict = {
         status: 'soon',
         cta: 'WonKick’i Keşfet',
         capabilities: ['Günlük Görevler', 'Kadro Kurucu', 'İnteraktif Oyun Modları'],
+      },
+      {
+        key: 'yocastudio',
+        name: 'YocaStudio',
+        category: 'Mobil Oyun Stüdyosu',
+        desc: 'Mobil cihazlar için özgün, erişilebilir ve tekrar oynanabilir oyun deneyimleri geliştiren, Yoca bünyesindeki bağımsız oyun stüdyosu.',
+        status: 'soon',
+        cta: 'YocaStudio’yu Keşfet',
+        capabilities: ['Önce Mobil', 'Özgün IP', 'Hızlı Prototipleme'],
       },
       {
         key: 'demo-hub',
@@ -731,6 +754,8 @@ const tr: Dict = {
     manifesto: ['Net düşün.', 'Bilinçli inşa et.', 'Dürüstçe ölç.', 'Sürekli geliştir.'],
     stackTitle: 'Araçlar değişir. Sistem bağlı kalır.',
     stackSub: 'Platform karması projeden projeye değişebilir. Değişmeyen şey; strateji, uygulama ve ölçümün birbirine bağlanma biçimidir.',
+    builtTitle: 'Nasıl kurulduk',
+    builtLines: ['Kompakt ekip.', 'Kıdemli düşünce.', 'Tek sorumlu sistem.', 'Problemin etrafında kurulu.'],
   },
   work: {
     metaTitle: 'Seçili Projeler — Markalar ve Dijital Deneyimler | Yoca',
@@ -760,7 +785,7 @@ const tr: Dict = {
     statusConcept: 'Konsept Proje',
     statusProduct: 'Yoca Ürünü',
     statusExp: 'Deneysel',
-    designedOutcome: 'Tasarlanan Sonuç',
+    designedOutcome: 'Hedeflenen Etki',
     liveLabel: 'Canlı Görüntüle',
   },
   contact: {
@@ -955,12 +980,12 @@ const az: Dict = {
     heading: 'Növbəti addımınız üçün lazım olan sistemi qururuq.',
     sub: 'Əvvəlcədən hazırlanmış paket satmaqla başlamırıq. Dəyişməli olan nöqtəni müəyyən edir və uyğun bacarıqları onun ətrafında birləşdiririk.',
     items: [
-      { name: 'Brend Strategiyası və Kimlik', desc: 'Brendi aydın, uyğun və tanınan edən mövqeləndirmə, adlandırma, verbal kimlik və vizual sistemlər.', points: ['Mövqeləndirmə və brend arxitekturası', 'Adlandırma və verbal kimlik', 'Vizual kimlik sistemləri', 'Brend qaydaları və tətbiq'], changes: 'Brend adilikdən çıxır: hər yerdə vahid aydın mövqe, vahid səs, vahid kimlik.' },
-      { name: 'Veb və Rəqəmsal Təcrübələr', desc: 'Real istifadəçi davranışlarına əsaslanan korporativ saytlar, platformalar və konversiya yönümlü rəqəmsal təcrübələr.', points: ['UX arxitekturası və prototipləşdirmə', 'Korporativ və kampaniya saytları', 'E-ticarət təcrübələri', 'Performans, əlçatanlıq və SEO təməli'], changes: 'Sayt broşürdən ən yaxşı performans göstərən satıcınıza çevrilir.' },
-      { name: 'İnkişaf və Performans', desc: 'Vahid ölçülə bilən inkişaf modeli ilə birləşdirilən istifadəçi cəlbi, performans marketinqi, analitika və optimizasiya.', points: ['Google, Meta və TikTok kampaniyaları', 'Konversiya izləməsi və analitika qurulumu', 'SEO və məzmun strategiyası', 'CRO və açılış səhifəsi optimizasiyası'], changes: 'Marketinq xərci aylıq qumar deyil, ölçülən sistemə çevrilir.' },
-      { name: 'Kreativ İstehsal', desc: 'Diqqət qazanmaq üçün hazırlanan kampaniya ideyaları, sosial media məzmunu, reklam kreativləri və vizual sistemlər.', points: ['Kampaniya konseptləri', 'Sosial media məzmun sistemləri', 'Reklam kreativləri və motion', 'Art direksiya'], changes: 'Məzmun trend qovmağı dayandırır, tanınırlıq qurmağa başlayır.' },
-      { name: 'Süni İntellekt və Avtomatlaşdırma', desc: 'Təkrarlanan işləri azaldan, qərarları sürətləndirən və əməliyyatları yaxşılaşdıran praktik süni intellekt alətləri və avtomatlaşdırmalar.', points: ['İş axını avtomatlaşdırması', 'Sİ dəstəkli məzmun prosesləri', 'Söhbət və dəstək asistentləri', 'Daxili alətlər və inteqrasiyalar'], changes: 'Saatlarla çəkən təkrar işlər avtomatik, etibarlı axınlara enir.' },
-      { name: 'Rəqəmsal Məhsul İnkişafı', desc: 'İdeyanın təsdiqindən MVP və buraxılışa qədər miqyaslana bilən faydalı rəqəmsal məhsullar hazırlayırıq.', points: ['İdeyanın təsdiqi və əhatə dairəsi', 'MVP dizaynı və inkişafı', 'Məhsul iterasiyası və analitika', 'Buraxılış və inkişaf dəstəyi'], changes: 'İdeyalar gözləməyi dayandırır: təsdiqlənir, qurulur və miqyaslana bilən şəkildə istifadəyə verilir.' },
+      { name: 'Brend Strategiyası və Kimlik', desc: 'Brendi aydın, uyğun və tanınan edən mövqeləndirmə, adlandırma, verbal kimlik və vizual sistemlər.', points: ['Mövqeləndirmə və brend arxitekturası', 'Adlandırma və verbal kimlik', 'Vizual kimlik sistemləri', 'Brend qaydaları və tətbiq'], changes: 'Brend adilikdən çıxır: hər yerdə vahid aydın mövqe, vahid səs, vahid kimlik.', problem: 'Brend kütlə içində itir: mövqeləndirmə aydın deyil, kimlik ardıcıl tətbiq olunmur və mesaj danışan şəxsə görə dəyişir.', stack: ['Figma', 'Frontify', 'Notion', 'Adobe Creative Cloud'] },
+      { name: 'Veb və Rəqəmsal Təcrübələr', desc: 'Real istifadəçi davranışlarına əsaslanan korporativ saytlar, platformalar və konversiya yönümlü rəqəmsal təcrübələr.', points: ['UX arxitekturası və prototipləşdirmə', 'Korporativ və kampaniya saytları', 'E-ticarət təcrübələri', 'Performans, əlçatanlıq və SEO təməli'], changes: 'Sayt broşürdən ən yaxşı performans göstərən satıcınıza çevrilir.', problem: 'Ziyarətçi gəlir, amma yol aydın deyil: veb-sayt brendi izah edir, lakin insanı səmərəli şəkildə hərəkətə yönləndirmir və ölçülə bilən qurulmayıb.', stack: ['Next.js', 'Vercel', 'Figma', 'GA4', 'Google Tag Manager'] },
+      { name: 'İnkişaf və Performans', desc: 'Vahid ölçülə bilən inkişaf modeli ilə birləşdirilən istifadəçi cəlbi, performans marketinqi, analitika və optimizasiya.', points: ['Google, Meta və TikTok kampaniyaları', 'Konversiya izləməsi və analitika qurulumu', 'SEO və məzmun strategiyası', 'CRO və açılış səhifəsi optimizasiyası'], changes: 'Marketinq xərci aylıq qumar deyil, ölçülən sistemə çevrilir.', problem: 'Kampaniyalar trafik gətirə bilər; amma cəlbetmə, konversiya və ölçmə ayrı yerlərdə yaşayır — artım oxunmur, optimallaşdırmaq daha da çətindir.', stack: ['Google Ads', 'Meta Ads', 'GA4', 'Meta CAPI', 'Semrush', 'Hotjar'] },
+      { name: 'Kreativ İstehsal', desc: 'Diqqət qazanmaq üçün hazırlanan kampaniya ideyaları, sosial media məzmunu, reklam kreativləri və vizual sistemlər.', points: ['Kampaniya konseptləri', 'Sosial media məzmun sistemləri', 'Reklam kreativləri və motion', 'Art direksiya'], changes: 'Məzmun trend qovmağı dayandırır, tanınırlıq qurmağa başlayır.', problem: 'Kreativ istehsal ardıcıl deyil: formatlar tək-tək hazırlanır, kampaniyaların sistemi yoxdur və məzmun keyfiyyəti itirmədən miqyaslana bilmir.', stack: ['Adobe Creative Cloud', 'Figma', 'After Effects', 'Notion'] },
+      { name: 'Süni İntellekt və Avtomatlaşdırma', desc: 'Təkrarlanan işləri azaldan, qərarları sürətləndirən və əməliyyatları yaxşılaşdıran praktik süni intellekt alətləri və avtomatlaşdırmalar.', points: ['İş axını avtomatlaşdırması', 'Sİ dəstəkli məzmun prosesləri', 'Söhbət və dəstək asistentləri', 'Daxili alətlər və inteqrasiyalar'], changes: 'Saatlarla çəkən təkrar işlər avtomatik, etibarlı axınlara enir.', problem: 'Təkrarlanan əl işi komandanı ləngidir: məlumat alətlər arasında əllə daşınır, qərarlar insan gözləyir və heç nə yoxlama addımı ilə avtomatlaşdırılmayıb.', stack: ['OpenAI API', 'Zapier / Make', 'Supabase', 'Cloudflare Workers'] },
+      { name: 'Rəqəmsal Məhsul İnkişafı', desc: 'İdeyanın təsdiqindən MVP və buraxılışa qədər miqyaslana bilən faydalı rəqəmsal məhsullar hazırlayırıq.', points: ['İdeyanın təsdiqi və əhatə dairəsi', 'MVP dizaynı və inkişafı', 'Məhsul iterasiyası və analitika', 'Buraxılış və inkişaf dəstəyi'], changes: 'İdeyalar gözləməyi dayandırır: təsdiqlənir, qurulur və miqyaslana bilən şəkildə istifadəyə verilir.', problem: 'Yaxşı məhsul ideyaları ilişib qalır: MVP əhatəsi aydın deyil, məhsul-dizayn-tərtibat qərarları qopuqdur və imkan heç vaxt buraxılmış məhsula çevrilmir.', stack: ['Next.js', 'Supabase', 'Vercel', 'Figma', 'Cloudflare'] },
     ],
     explore: 'Bax',
   },
@@ -981,7 +1006,7 @@ const az: Dict = {
     tabs: { problem: 'Hansı problemi həll edir?', deliverables: 'Nələr təhvil verilir?', stack: 'Texnologiya dəsti', changes: 'Nə dəyişir?' },
     stackNote: 'Alətlər problemə görə seçilir — heç vaxt əksinə yox.',
     flowTitle: 'Bu necə reallaşır.',
-    flows: [['Mövqe', 'Dil', 'Kimlik', 'Təcrübə'], ['Strategiya', 'UX', 'İnterfeys', 'Tərtibat', 'Ölçmə'], ['Diqqət', 'Açılış', 'Konversiya', 'Ölçmə', 'Optimallaşdırma'], ['İdeya', 'Konsept', 'İstehsal', 'Yayım'], ['Tətik', 'Proses', 'Süni intellekt', 'Baxış', 'Hərəkət'], ['Problem', 'Axın', 'Məhsul', 'İterasiya']],
+    flows: [['Mövqe', 'Dil', 'Kimlik', 'Təcrübə'], ['Strategiya', 'UX', 'İnterfeys', 'Tərtibat', 'Ölçmə'], ['Cəlb et', 'Çevir', 'Ölç', 'Optimallaşdır'], ['İdeya', 'Sistem', 'İstehsal', 'Uyğunlaşdır', 'Yayımla'], ['Tətik', 'Proses', 'İntellekt', 'Baxış', 'Hərəkət'], ['Problem', 'Axın', 'Prototip', 'Tərtibat', 'İterasiya']],
     groups: [
       {
         key: 'brand',
@@ -1016,8 +1041,8 @@ const az: Dict = {
     ],
   },
   products: {
-    metaTitle: 'Məhsullar — YocaServe, WonKick, Demo Hub və Labs | Yoca',
-    metaDescription: 'Yoca-nın öz məhsul ekosistemi: YocaServe, WonKick, Yoca Demo Hub və Yoca Labs — müştəri brendlərinə tətbiq etdiyimiz sistemlərlə qurulur və böyüdülür.',
+    metaTitle: 'Məhsullar — YocaServe, WonKick, YocaStudio, Demo Hub və Labs | Yoca',
+    metaDescription: 'Yoca-nın öz məhsul ekosistemi: YocaServe, WonKick, YocaStudio, Yoca Demo Hub və Yoca Labs — müştəri brendlərinə tətbiq etdiyimiz sistemlərlə qurulur və böyüdülür.',
     eyebrow: 'Yoca Məhsulları',
     heading: 'Özümüz qurub böyütdüyümüz məhsullar.',
     sub: 'Məhsul ekosistemimiz Yoca metodologiyasının praktikada sınandığı yerdir — müştəri işlərinə gətirdiyimiz strateji, kreativ və texniki sistemlərin öz qurduğumuz məhsullara tətbiqi.',
@@ -1044,6 +1069,15 @@ const az: Dict = {
         status: 'soon',
         cta: 'WonKick-i Kəşf Et',
         capabilities: ['Gündəlik Tapşırıqlar', 'Heyət Qurucusu', 'İnteraktiv Oyun Rejimləri'],
+      },
+      {
+        key: 'yocastudio',
+        name: 'YocaStudio',
+        category: 'Mobil Oyun Studiyası',
+        desc: 'Mobil cihazlar üçün orijinal, əlçatan və təkrar oynanıla bilən oyun təcrübələri hazırlayan, Yoca daxilindəki müstəqil oyun studiyası.',
+        status: 'soon',
+        cta: 'YocaStudio-nu kəşf et',
+        capabilities: ['Mobil-öncəlikli', 'Orijinal IP', 'Sürətli prototipləmə'],
       },
       {
         key: 'demo-hub',
@@ -1086,6 +1120,8 @@ const az: Dict = {
     manifesto: ['Aydın düşün.', 'Şüurlu qur.', 'Dürüst ölç.', 'Daim təkmilləşdir.'],
     stackTitle: 'Alətlər dəyişir. Sistem bağlı qalır.',
     stackSub: 'Platform tərkibi layihədən layihəyə dəyişə bilər. Dəyişməyən isə strategiya, icra və ölçmənin bir-birinə bağlanma tərzidir.',
+    builtTitle: 'Necə qurulmuşuq',
+    builtLines: ['Kompakt komanda.', 'Təcrübəli düşüncə.', 'Tək cavabdeh sistem.', 'Problemin ətrafında qurulub.'],
   },
   work: {
     metaTitle: 'Seçilmiş Layihələr — Brendlər və Rəqəmsal Təcrübələr | Yoca',
@@ -1115,7 +1151,7 @@ const az: Dict = {
     statusConcept: 'Konsept Layihə',
     statusProduct: 'Yoca Məhsulu',
     statusExp: 'Eksperimental',
-    designedOutcome: 'Dizayn Edilmiş Nəticə',
+    designedOutcome: 'Nəzərdə tutulan təsir',
     liveLabel: 'Canlı Bax',
   },
   contact: {
@@ -1310,12 +1346,12 @@ const ar: Dict = {
     heading: 'نبني البنية التي تحتاجها خطوتك التالية.',
     sub: 'لا نبدأ ببيع حزمة جاهزة. نحدد ما يجب أن يتغير، ثم نجمع القدرات المناسبة حوله.',
     items: [
-      { name: 'استراتيجية العلامة والهوية', desc: 'تموضع وتسمية وهوية لفظية وأنظمة بصرية تجعل العلامة واضحة وذات صلة ومميزة.', points: ['التموضع وبنية العلامة', 'التسمية والهوية اللفظية', 'أنظمة الهوية البصرية', 'أدلة العلامة والتطبيق'], changes: 'تتوقف العلامة عن الذوبان في المشهد: موقع واحد واضح وصوت واحد وهوية واحدة في كل مكان.' },
-      { name: 'الويب والتجارب الرقمية', desc: 'مواقع مؤسسية ومنصات وتجارب رقمية تركز على التحويل، مصممة حول سلوك المستخدم الحقيقي.', points: ['بنية UX والنماذج الأولية', 'مواقع مؤسسية وحملات', 'تجارب التجارة الإلكترونية', 'أسس الأداء وإمكانية الوصول وSEO'], changes: 'يتحول الموقع من كتيّب تعريفي إلى أفضل مندوب مبيعات لديك.' },
-      { name: 'النمو والأداء', desc: 'اكتساب العملاء والتسويق بالأداء والتحليلات والتحسين متصلة في نموذج نمو واحد قابل للقياس.', points: ['حملات Google وMeta وTikTok', 'تتبع التحويلات وإعداد التحليلات', 'استراتيجية SEO والمحتوى', 'تحسين معدل التحويل وصفحات الهبوط'], changes: 'يتحول الإنفاق التسويقي إلى نظام مُقاس بدلًا من مقامرة شهرية.' },
-      { name: 'الإنتاج الإبداعي', desc: 'أفكار حملات ومحتوى اجتماعي وإبداعات إعلانية وأنظمة بصرية صُنعت لتكسب الانتباه.', points: ['مفاهيم الحملات', 'أنظمة محتوى وسائل التواصل', 'الإبداعات الإعلانية والموشن', 'الإدارة الفنية'], changes: 'يتوقف المحتوى عن ملاحقة الترندات ويبدأ ببناء الحضور.' },
-      { name: 'الذكاء الاصطناعي والأتمتة', desc: 'أدوات ذكاء اصطناعي عملية وتدفقات عمل مؤتمتة تقلل التكرار وتسرّع القرارات وتحسن العمليات.', points: ['أتمتة تدفقات العمل', 'خطوط محتوى مدعومة بالذكاء الاصطناعي', 'مساعدو الدردشة والدعم', 'أدوات داخلية وتكاملات'], changes: 'تتقلص ساعات العمل المتكرر إلى تدفقات مؤتمتة موثوقة.' },
-      { name: 'تطوير المنتجات الرقمية', desc: 'من التحقق من الفكرة إلى MVP والإطلاق، نصمم ونطور منتجات رقمية مفيدة قابلة للتوسع.', points: ['التحقق من الفكرة وتحديد النطاق', 'تصميم وتطوير MVP', 'تكرار المنتج والتحليلات', 'دعم الإطلاق والنمو'], changes: 'تتوقف الأفكار عن الانتظار: يتم التحقق منها وبناؤها وإطلاقها مع مجال للتوسع.' },
+      { name: 'استراتيجية العلامة والهوية', desc: 'تموضع وتسمية وهوية لفظية وأنظمة بصرية تجعل العلامة واضحة وذات صلة ومميزة.', points: ['التموضع وبنية العلامة', 'التسمية والهوية اللفظية', 'أنظمة الهوية البصرية', 'أدلة العلامة والتطبيق'], changes: 'تتوقف العلامة عن الذوبان في المشهد: موقع واحد واضح وصوت واحد وهوية واحدة في كل مكان.', problem: 'العلامة تذوب في الزحام: الموقع غير واضح، والهوية تُطبَّق بشكل غير متسق، والرسالة تتغيّر بتغيّر المتحدث.', stack: ['Figma', 'Frontify', 'Notion', 'Adobe Creative Cloud'] },
+      { name: 'الويب والتجارب الرقمية', desc: 'مواقع مؤسسية ومنصات وتجارب رقمية تركز على التحويل، مصممة حول سلوك المستخدم الحقيقي.', points: ['بنية UX والنماذج الأولية', 'مواقع مؤسسية وحملات', 'تجارب التجارة الإلكترونية', 'أسس الأداء وإمكانية الوصول وSEO'], changes: 'يتحول الموقع من كتيّب تعريفي إلى أفضل مندوب مبيعات لديك.', problem: 'يصل الزوار لكن المسار غير واضح: الموقع يشرح العلامة دون أن يقود الناس بكفاءة نحو إجراء، ولم يُبنَ ليُقاس.', stack: ['Next.js', 'Vercel', 'Figma', 'GA4', 'Google Tag Manager'] },
+      { name: 'النمو والأداء', desc: 'اكتساب العملاء والتسويق بالأداء والتحليلات والتحسين متصلة في نموذج نمو واحد قابل للقياس.', points: ['حملات Google وMeta وTikTok', 'تتبع التحويلات وإعداد التحليلات', 'استراتيجية SEO والمحتوى', 'تحسين معدل التحويل وصفحات الهبوط'], changes: 'يتحول الإنفاق التسويقي إلى نظام مُقاس بدلًا من مقامرة شهرية.', problem: 'قد تجلب الحملات زيارات، لكن الاستقطاب والتحويل والقياس تعيش في أماكن منفصلة — فيصعب قراءة النمو ويصعب تحسينه أكثر.', stack: ['Google Ads', 'Meta Ads', 'GA4', 'Meta CAPI', 'Semrush', 'Hotjar'] },
+      { name: 'الإنتاج الإبداعي', desc: 'أفكار حملات ومحتوى اجتماعي وإبداعات إعلانية وأنظمة بصرية صُنعت لتكسب الانتباه.', points: ['مفاهيم الحملات', 'أنظمة محتوى وسائل التواصل', 'الإبداعات الإعلانية والموشن', 'الإدارة الفنية'], changes: 'يتوقف المحتوى عن ملاحقة الترندات ويبدأ ببناء الحضور.', problem: 'الإنتاج الإبداعي غير متسق: تُنتَج الصيغ واحدة تلو الأخرى، والحملات بلا نظام، ولا يمكن للمحتوى أن يتوسّع دون فقدان الجودة.', stack: ['Adobe Creative Cloud', 'Figma', 'After Effects', 'Notion'] },
+      { name: 'الذكاء الاصطناعي والأتمتة', desc: 'أدوات ذكاء اصطناعي عملية وتدفقات عمل مؤتمتة تقلل التكرار وتسرّع القرارات وتحسن العمليات.', points: ['أتمتة تدفقات العمل', 'خطوط محتوى مدعومة بالذكاء الاصطناعي', 'مساعدو الدردشة والدعم', 'أدوات داخلية وتكاملات'], changes: 'تتقلص ساعات العمل المتكرر إلى تدفقات مؤتمتة موثوقة.', problem: 'العمل اليدوي المتكرر يبطئ الفريق: تنتقل المعلومات بين الأدوات يدويًا، وتنتظر القرارات الأشخاص، ولا شيء مؤتمت مع خطوة مراجعة.', stack: ['OpenAI API', 'Zapier / Make', 'Supabase', 'Cloudflare Workers'] },
+      { name: 'تطوير المنتجات الرقمية', desc: 'من التحقق من الفكرة إلى MVP والإطلاق، نصمم ونطور منتجات رقمية مفيدة قابلة للتوسع.', points: ['التحقق من الفكرة وتحديد النطاق', 'تصميم وتطوير MVP', 'تكرار المنتج والتحليلات', 'دعم الإطلاق والنمو'], changes: 'تتوقف الأفكار عن الانتظار: يتم التحقق منها وبناؤها وإطلاقها مع مجال للتوسع.', problem: 'أفكار المنتجات الجيدة تتعثّر: نطاق الـMVP غير واضح، وقرارات المنتج والتصميم والتطوير منفصلة، ولا تتحوّل الفرصة أبدًا إلى منتج مطروح.', stack: ['Next.js', 'Supabase', 'Vercel', 'Figma', 'Cloudflare'] },
     ],
     explore: 'استكشف',
   },
@@ -1336,7 +1372,7 @@ const ar: Dict = {
     tabs: { problem: 'ما المشكلة التي يحلها؟', deliverables: 'المخرجات', stack: 'البنية التقنية', changes: 'ما الذي يتغير؟' },
     stackNote: 'تُختار الأدوات وفق المشكلة — وليس العكس أبدًا.',
     flowTitle: 'كيف يتحوّل هذا إلى واقع.',
-    flows: [['الموقع', 'اللغة', 'الهوية', 'التجربة'], ['الاستراتيجية', 'تجربة المستخدم', 'الواجهة', 'التطوير', 'القياس'], ['الانتباه', 'صفحة الهبوط', 'التحويل', 'القياس', 'التحسين'], ['الفكرة', 'المفهوم', 'الإنتاج', 'التوزيع'], ['المُحفِّز', 'المعالجة', 'الذكاء الاصطناعي', 'المراجعة', 'الإجراء'], ['المشكلة', 'التدفق', 'المنتج', 'التكرار']],
+    flows: [['الموقع', 'اللغة', 'الهوية', 'التجربة'], ['الاستراتيجية', 'تجربة المستخدم', 'الواجهة', 'البناء', 'القياس'], ['الاستقطاب', 'التحويل', 'القياس', 'التحسين'], ['الفكرة', 'النظام', 'الإنتاج', 'التكييف', 'النشر'], ['المُحفِّز', 'المعالجة', 'الذكاء', 'المراجعة', 'الإجراء'], ['المشكلة', 'التدفق', 'النموذج الأولي', 'البناء', 'التكرار']],
     groups: [
       {
         key: 'brand',
@@ -1371,8 +1407,8 @@ const ar: Dict = {
     ],
   },
   products: {
-    metaTitle: 'المنتجات — YocaServe وWonKick وDemo Hub وLabs | Yoca',
-    metaDescription: 'منظومة منتجات Yoca الخاصة: YocaServe وWonKick وYoca Demo Hub وYoca Labs — تُبنى وتنمو بالأنظمة نفسها التي نطبقها على علامات عملائنا.',
+    metaTitle: 'المنتجات — YocaServe وWonKick وYocaStudio وDemo Hub وLabs | Yoca',
+    metaDescription: 'منظومة منتجات Yoca الخاصة: YocaServe وWonKick وYocaStudio وYoca Demo Hub وYoca Labs — تُبنى وتنمو بالأنظمة نفسها التي نطبقها على علامات عملائنا.',
     eyebrow: 'منتجات Yoca',
     heading: 'منتجات نبنيها وننمّيها بأنفسنا.',
     sub: 'منظومة منتجاتنا هي المكان الذي تُختبر فيه منهجية Yoca عمليًا — الأنظمة الاستراتيجية والإبداعية والتقنية نفسها التي نقدمها لعملائنا، مطبقة على منتجات نبنيها بأنفسنا.',
@@ -1399,6 +1435,15 @@ const ar: Dict = {
         status: 'soon',
         cta: 'استكشف WonKick',
         capabilities: ['تحديات يومية', 'بناء التشكيلات', 'أنماط لعب تفاعلية'],
+      },
+      {
+        key: 'yocastudio',
+        name: 'YocaStudio',
+        category: 'استوديو ألعاب للجوال',
+        desc: 'استوديو ألعاب مستقل ضمن Yoca يطوّر تجارب ألعاب أصلية وسهلة الوصول وقابلة لإعادة اللعب على الأجهزة المحمولة.',
+        status: 'soon',
+        cta: 'اكتشف YocaStudio',
+        capabilities: ['الجوال أولًا', 'ملكية فكرية أصلية', 'نمذجة سريعة'],
       },
       {
         key: 'demo-hub',
@@ -1448,7 +1493,7 @@ const ar: Dict = {
     statusConcept: 'مشروع مفاهيمي',
     statusProduct: 'منتج Yoca',
     statusExp: 'تجريبي',
-    designedOutcome: 'النتيجة المصممة',
+    designedOutcome: 'الأثر المستهدف',
     liveLabel: 'عرض مباشر',
   },
   contact: {
@@ -1590,6 +1635,8 @@ const ar: Dict = {
     manifesto: ['فكّر بوضوح.', 'ابنِ بقصد.', 'قِس بصدق.', 'حسّن باستمرار.'],
     stackTitle: 'الأدوات تتغير. النظام يبقى مترابطًا.',
     stackSub: 'قد يتغير مزيج المنصات من مشروع لآخر. ما يبقى ثابتًا هو طريقة ترابط الاستراتيجية والتنفيذ والقياس.',
+    builtTitle: 'كيف نحن مبنيّون',
+    builtLines: ['فريق مضغوط.', 'تفكير رفيع الخبرة.', 'نظام واحد يتحمّل المسؤولية.', 'مبنيّ حول المشكلة.'],
   },
   checkup: {
     eyebrow: 'الفحص الرقمي',

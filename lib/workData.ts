@@ -60,7 +60,7 @@ const CONTENT: Record<Locale, Record<string, LocalizedFields>> = {
       problem: "The concept had a premium physical vision but no digital presence able to communicate it. Early materials leaned on generic real-estate language that blurred what made the location distinctive.",
       approach: "We started from the experience of arriving, not from floor plans: how the coastline, light and pace of the place should feel on a screen. Information architecture was rebuilt around exploration rather than listings.",
       solution: "A calm, image-led digital experience with restrained typography, full-bleed visuals and a clear enquiry path that respects the visitor’s own rhythm.",
-      results: "The brand now enters conversations positioned as a destination rather than a development, and the enquiry flow gives the sales team clearer, better-qualified context from the first message.",
+      results: "The concept is designed to position the brand as a destination rather than a development, and to give a sales team clearer, better-qualified context from the very first enquiry.",
     },
     "vertex-studio": {
       name: "Vertex Studio",
@@ -69,7 +69,7 @@ const CONTENT: Record<Locale, Record<string, LocalizedFields>> = {
       problem: "The studio’s work was strong, but its own presence felt interchangeable with every other portfolio site — the identity said nothing about how the studio thinks.",
       approach: "We treated the studio itself as the case study: a verbal identity built on how they reason about problems, and a visual system disciplined enough to step back behind the work.",
       solution: "A high-contrast editorial identity and portfolio experience where projects open with the decision behind them, not just the final images.",
-      results: "The studio now starts new-business conversations from its point of view instead of its price, and the portfolio finally reads the way the team actually works.",
+      results: "The concept is designed to let a studio open new-business conversations from its point of view rather than its price, with a portfolio structured the way the team actually works.",
     },
     "novis-clinic": {
       name: "Novis Clinic",
@@ -78,7 +78,7 @@ const CONTENT: Record<Locale, Record<string, LocalizedFields>> = {
       problem: "Patients arrived at the old website anxious and left confused: dense medical language, unclear pathways and no sense of who they would actually meet.",
       approach: "Every page was rebuilt around the questions patients actually ask before booking — what happens, who treats me, what does it cost, how do I prepare — in language reviewed for calm and clarity.",
       solution: "A quiet, accessible interface with clear treatment journeys, transparent practical information and an appointment flow designed to reduce hesitation rather than push conversion.",
-      results: "The clinic’s team reports conversations that start further along: patients arrive already understanding their treatment path, and the front desk spends less time repeating basics.",
+      results: "The experience is designed to answer patients’ core questions before the appointment, so that consultations can start further along and the front desk repeats fewer basics.",
     },
     "roam-safaris": {
       name: "Roam Safaris",
@@ -87,7 +87,7 @@ const CONTENT: Record<Locale, Record<string, LocalizedFields>> = {
       problem: "Trips were extraordinary; the booking experience was not. Route options lived in PDFs and email threads, and travellers could not see how one journey differed from another.",
       approach: "We mapped how travellers actually decide — season, pace, landscape, comfort — and turned those decisions into the structure of the product instead of a filter bolted onto a list.",
       solution: "A journey-first platform where each route unfolds visually from day to day, with practical detail layered in only when the traveller asks for it.",
-      results: "Enquiries now arrive with a chosen route and travel window attached, which shortens the planning conversation and lets the team focus on tailoring rather than explaining.",
+      results: "The flow is designed to help visitors clarify their route and travel window before getting in touch, so that a planning conversation can focus on tailoring rather than explaining.",
     },
   },
   tr: {
@@ -98,7 +98,7 @@ const CONTENT: Record<Locale, Record<string, LocalizedFields>> = {
       problem: "Konseptin güçlü bir fiziksel vizyonu vardı ancak bunu anlatabilecek bir dijital varlığı yoktu. İlk materyaller, lokasyonu ayrıştıran değerleri silikleştiren jenerik gayrimenkul dili kullanıyordu.",
       approach: "Kat planlarından değil, oraya varma deneyiminden başladık: Sahilin, ışığın ve o yerin temposunun ekranda nasıl hissettirmesi gerektiğinden. Bilgi mimarisi listeleme mantığı yerine keşif etrafında yeniden kuruldu.",
       solution: "Kontrollü tipografi, tam ekran görseller ve ziyaretçinin kendi ritmine saygı duyan net bir iletişim akışıyla sakin, görsel odaklı bir dijital deneyim.",
-      results: "Marka artık bir konut projesi olarak değil, bir destinasyon olarak konuşuluyor; iletişim akışı satış ekibine ilk mesajdan itibaren daha net ve nitelikli bağlam sunuyor.",
+      results: "Konsept, markanın bir konut projesi olarak değil bir destinasyon olarak konumlanmasını ve iletişim akışının satış ekibine ilk mesajdan itibaren daha net, daha nitelikli bağlam sunmasını hedefleyecek şekilde tasarlandı.",
     },
     "vertex-studio": {
       name: "Vertex Studio",
@@ -107,7 +107,7 @@ const CONTENT: Record<Locale, Record<string, LocalizedFields>> = {
       problem: "Stüdyonun işleri güçlüydü ancak kendi varlığı diğer tüm portfolyo siteleriyle yer değiştirebilir hissettiriyordu; kimlik, stüdyonun nasıl düşündüğüne dair hiçbir şey söylemiyordu.",
       approach: "Stüdyonun kendisini bir vaka çalışması olarak ele aldık: Problemlere yaklaşım biçimleri üzerine kurulan bir marka dili ve işlerin arkasında durmayı bilen disiplinli bir görsel sistem.",
       solution: "Projelerin yalnızca final görsellerle değil, arkalarındaki kararla açıldığı yüksek kontrastlı, editoryal bir kimlik ve portfolyo deneyimi.",
-      results: "Stüdyo artık yeni iş görüşmelerine fiyatıyla değil bakış açısıyla başlıyor; portfolyo, ekibin gerçekte çalıştığı biçimde okunuyor.",
+      results: "Konsept, stüdyonun yeni iş görüşmelerine fiyatıyla değil bakış açısıyla başlamasını sağlayacak ve portfolyonun ekibin gerçekte çalıştığı biçimde okunmasını destekleyecek şekilde kurgulandı.",
     },
     "novis-clinic": {
       name: "Novis Clinic",
@@ -116,7 +116,7 @@ const CONTENT: Record<Locale, Record<string, LocalizedFields>> = {
       problem: "Hastalar eski siteye kaygılı geliyor, kafası karışmış hâlde ayrılıyordu: Yoğun tıbbi dil, belirsiz yönlendirmeler ve karşılaşacakları ekibe dair hiçbir fikir yoktu.",
       approach: "Her sayfa, hastaların randevudan önce gerçekten sorduğu sorular etrafında yeniden kuruldu: Ne olacak, beni kim tedavi edecek, maliyeti ne, nasıl hazırlanmalıyım. Dil, sakinlik ve netlik için gözden geçirildi.",
       solution: "Net tedavi yolculukları, şeffaf pratik bilgiler ve dönüşümü zorlamak yerine tereddüdü azaltmak için tasarlanan randevu akışıyla sakin, erişilebilir bir arayüz.",
-      results: "Klinik ekibi görüşmelerin artık daha ileriden başladığını aktarıyor: Hastalar tedavi süreçlerini anlayarak geliyor ve ön büro temel bilgileri tekrar etmeye daha az zaman harcıyor.",
+      results: "Yeni deneyim, hastaların randevu öncesinde temel sorularına daha erken yanıt almasını ve görüşmeye daha hazırlıklı gelmesini destekleyecek şekilde tasarlandı; böylece ön büronun temel bilgileri tekrar etme yükü azalır.",
     },
     "roam-safaris": {
       name: "Roam Safaris",
@@ -125,7 +125,7 @@ const CONTENT: Record<Locale, Record<string, LocalizedFields>> = {
       problem: "Seyahatler olağanüstüydü ancak rezervasyon deneyimi öyle değildi. Rota seçenekleri PDF’lerde ve e-posta yazışmalarında yaşıyor, gezginler bir yolculuğun diğerinden nasıl ayrıştığını göremiyordu.",
       approach: "Gezginlerin gerçekte nasıl karar verdiğini haritaladık: Mevsim, tempo, coğrafya, konfor. Bu kararları bir listeye eklenmiş filtreler yerine ürünün kendisinin yapısına dönüştürdük.",
       solution: "Her rotanın günden güne görsel olarak açıldığı, pratik detayların yalnızca gezgin istediğinde katman katman sunulduğu yolculuk odaklı bir platform.",
-      results: "Talepler artık seçilmiş bir rota ve seyahat aralığıyla geliyor; planlama görüşmeleri kısalıyor ve ekip anlatmak yerine kişiselleştirmeye odaklanabiliyor.",
+      results: "Yeni akış, ziyaretçilerin iletişime geçmeden önce rota ve seyahat tercihlerini netleştirmesine yardımcı olacak şekilde kurgulandı; planlama görüşmesi anlatmak yerine kişiselleştirmeye odaklanabilir.",
     },
   },
   az: {
@@ -136,7 +136,7 @@ const CONTENT: Record<Locale, Record<string, LocalizedFields>> = {
       problem: "Konseptin güclü fiziki vizyonu var idi, lakin bunu çatdıra biləcək rəqəmsal varlığı yox idi. İlk materiallar lokasiyanı fərqləndirən dəyərləri zəiflədən ümumi daşınmaz əmlak dilinə söykənirdi.",
       approach: "Mərtəbə planlarından deyil, oraya çatma təcrübəsindən başladıq: sahilin, işığın və məkanın tempinin ekranda necə hiss olunmalı olduğundan. İnformasiya arxitekturası siyahılar əvəzinə kəşf ətrafında yenidən quruldu.",
       solution: "Təmkinli tipoqrafiya, tam ekran vizuallar və ziyarətçinin öz ritminə hörmət edən aydın müraciət axını ilə sakit, vizual yönümlü rəqəmsal təcrübə.",
-      results: "Brend artıq tikinti layihəsi kimi deyil, destinasiya kimi mövqelənir; müraciət axını satış komandasına ilk mesajdan daha aydın və keyfiyyətli kontekst verir.",
+      results: "Konsept brendin tikinti layihəsi kimi deyil, destinasiya kimi mövqelənməsini və müraciət axınının satış komandasına ilk mesajdan daha aydın, daha keyfiyyətli kontekst verməsini hədəfləyəcək şəkildə dizayn edilib.",
     },
     "vertex-studio": {
       name: "Vertex Studio",
@@ -145,7 +145,7 @@ const CONTENT: Record<Locale, Record<string, LocalizedFields>> = {
       problem: "Studiyanın işləri güclü idi, lakin öz təqdimatı digər portfolio saytlarından fərqlənmirdi; kimlik studiyanın necə düşündüyü barədə heç nə demirdi.",
       approach: "Studiyanın özünə keys kimi yanaşdıq: problemlərə yanaşma tərzi üzərində qurulan verbal kimlik və işlərin arxasında dayanmağı bacaran intizamlı vizual sistem.",
       solution: "Layihələrin yalnız final görüntülərlə deyil, arxasındakı qərarla açıldığı yüksək kontrastlı, editorial kimlik və portfolio təcrübəsi.",
-      results: "Studiya yeni əməkdaşlıq söhbətlərinə artıq qiyməti ilə deyil, baxış bucağı ilə başlayır; portfolio komandanın real iş tərzini əks etdirir.",
+      results: "Konsept studiyanın yeni əməkdaşlıq söhbətlərinə qiyməti ilə deyil, baxış bucağı ilə başlamasını mümkün edəcək və portfolionun komandanın real iş tərzini əks etdirməsini dəstəkləyəcək şəkildə qurulub.",
     },
     "novis-clinic": {
       name: "Novis Clinic",
@@ -154,7 +154,7 @@ const CONTENT: Record<Locale, Record<string, LocalizedFields>> = {
       problem: "Pasiyentlər köhnə sayta narahat gəlir, çaşqın ayrılırdılar: sıx tibbi dil, qeyri-müəyyən yönləndirmələr və qarşılaşacaqları komanda barədə heç bir təsəvvür yox idi.",
       approach: "Hər səhifə pasiyentlərin görüşdən əvvəl həqiqətən verdiyi suallar ətrafında yenidən quruldu: nə baş verəcək, məni kim müalicə edəcək, qiyməti nədir, necə hazırlaşım. Dil sakitlik və aydınlıq üçün nəzərdən keçirildi.",
       solution: "Aydın müalicə yolları, şəffaf praktik məlumat və konversiyanı sıxışdırmaq əvəzinə tərəddüdü azaltmaq üçün qurulmuş görüş axını ilə sakit, əlçatan interfeys.",
-      results: "Klinikanın komandası söhbətlərin artıq daha irəlidən başladığını bildirir: pasiyentlər müalicə yolunu anlayaraq gəlir, qəbul isə əsas məlumatları təkrarlamağa daha az vaxt sərf edir.",
+      results: "Yeni təcrübə pasiyentlərin görüşdən əvvəl əsas suallarına daha tez cavab almasını və söhbətə daha hazırlıqlı gəlməsini dəstəkləyəcək şəkildə dizayn edilib; beləliklə qəbulun əsas məlumatları təkrarlama yükü azalır.",
     },
     "roam-safaris": {
       name: "Roam Safaris",
@@ -163,7 +163,7 @@ const CONTENT: Record<Locale, Record<string, LocalizedFields>> = {
       problem: "Səyahətlər qeyri-adi idi, rezervasiya təcrübəsi isə yox. Marşrut seçimləri PDF-lərdə və e-poçt yazışmalarında yaşayırdı və səyahətçilər bir yolun digərindən nə ilə fərqləndiyini görə bilmirdilər.",
       approach: "Səyahətçilərin real qərar vermə tərzini xəritələdik: mövsüm, temp, landşaft, komfort. Bu qərarları siyahıya əlavə edilmiş filtr əvəzinə məhsulun öz strukturuna çevirdik.",
       solution: "Hər marşrutun gündən-günə vizual şəkildə açıldığı, praktik detalların yalnız səyahətçi istədikdə təqdim olunduğu səyahət yönümlü platforma.",
-      results: "Müraciətlər artıq seçilmiş marşrut və səyahət tarixləri ilə gəlir; planlaşdırma söhbətləri qısalır və komanda izah etmək əvəzinə fərdiləşdirməyə fokuslanır.",
+      results: "Yeni axın ziyarətçilərin əlaqə saxlamazdan əvvəl marşrut və səyahət seçimlərini dəqiqləşdirməsinə kömək edəcək şəkildə qurulub; planlaşdırma söhbəti izah etmək əvəzinə fərdiləşdirməyə fokuslana bilər.",
     },
   },
   ar: {
@@ -174,7 +174,7 @@ const CONTENT: Record<Locale, Record<string, LocalizedFields>> = {
       problem: "كان للمفهوم رؤية عمرانية مميزة لكن دون حضور رقمي قادر على التعبير عنها، واعتمدت المواد الأولى على لغة عقارية عامة أضعفت ما يميز الموقع.",
       approach: "بدأنا من تجربة الوصول إلى المكان لا من المخططات: كيف يجب أن يُحَس الساحل والضوء وإيقاع المكان على الشاشة. وأعيد بناء هيكلة المحتوى حول الاستكشاف بدلًا من القوائم.",
       solution: "تجربة رقمية هادئة تقودها الصورة، بخطوط متزنة ومشاهد بملء الشاشة ومسار تواصل واضح يحترم إيقاع الزائر.",
-      results: "أصبحت العلامة تُقدَّم كوجهة لا كمشروع عقاري، ويمنح مسار التواصل فريق المبيعات سياقًا أوضح وأكثر جدية منذ الرسالة الأولى.",
+      results: "صُمّم المفهوم ليضع العلامة كوجهة لا كمشروع عقاري، وليمنح فريق المبيعات سياقًا أوضح وأكثر جدية منذ أول استفسار.",
     },
     "vertex-studio": {
       name: "Vertex Studio",
@@ -183,7 +183,7 @@ const CONTENT: Record<Locale, Record<string, LocalizedFields>> = {
       problem: "كانت أعمال الاستوديو قوية، لكن حضوره الخاص بدا قابلًا للاستبدال بأي موقع أعمال آخر؛ فالهوية لم تقل شيئًا عن طريقة تفكيره.",
       approach: "تعاملنا مع الاستوديو نفسه كدراسة حالة: هوية لفظية مبنية على طريقة تحليله للمشكلات، ونظام بصري منضبط يعرف متى يتراجع خلف العمل.",
       solution: "هوية تحريرية عالية التباين وتجربة ملف أعمال تُفتتح فيها المشاريع بالقرار الذي يقف خلفها، لا بالصور النهائية فقط.",
-      results: "أصبح الاستوديو يبدأ محادثات الأعمال الجديدة من وجهة نظره لا من سعره، وصار ملف الأعمال يُقرأ كما يعمل الفريق فعلًا.",
+      results: "صُمّم المفهوم ليتيح للاستوديو بدء محادثات الأعمال الجديدة من وجهة نظره لا من سعره، مع ملف أعمال مبنيّ بالطريقة التي يعمل بها الفريق فعلًا.",
     },
     "novis-clinic": {
       name: "Novis Clinic",
@@ -192,7 +192,7 @@ const CONTENT: Record<Locale, Record<string, LocalizedFields>> = {
       problem: "كان المرضى يصلون إلى الموقع القديم قلقين ويغادرونه مرتبكين: لغة طبية كثيفة، ومسارات غير واضحة، ولا فكرة عمن سيقابلونه فعلًا.",
       approach: "أعيد بناء كل صفحة حول الأسئلة التي يطرحها المرضى فعلًا قبل الحجز: ماذا سيحدث، من سيعالجني، كم التكلفة، كيف أستعد — بلغة رُوجعت لتكون هادئة وواضحة.",
       solution: "واجهة هادئة وسهلة الوصول، بمسارات علاج واضحة ومعلومات عملية شفافة، ومسار حجز صُمم لتقليل التردد لا للضغط على الزائر.",
-      results: "يشير فريق العيادة إلى أن المحادثات أصبحت تبدأ من نقطة أبعد: يصل المرضى وهم يفهمون مسار علاجهم، ويقضي موظفو الاستقبال وقتًا أقل في تكرار الأساسيات.",
+      results: "صُمّمت التجربة للإجابة عن الأسئلة الأساسية للمرضى قبل الموعد، بحيث يمكن أن تبدأ الاستشارة من نقطة أبعد ويقلّ تكرار الأساسيات في الاستقبال.",
     },
     "roam-safaris": {
       name: "Roam Safaris",
@@ -201,7 +201,7 @@ const CONTENT: Record<Locale, Record<string, LocalizedFields>> = {
       problem: "كانت الرحلات استثنائية، لكن تجربة الحجز لم تكن كذلك. عاشت خيارات المسارات في ملفات PDF وسلاسل بريد إلكتروني، ولم يستطع المسافرون رؤية ما يميز رحلة عن أخرى.",
       approach: "رسمنا خريطة الطريقة التي يقرر بها المسافرون فعلًا — الموسم والإيقاع والطبيعة والراحة — وحولنا هذه القرارات إلى بنية المنتج نفسه بدلًا من فلاتر مضافة إلى قائمة.",
       solution: "منصة تبدأ من الرحلة، يتكشف فيها كل مسار بصريًا يومًا بيوم، مع تفاصيل عملية تظهر فقط عندما يطلبها المسافر.",
-      results: "تصل الطلبات الآن ومعها مسار مختار وإطار زمني للسفر، ما يختصر محادثة التخطيط ويتيح للفريق التركيز على التخصيص بدلًا من الشرح.",
+      results: "صُمّم المسار لمساعدة الزوار على تحديد وجهتهم وإطارهم الزمني قبل التواصل، بحيث تركّز محادثة التخطيط على التخصيص بدلًا من الشرح.",
     },
   },
 };

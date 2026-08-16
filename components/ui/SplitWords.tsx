@@ -32,7 +32,9 @@ export default function SplitWords({
 }: SplitWordsProps) {
   const reduced = useReducedMotion();
   const words = text.split(/\s+/).filter(Boolean);
-  const isEmphasis = (word: string) => emphasis.some((e) => word.replace(/[^\p{L}\p{N}]/gu, '') === e.replace(/[^\p{L}\p{N}]/gu, ''));
+  // Strip surrounding punctuation (any script) without Unicode-property regex (tsconfig target).
+  const core = (word: string) => word.replace(/^[\s.,;:!?"'()\[\]{}«»،؛؟\-–—]+|[\s.,;:!?"'()\[\]{}«»،؛؟\-–—]+$/g, '');
+  const isEmphasis = (word: string) => emphasis.some((e) => core(word) === core(e));
 
   if (reduced) {
     return (

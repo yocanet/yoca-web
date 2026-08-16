@@ -34,6 +34,14 @@ const config: Config = {
       maxWidth: {
         container: '1200px',
       },
+      // Angular brand: corners stay tight (the mark has none)
+      borderRadius: {
+        sm: '2px',
+        DEFAULT: '3px',
+        md: '4px',
+        lg: '6px',
+        xl: '8px',
+      },
       keyframes: {
         marquee: {
           from: { transform: 'translateX(0)' },
@@ -43,15 +51,10 @@ const config: Config = {
           '0%': { transform: 'scale(0.5)', opacity: '0.9' },
           '100%': { transform: 'scale(1.8)', opacity: '0' },
         },
-        'orb-drift': {
-          from: { transform: 'translate3d(0,0,0) scale(1)' },
-          to: { transform: 'translate3d(60px,40px,0) scale(1.12)' },
-        },
       },
       animation: {
         marquee: 'marquee 36s linear infinite',
         'pulse-ring': 'pulse-ring 2s ease-out infinite',
-        'orb-drift': 'orb-drift 26s ease-in-out infinite alternate',
       },
     },
   },

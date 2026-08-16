@@ -23,10 +23,6 @@ export default async function TeamSection({ t }: TeamSectionProps) {
     <section
       id="team"
       className="relative z-[7] py-20 lg:py-28"
-      style={{
-        background:
-          'radial-gradient(ellipse 50% 60% at 15% 100%, rgba(64,196,1,0.05), transparent 70%)',
-      }}
     >
       <div className="container-y">
         <div className="mb-12 max-w-2xl lg:mb-16">
@@ -40,7 +36,7 @@ export default async function TeamSection({ t }: TeamSectionProps) {
           {team.map((member) => (
             <article
               key={member.id}
-              className="glass group relative overflow-hidden rounded-md transition-all duration-300 hover:-translate-y-1 hover:border-yoca-lime/40 hover:shadow-[0_0_40px_rgba(162,255,0,0.08)]"
+              className="glass group relative overflow-hidden rounded-md transition-all duration-300 hover:-translate-y-1 hover:border-yoca-lime/40"
             >
               <div className="aspect-square overflow-hidden bg-surface-secondary">
                 <img

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import type { Dict } from '@/lib/i18n';
+import BrandMark from '@/components/ui/BrandMark';
 
 /** Yoca — final call-to-action band (primary CTA → contact). */
 
@@ -10,13 +11,14 @@ interface CtaSectionProps {
 
 export default function CtaSection({ t, base }: CtaSectionProps) {
   return (
-    <section className="relative z-[7] py-24 text-center lg:py-36">
-      <div className="container-y grid justify-items-center">
-        <span aria-hidden="true" className="mb-7 inline-flex gap-2">
-          <span className="h-3.5 w-3.5 bg-yoca-lime" />
-          <span className="h-3.5 w-3.5 bg-yoca-green" />
-          <span className="h-3.5 w-3.5 bg-surface-elevated" />
-        </span>
+    <section className="relative z-[7] overflow-hidden border-t border-line bg-surface-deep py-24 text-center lg:py-36">
+      {/* Oversized mark bleeding off the end edge — the one place it appears large */}
+      <BrandMark
+        className="pointer-events-none absolute -bottom-10 -end-8 h-[min(52vw,340px)] w-auto opacity-[0.07] rtl:-scale-x-100"
+        ink="#FFFFFF"
+      />
+      <div className="container-y relative grid justify-items-center">
+        <BrandMark variant="modules" className="mb-7 h-9 w-auto" />
         <h2 className="max-w-[22ch] text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl lg:text-5xl">
           {t.heading}
         </h2>

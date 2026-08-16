@@ -48,7 +48,7 @@ const STATUS_STYLE: Record<CaseStudy['kind'], string> = {
   client: 'bg-yoca-lime text-black',
   concept: 'bg-[#050505] text-white',
   product: 'bg-yoca-green text-black',
-  experimental: 'border border-[rgba(5,5,5,0.3)] bg-white text-[#050505]',
+  experimental: 'bg-[#E4E4DF] text-[#050505]',
 };
 
 export default function WorkGrid({ studies, base, labels }: WorkGridProps) {
@@ -149,13 +149,13 @@ export default function WorkGrid({ studies, base, labels }: WorkGridProps) {
                       )}
                       {/* Status label */}
                       <span
-                        className={`absolute start-3 top-3 rounded-sm px-2.5 py-1 text-[11px] font-extrabold uppercase tracking-[0.06em] ${STATUS_STYLE[study.kind]}`}
+                        className={`slant absolute start-3 top-3 px-3 py-1 text-[11px] font-extrabold uppercase tracking-[0.06em] ${STATUS_STYLE[study.kind]}`}
                       >
                         {labels.status[study.kind]}
                       </span>
                       {/* Verified metric badge — only when real data exists */}
                       {study.metricBadge && (
-                        <span className="absolute end-3 top-3 rounded-sm bg-yoca-lime px-2.5 py-1 text-[12px] font-extrabold text-black">
+                        <span className="slant absolute end-3 top-3 bg-yoca-lime px-3 py-1 text-[12px] font-extrabold text-black">
                           {study.metricBadge}
                         </span>
                       )}

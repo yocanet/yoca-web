@@ -81,9 +81,8 @@ export default function Hero({ t, base }: HeroProps) {
           backgroundImage:
             'linear-gradient(#1A1E26 1px, transparent 1px), linear-gradient(90deg, #1A1E26 1px, transparent 1px)',
           backgroundSize: '72px 72px',
-          maskImage: 'radial-gradient(ellipse 90% 80% at 50% 30%, #000 30%, transparent 75%)',
-          WebkitMaskImage:
-            'radial-gradient(ellipse 90% 80% at 50% 30%, #000 30%, transparent 75%)',
+          maskImage: 'linear-gradient(180deg, #000 55%, transparent 100%)',
+          WebkitMaskImage: 'linear-gradient(180deg, #000 55%, transparent 100%)',
         }}
       />
 

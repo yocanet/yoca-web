@@ -3,12 +3,14 @@ import Link from 'next/link';
 import { fetchMenu } from '@/lib/supabase';
 import { getRequestContext } from '@/lib/seo';
 import type { Dict } from '@/lib/i18n';
+import YocaSignature from '@/components/branding/YocaSignature';
 
 /**
  * Yoca — site footer.
  * Giant closing hook ("What should we build together next?") with a
  * three-card action gateway (Start a Project · Digital Check-Up · Explore
- * Yoca Products), a 4-column breakdown and the oversized wordmark.
+ * Yoca Products), a 4-column breakdown, the official "Made to move forward."
+ * signature lockup in the bottom bar and the oversized wordmark.
  */
 
 interface SiteFooterProps {
@@ -137,20 +139,15 @@ export default async function SiteFooter({ t }: SiteFooterProps) {
           ))}
         </div>
 
-        <div className="flex flex-wrap items-center gap-x-7 gap-y-4 pt-7 text-[13px] text-subtle">
-          <img
-            src="/brand/yoca-logo-mono-white.svg"
-            alt=""
-            aria-hidden="true"
-            width={96}
-            height={24}
-            loading="lazy"
-            className="h-6 w-auto opacity-80"
-          />
-          <p>
-            © {year} {t.footer.rights}
-          </p>
-          <p className="text-[12px]">{t.footer.message}</p>
+        {/* Bottom bar: copyright (start) · Yoca signature lockup (end) */}
+        <div className="flex flex-wrap items-center justify-between gap-x-7 gap-y-4 pt-7 text-[13px] text-subtle">
+          <div className="flex flex-wrap items-center gap-x-7 gap-y-2">
+            <p>
+              © {year} {t.footer.rights}
+            </p>
+            <p className="text-[12px]">{t.footer.message}</p>
+          </div>
+          <YocaSignature variant="signature" theme="dark" source="yoca.net" className="footer-signature" />
         </div>
 
         {/* Oversized outlined wordmark — typographic texture, not a logo redraw. */}

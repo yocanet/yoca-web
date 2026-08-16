@@ -11,11 +11,17 @@ import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } fro
  * (Faithful to the logo geometry — fragments are never redrawn or distorted.)
  */
 
+/** Exact geometry of the Yoca mark (logo file, viewBox 0 0 250 69.05 → symbol crop). */
+export const MARK = {
+  lime: '0,16.71 1.36,0.62 17.54,0.62 16.18,16.71',
+  green: '9.31,16.71 25.49,16.71 24.13,32.8 7.95,32.8',
+  y: '50.92,0.62 67.43,0.62 42.59,69.04 26.18,69.04 33.49,48.91 15.43,48.91 16.66,32.8 39.56,32.8',
+} as const;
+
 const FRAGMENTS: Array<{ points: string; fill: string; depth: number; delay: number }> = [
-  { points: '4,0 34,0 30,28 0,28', fill: '#A2FF00', depth: 26, delay: 0 },
-  { points: '18,36 48,36 44,64 14,64', fill: '#40C401', depth: 40, delay: 0.9 },
-  { points: '80,0 112,0 72,62 40,62', fill: '#FFFFFF', depth: 14, delay: 0.4 },
-  { points: '40,62 72,62 60,126 28,126', fill: '#FFFFFF', depth: 20, delay: 1.3 },
+  { points: MARK.lime, fill: '#A2FF00', depth: 26, delay: 0 },
+  { points: MARK.green, fill: '#40C401', depth: 40, delay: 0.9 },
+  { points: MARK.y, fill: '#FFFFFF', depth: 14, delay: 0.4 },
 ];
 
 export default function HeroSymbol() {
@@ -48,16 +54,8 @@ export default function HeroSymbol() {
       aria-hidden="true"
       className="relative mx-auto w-full max-w-[420px] select-none"
     >
-      {/* Ambient glow behind the mark */}
-      <div
-        className="absolute inset-0 -z-10"
-        style={{
-          background:
-            'radial-gradient(ellipse 60% 55% at 55% 45%, rgba(162,255,0,0.14), transparent 70%)',
-        }}
-      />
       <motion.svg
-        viewBox="-24 -17 160 160"
+        viewBox="-12 -8 92 88"
         className="h-auto w-full"
         style={{ rotate: prefersReducedMotion ? 0 : rotate }}
       >

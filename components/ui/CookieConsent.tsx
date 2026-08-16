@@ -73,7 +73,7 @@ export default function CookieConsent({ text, acceptAll, essentialOnly }: Cookie
     <div
       role="region"
       aria-label="Cookies"
-      className="glass fixed bottom-4 right-4 z-[150] grid w-[min(520px,calc(100vw-2rem))] gap-3.5 rounded-md p-5 shadow-[0_18px_50px_rgba(0,0,0,0.5)]"
+      className="glass fixed bottom-4 right-4 z-[150] grid w-[min(520px,calc(100vw-2rem))] gap-3.5 rounded-md p-5 shadow-[0_12px_32px_rgba(0,0,0,0.45)]"
     >
       <p className="text-[13px] leading-relaxed text-muted">{text}</p>
       <div className="flex flex-wrap items-center gap-2.5">

@@ -24,13 +24,15 @@ interface NodeSpec {
   y: [number, number];
 }
 
-// Y composition roughly mirrors the logo's fragment layout, centred in view.
+// Y composition follows the real mark: lime module (top-left), green module
+// (stacked below it, offset by the logo's 4.83° slant), and three white nodes
+// tracing the Y stroke — upper arm, junction, descending leg.
 const NODES: NodeSpec[] = [
-  { id: 'brand', size: 26, fill: '#A2FF00', label: 'Brand', scattered: [14, 96], system: [30, 40], y: [168, 10] },
-  { id: 'identity', size: 22, fill: '#FFFFFF', label: 'Identity', scattered: [96, 18], system: [120, 92], y: [182, 44] },
-  { id: 'experience', size: 22, fill: '#FFFFFF', label: 'Experience', scattered: [210, 118], system: [210, 44], y: [232, 12] },
-  { id: 'growth', size: 26, fill: '#40C401', label: 'Growth', scattered: [300, 26], system: [296, 108], y: [206, 76] },
-  { id: 'scale', size: 30, fill: '#A2FF00', label: 'Scale', scattered: [368, 112], system: [372, 40], y: [196, 116] },
+  { id: 'brand', size: 26, fill: '#A2FF00', label: 'Brand', scattered: [14, 96], system: [30, 40], y: [150, 12] },
+  { id: 'identity', size: 22, fill: '#FFFFFF', label: 'Identity', scattered: [96, 18], system: [120, 92], y: [268, 12] },
+  { id: 'experience', size: 22, fill: '#FFFFFF', label: 'Experience', scattered: [210, 118], system: [210, 44], y: [214, 84] },
+  { id: 'growth', size: 26, fill: '#40C401', label: 'Growth', scattered: [300, 26], system: [296, 108], y: [170, 48] },
+  { id: 'scale', size: 30, fill: '#A2FF00', label: 'Scale', scattered: [368, 112], system: [372, 40], y: [206, 132] },
 ];
 
 const LINKS: Array<[number, number]> = [

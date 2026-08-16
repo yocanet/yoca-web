@@ -1,1 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-14 -7 140 140" width="140" height="140"><polygon points="4,0 34,0 30,28 0,28" fill="#A2FF00"/><polygon points="18,36 48,36 44,64 14,64" fill="#40C401"/><polygon points="80,0 112,0 72,62 40,62" fill="#000000"/><polygon points="40,62 72,62 60,126 28,126" fill="#000000"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-1 -0.5 70 70.5" width="70" height="70.5" role="img" aria-label="Yoca">
+  <path fill="#A2FF00" d="M0,16.71L1.36.62h16.18l-1.36,16.09H0Z"/>
+  <path fill="#40C401" d="M25.49,16.71l-1.36,16.09H7.95l1.36-16.09h16.18Z"/>
+  <path fill="#050505" d="M42.59,69.04h-16.41s7.31-20.13,7.31-20.13h-9.96v-.02h-8.1l1.23-16.09h14.66v.06s8.24,0,8.24,0L50.92.62h16.51l-24.83,68.42Z"/>
+</svg>

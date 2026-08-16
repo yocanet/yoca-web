@@ -141,6 +141,23 @@ bağlandığında yapı aynen çalışmaya devam eder.
 - **Müşteri yorumları:** Vaka detayındaki 5. modül (Müşteri Yorumu) yalnızca
   /admin'den GERÇEK bir yorum girildiğinde görünür.
 
+## 4b. Marka Varlıkları (v9)
+
+Tüm logo dosyaları gerçek logo SVG'sinden (Artboard 9) üretilmiştir:
+
+| Dosya | Kullanım |
+|---|---|
+| `public/brand/yoca-logo-primary.svg` | Koyu zemin (header, admin, schema.org logo) |
+| `public/brand/yoca-logo-light-bg.svg` | Açık zemin |
+| `public/brand/yoca-logo-mono-black.svg` / `-mono-white.svg` | Tek renk |
+| `public/brand/yoca-symbol.svg` / `-dark-ink.svg` | Yalnız Y işareti |
+| `public/favicons/*`, `public/favicon.ico` | Y işareti, koyu kare |
+| `public/brand/og-default.png` | 1200×630 sosyal paylaşım görseli |
+
+Sitedeki her eğik öğe (`.slant`, `.intro-slab`, eyebrow işareti, durum
+etiketleri) logodaki modüllerin **4,83°** eğimini kullanır. `components/ui/BrandMark.tsx`
+işareti birebir geometriyle çizer — başka yerde yeniden çizmeyin.
+
 ## 5. Yayın Sonrası Kontrol Listesi
 
 - [ ] Dört domain de açılıyor, `yoca.com.tr` → `yoca.tr`'ye yönleniyor

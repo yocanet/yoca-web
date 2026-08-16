@@ -1,0 +1,173 @@
+/* Yoca Footer Signature System
+   Zero dependency. Adopts the host project's font-family via `inherit`. */
+
+.root {
+  /* ---- tunable tokens ---- */
+  --yoca-font-size: 12px;
+  --yoca-logo-width: 60px;
+  --yoca-gap-label: 9px;   /* text -> logo */
+  --yoca-gap-arrow: 7px;   /* logo -> arrow */
+  --yoca-optical-shift: 1px; /* optical baseline nudge for the logo */
+  --yoca-arrow-size: 9px;
+  --yoca-idle-opacity: 0.74;
+  --yoca-duration: 180ms;
+
+  /* ---- light theme (default) ---- */
+  --yoca-text-color: #1a1a1a;
+  --yoca-logo-color: #101010;
+  --yoca-accent: #40c300;
+  --yoca-accent-alt: #a1ff00;
+
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  color: var(--yoca-text-color);
+  font-family: inherit;
+  font-size: var(--yoca-font-size);
+  font-weight: inherit;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  opacity: var(--yoca-idle-opacity);
+  transition: opacity var(--yoca-duration) ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.label {
+  white-space: nowrap;
+}
+
+/* ---------- logo ---------- */
+
+.mark {
+  display: block;
+  flex: none;
+  width: var(--yoca-logo-width);
+  height: auto; /* aspect ratio preserved by the viewBox */
+  margin-left: var(--yoca-gap-label);
+  color: var(--yoca-logo-color);
+  transform: translateY(var(--yoca-optical-shift));
+}
+
+.ink {
+  fill: currentColor;
+}
+
+/* Brand accents stay monochrome at rest, resolve to Yoca green on hover/focus. */
+.accent,
+.accentAlt {
+  fill: currentColor;
+  transition: fill var(--yoca-duration) ease;
+}
+
+/* ---------- arrow ---------- */
+
+.arrow {
+  display: block;
+  flex: none;
+  width: var(--yoca-arrow-size);
+  height: var(--yoca-arrow-size);
+  margin-left: var(--yoca-gap-arrow);
+  opacity: 0.65;
+  transition: transform var(--yoca-duration) ease, opacity var(--yoca-duration) ease;
+}
+
+/* ---------- interaction ---------- */
+
+.root:hover,
+.root:focus-visible {
+  opacity: 1;
+}
+
+.root:hover .accent,
+.root:focus-visible .accent {
+  fill: var(--yoca-accent);
+}
+
+.root:hover .accentAlt,
+.root:focus-visible .accentAlt {
+  fill: var(--yoca-accent-alt);
+}
+
+.root:hover .arrow,
+.root:focus-visible .arrow {
+  opacity: 1;
+  transform: translate(1px, -1px);
+}
+
+.root:focus-visible {
+  outline: 1px solid currentColor;
+  outline-offset: 5px;
+  border-radius: 2px;
+}
+
+.root:focus-visible .label {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ---------- dark theme ---------- */
+
+.root[data-theme="dark"] {
+  --yoca-text-color: #f5f5f5;
+  --yoca-logo-color: #ffffff;
+  --yoca-idle-opacity: 0.72;
+}
+
+@media (prefers-color-scheme: dark) {
+  .root[data-theme="auto"] {
+    --yoca-text-color: #f5f5f5;
+    --yoca-logo-color: #ffffff;
+    --yoca-idle-opacity: 0.72;
+  }
+}
+
+/* Class-based dark mode (Tailwind `.dark`, data attributes, next-themes). */
+:global(.dark) .root[data-theme="auto"],
+:global([data-theme="dark"]) .root[data-theme="auto"],
+:global([data-mode="dark"]) .root[data-theme="auto"] {
+  --yoca-text-color: #f5f5f5;
+  --yoca-logo-color: #ffffff;
+  --yoca-idle-opacity: 0.72;
+}
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 480px) {
+  .root {
+    --yoca-font-size: 11px;
+    --yoca-logo-width: 54px;
+    --yoca-gap-label: 8px;
+    --yoca-gap-arrow: 6px;
+    --yoca-optical-shift: 0.9px;
+    --yoca-arrow-size: 8px;
+  }
+}
+
+/* ---------- accessibility ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .root,
+  .arrow,
+  .accent,
+  .accentAlt {
+    transition: none;
+  }
+
+  .root:hover .arrow,
+  .root:focus-visible .arrow {
+    transform: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .root {
+    opacity: 1;
+  }
+
+  .ink,
+  .accent,
+  .accentAlt {
+    fill: currentColor;
+  }
+}

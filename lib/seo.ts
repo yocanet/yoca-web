@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { headers } from 'next/headers';
 import type { Locale } from '@/types';
+import { COMPANY } from '@/lib/company';
 import {
   absoluteLocalizedUrl,
   absoluteUrl,
@@ -94,6 +95,16 @@ export function buildMetadata(opts: {
 // ── JSON-LD builders ───────────────────────────────────────────────
 type JsonLd = Record<string, unknown>;
 
+function postalAddress(): JsonLd {
+  return {
+    '@type': 'PostalAddress',
+    streetAddress: COMPANY.address.street,
+    addressLocality: COMPANY.address.district,
+    addressRegion: COMPANY.address.city,
+    addressCountry: COMPANY.address.countryCode,
+  };
+}
+
 export function organizationSchema(host: string): JsonLd {
   return {
     '@context': 'https://schema.org',
@@ -102,8 +113,9 @@ export function organizationSchema(host: string): JsonLd {
     alternateName: 'Your Own Creative Agency',
     url: absoluteUrl(host, '/'),
     logo: absoluteUrl(host, '/brand/yoca-logo-primary.svg'),
-    email: 'connect@yoca.net',
-    sameAs: ['https://instagram.com/thisisyoca'],
+    email: COMPANY.email,
+    sameAs: [COMPANY.instagram],
+    address: postalAddress(),
   };
 }
 
@@ -122,6 +134,7 @@ export function professionalServiceSchema(host: string, locale: Locale): JsonLd 
     url: absoluteUrl(host, '/'),
     areaServed: ['TR', 'AZ', 'AE', 'SA', 'GB', 'EU'],
     priceRange: '$$',
+    address: postalAddress(),
     parentOrganization: { '@type': 'Organization', name: 'Yoca' },
   };
 }

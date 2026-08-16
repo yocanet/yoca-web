@@ -4,6 +4,7 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { DUR, EASE_YOCA } from '@/lib/motion';
+import SplitWords from '@/components/ui/SplitWords';
 
 /**
  * Yoca — inner-page intro (shared by every non-home page).
@@ -78,12 +79,9 @@ export default function PageIntro({
             {eyebrow}
           </motion.p>
         )}
-        <motion.h1
-          {...item(0.12)}
-          className={`mt-6 ${titleMax} text-[clamp(36px,4.8vw,72px)] font-extrabold leading-[1.04] tracking-[-0.03em]`}
-        >
-          {title}
-        </motion.h1>
+        <h1 className={`mt-6 ${titleMax} text-[clamp(36px,4.8vw,72px)] font-extrabold leading-[1.04] tracking-[-0.03em]`}>
+          <SplitWords text={title} trigger="load" delay={0.12} />
+        </h1>
         {sub && (
           <motion.p
             {...item(0.2)}

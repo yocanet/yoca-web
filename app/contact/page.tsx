@@ -6,6 +6,7 @@ import ContactForm from '@/components/ContactForm';
 import CopyEmail from '@/components/ui/CopyEmail';
 import { getDict } from '@/lib/i18n';
 import { getContent } from '@/lib/content';
+import { COMPANY } from '@/lib/company';
 import { buildMetadata, breadcrumbSchema, getRequestContext, jsonLdString } from '@/lib/seo';
 
 export function generateMetadata(): Metadata {
@@ -73,9 +74,13 @@ export default async function ContactPage() {
               >
                 @thisisyoca
               </a>
-              <p className="mt-2 w-full border-t border-line pt-4 text-[13px] text-subtle">
-                {t.contact.based}
-              </p>
+              <div className="mt-2 w-full border-t border-line pt-4">
+                <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-subtle">{t.contact.addressLabel}</p>
+                <address className="mt-1.5 text-[14px] font-semibold not-italic leading-relaxed text-soft" dir="ltr">
+                  {COMPANY.address.line}
+                </address>
+                <p className="mt-2 text-[13px] text-subtle">{t.contact.based}</p>
+              </div>
               <div className="mt-4 w-full border-t border-line pt-5">
                 <h3 className="text-[15px] font-extrabold">{t.contact.nextTitle}</h3>
                 <ol className="mt-4 grid gap-4">

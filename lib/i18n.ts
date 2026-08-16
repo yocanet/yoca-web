@@ -121,6 +121,7 @@ export interface Dict {
     submit: string;
     success: string;
     based: string;
+    addressLabel: string;
     direct: string;
     website: string;
     plannerSystems: string;
@@ -412,6 +413,7 @@ const en: Dict = {
     submit: 'Send Project Brief',
     success: 'Thank you. Your project details have been received. We will review them and contact you through the information provided.',
     based: 'Based in Türkiye. Working across markets.',
+    addressLabel: 'Address',
     direct: 'Prefer email?',
     website: 'Website or current digital presence',
     plannerSystems: 'Which systems do you need?',
@@ -761,6 +763,7 @@ const tr: Dict = {
     submit: 'Proje Brief’ini Gönder',
     success: 'Teşekkürler. Proje bilgileriniz bize ulaştı. Bilgileri inceleyerek bıraktığınız iletişim kanalı üzerinden sizinle iletişime geçeceğiz.',
     based: 'Türkiye merkezli. Farklı pazarlarda çalışıyoruz.',
+    addressLabel: 'Adres',
     direct: 'E-posta mı tercih edersiniz?',
     website: 'Web siteniz veya mevcut dijital varlığınız',
     plannerSystems: 'Hangi sistemlere ihtiyacınız var?',
@@ -1110,6 +1113,7 @@ const az: Dict = {
     submit: 'Layihə Brifini Göndər',
     success: 'Təşəkkür edirik. Layihə məlumatlarınız bizə çatdı. Məlumatları nəzərdən keçirərək qeyd etdiyiniz əlaqə vasitəsi ilə sizinlə əlaqə saxlayacağıq.',
     based: 'Türkiyə mərkəzli. Müxtəlif bazarlarda işləyirik.',
+    addressLabel: 'Ünvan',
     direct: 'E-poçtu üstün tutursunuz?',
     website: 'Saytınız və ya mövcud rəqəmsal varlığınız',
     plannerSystems: 'Hansı sistemlərə ehtiyacınız var?',
@@ -1437,6 +1441,7 @@ const ar: Dict = {
     submit: 'أرسل موجز المشروع',
     success: 'شكرًا لك. تم استلام تفاصيل مشروعك. سنراجع المعلومات ونتواصل معك عبر بيانات الاتصال التي قدمتها.',
     based: 'مقرنا في تركيا، ونعمل عبر أسواق متعددة.',
+    addressLabel: 'العنوان',
     direct: 'تفضل البريد الإلكتروني؟',
     website: 'موقعك أو حضورك الرقمي الحالي',
     plannerSystems: 'ما الأنظمة التي تحتاجها؟',

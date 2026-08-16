@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import type { Dict } from '@/lib/i18n';
 import { EASE_YOCA } from '@/lib/motion';
+import SplitWords from '@/components/ui/SplitWords';
 
 /**
  * Yoca — the three systems on a soft-white editorial break.
@@ -251,7 +252,7 @@ export default function SystemPillars({ t, base }: SystemPillarsProps) {
         {/* Section head — heading start, sub end (editorial spread) */}
         <div className="grid gap-6 border-b border-[rgba(5,5,5,0.16)] pb-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:items-end lg:gap-16">
           <h2 className="max-w-[16ch] text-[clamp(34px,4.6vw,64px)] font-extrabold leading-[1.02] tracking-[-0.03em]">
-            {t.heading}
+            <SplitWords text={t.heading} />
           </h2>
           <p className="light-muted max-w-[46ch] text-[16px] leading-relaxed lg:justify-self-end lg:text-[17px]">
             {t.sub}

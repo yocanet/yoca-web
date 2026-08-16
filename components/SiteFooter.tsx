@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { fetchMenu } from '@/lib/supabase';
 import { getRequestContext } from '@/lib/seo';
 import type { Dict } from '@/lib/i18n';
+import { COMPANY } from '@/lib/company';
 import YocaSignature from '@/components/branding/YocaSignature';
 
 /**
@@ -146,6 +147,7 @@ export default async function SiteFooter({ t }: SiteFooterProps) {
               © {year} {t.footer.rights}
             </p>
             <p className="text-[12px]">{t.footer.message}</p>
+            <address className="text-[12px] not-italic" dir="ltr">{COMPANY.address.line}</address>
           </div>
           <YocaSignature variant="signature" theme="dark" source="yoca.net" className="footer-signature" />
         </div>

@@ -1,8 +1,11 @@
 'use client';
 
 import Link from 'next/link';
-import { motion, useReducedMotion } from 'framer-motion';
+import { useRef } from 'react';
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import HeroSymbol from '@/components/ui/HeroSymbol';
+import SplitWords from '@/components/ui/SplitWords';
+import Magnetic from '@/components/ui/Magnetic';
 import type { Dict } from '@/lib/i18n';
 import { DUR, EASE_YOCA } from '@/lib/motion';
 
@@ -24,48 +27,14 @@ interface HeroProps {
   rail?: string[];
 }
 
-/**
- * Controlled typographic emphasis: the key words ("brands", "systems" and
- * their localized equivalents) get a thin lime underline — no neon, no loop.
- */
-function EmphasisTitle({ title, words }: { title: string; words: string[] }) {
-  let parts: Array<{ text: string; hit: boolean }> = [{ text: title, hit: false }];
-  for (const word of words) {
-    const next: typeof parts = [];
-    for (const part of parts) {
-      if (part.hit || !part.text.includes(word)) {
-        next.push(part);
-        continue;
-      }
-      const at = part.text.indexOf(word);
-      if (at > 0) next.push({ text: part.text.slice(0, at), hit: false });
-      next.push({ text: word, hit: true });
-      if (at + word.length < part.text.length) {
-        next.push({ text: part.text.slice(at + word.length), hit: false });
-      }
-    }
-    parts = next;
-  }
-  return (
-    <>
-      {parts.map((part, index) =>
-        part.hit ? (
-          <span
-            key={index}
-            className="underline decoration-yoca-lime decoration-[0.045em] underline-offset-[0.06em]"
-          >
-            {part.text}
-          </span>
-        ) : (
-          <span key={index}>{part.text}</span>
-        ),
-      )}
-    </>
-  );
-}
-
 export default function Hero({ t, base, rail = [] }: HeroProps) {
   const prefersReducedMotion = useReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
+  // Scroll parallax: the mark drifts up and leans as the hero leaves the viewport.
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end start'] });
+  const markY = useTransform(scrollYProgress, [0, 1], [0, -120]);
+  const markRotate = useTransform(scrollYProgress, [0, 1], [0, -4.83]);
+  const copyY = useTransform(scrollYProgress, [0, 1], [0, 60]);
 
   const item = (delay: number) => ({
     initial: { opacity: prefersReducedMotion ? 1 : 0, y: prefersReducedMotion ? 0 : 22 },
@@ -74,7 +43,7 @@ export default function Hero({ t, base, rail = [] }: HeroProps) {
   });
 
   return (
-    <section className="relative z-[7] flex min-h-[100svh] flex-col overflow-hidden bg-surface-deep pt-28 lg:min-h-[92svh] lg:pt-32">
+    <section ref={sectionRef} className="relative z-[7] flex min-h-[100svh] flex-col overflow-hidden bg-surface-deep pt-28 lg:min-h-[92svh] lg:pt-32">
       {/* Grid lines backdrop — fades toward the rail */}
       <div
         aria-hidden="true"
@@ -89,7 +58,7 @@ export default function Hero({ t, base, rail = [] }: HeroProps) {
       />
 
       <div className="container-y relative grid flex-1 items-center gap-10 py-6 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-8 lg:py-8">
-        <div className="relative z-10">
+        <motion.div style={{ y: prefersReducedMotion ? 0 : copyY }} className="relative z-10">
           <motion.p {...item(0)} className="eyebrow">
             {t.eyebrow}
           </motion.p>
@@ -97,7 +66,7 @@ export default function Hero({ t, base, rail = [] }: HeroProps) {
             {...item(0.1)}
             className="mt-6 max-w-[16ch] text-[clamp(38px,5vw,76px)] font-extrabold leading-[1.04] tracking-[-0.03em]"
           >
-            <EmphasisTitle title={t.title} words={t.emphasis} />
+            <SplitWords text={t.title} emphasis={t.emphasis} trigger="load" delay={0.15} />
           </motion.h1>
           <motion.p
             {...item(0.2)}
@@ -106,21 +75,25 @@ export default function Hero({ t, base, rail = [] }: HeroProps) {
             {t.description}
           </motion.p>
           <motion.div {...item(0.3)} className="mt-9 flex flex-wrap gap-3.5">
-            <Link href={`${base}/contact`} className="btn-primary px-8 py-4 text-base">
-              {t.primaryCta}
-            </Link>
+            <Magnetic>
+              <Link href={`${base}/contact`} className="btn-primary px-8 py-4 text-base">
+                {t.primaryCta}
+              </Link>
+            </Magnetic>
             <Link href={`${base}/checkup`} className="btn-ghost px-8 py-4 text-base">
               {t.secondaryCta}
             </Link>
           </motion.div>
-        </div>
+        </motion.div>
 
         {/* The mark — allowed to run past the container edge on wide screens */}
         <motion.div
           {...item(0.15)}
           className="relative max-lg:mx-auto max-lg:w-[min(70vw,340px)] lg:-me-[6vw] lg:justify-self-end lg:w-[min(38vw,560px)]"
         >
-          <HeroSymbol />
+          <motion.div style={{ y: prefersReducedMotion ? 0 : markY, rotate: prefersReducedMotion ? 0 : markRotate }}>
+            <HeroSymbol />
+          </motion.div>
         </motion.div>
       </div>
 

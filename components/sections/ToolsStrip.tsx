@@ -1,4 +1,5 @@
 import type { Dict } from '@/lib/i18n';
+import SplitWords from '@/components/ui/SplitWords';
 
 /**
  * Yoca — platforms strip (Server Component).
@@ -16,7 +17,7 @@ export default function ToolsStrip({ t }: ToolsStripProps) {
       <div className="container-y grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
         <div>
           <h2 className="max-w-[18ch] text-2xl font-extrabold leading-tight tracking-[-0.02em] sm:text-3xl">
-            {t.heading}
+            <SplitWords text={t.heading} />
           </h2>
           <p className="mt-4 max-w-[44ch] text-[15px] leading-relaxed text-muted">{t.sub}</p>
         </div>

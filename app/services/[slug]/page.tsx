@@ -98,23 +98,27 @@ export default async function ServiceDetailPage({ params }: PageProps) {
           compact
         />
 
-        {/* The problem it solves */}
-        <section className="relative z-[7] border-t border-line bg-surface py-16">
-          <div className="container-y grid gap-8 md:grid-cols-2 lg:gap-12">
+        {/* Problem → What changes — soft-white editorial spread */}
+        <section className="section-light relative z-[7] py-16 lg:py-28">
+          <div className="container-y grid gap-12 lg:grid-cols-2 lg:gap-20">
             <Reveal>
-              <div className="glass h-full rounded-md p-7 lg:p-9">
-                <h2 className="text-[12px] font-bold uppercase tracking-[0.12em] text-subtle">
+              <div>
+                <p className="flex items-center gap-2.5 text-[12px] font-extrabold uppercase tracking-[0.14em] text-[rgba(5,5,5,0.55)]">
+                  <span aria-hidden="true" className="slant block h-2.5 w-3 bg-[#050505]" />
                   {t.servicesPage.tabs.problem}
-                </h2>
-                <p className="mt-4 text-[16px] leading-[1.85] text-soft">{group.problem}</p>
+                </p>
+                <p className="mt-6 max-w-[40ch] text-[clamp(22px,2.4vw,32px)] font-bold leading-[1.35] tracking-[-0.02em]">
+                  {group.problem}
+                </p>
               </div>
             </Reveal>
-            <Reveal delay={0.08}>
-              <div className="glass h-full rounded-md border-yoca-lime/30 p-7 lg:p-9">
-                <h2 className="text-[12px] font-bold uppercase tracking-[0.12em] text-subtle">
+            <Reveal delay={0.1}>
+              <div className="lg:border-s lg:border-[rgba(5,5,5,0.16)] lg:ps-16">
+                <p className="flex items-center gap-2.5 text-[12px] font-extrabold uppercase tracking-[0.14em] text-[#267800]">
+                  <span aria-hidden="true" className="slant block h-2.5 w-3 bg-yoca-green" />
                   {t.servicesPage.tabs.changes}
-                </h2>
-                <p className="mt-4 text-[19px] font-bold leading-[1.65] text-yoca-lime">
+                </p>
+                <p className="mt-6 max-w-[40ch] text-[clamp(22px,2.4vw,32px)] font-bold leading-[1.35] tracking-[-0.02em]">
                   {service.changes}
                 </p>
               </div>
@@ -122,46 +126,36 @@ export default async function ServiceDetailPage({ params }: PageProps) {
           </div>
         </section>
 
-        {/* Deliverables + stack */}
-        <section className="relative z-[7] py-16">
-          <div className="container-y grid gap-10 lg:grid-cols-[3fr_2fr] lg:gap-16">
+        {/* Deliverables index + stack */}
+        <section className="relative z-[7] bg-surface-deep py-16 lg:py-28">
+          <div className="container-y grid gap-12 lg:grid-cols-[minmax(0,7fr)_minmax(0,4fr)] lg:gap-20">
             <Reveal>
               <div>
-                <h2 className="text-2xl font-extrabold tracking-tight">
+                <h2 className="text-[clamp(26px,3vw,40px)] font-extrabold leading-[1.08] tracking-[-0.02em]">
                   {t.servicesPage.tabs.deliverables}
                 </h2>
-                <ul className="mt-6 grid gap-3 sm:grid-cols-2">
-                  {service.points.map((point) => (
-                    <li
-                      key={point}
-                      className="flex items-start gap-2.5 rounded-sm border border-line bg-surface p-4 text-[14px] font-semibold text-soft"
-                    >
-                      <span
-                        aria-hidden="true"
-                        className="mt-[6px] block h-1.5 w-1.5 flex-none bg-yoca-lime"
-                      />
-                      {point}
+                <ol className="mt-8 border-t border-line">
+                  {service.points.map((point, index) => (
+                    <li key={point} className="group relative grid grid-cols-[48px_minmax(0,1fr)] items-baseline gap-4 border-b border-line py-5 ps-5">
+                      <span aria-hidden="true" className="absolute inset-y-0 start-0 w-px bg-line transition-all duration-300 group-hover:w-[3px] group-hover:bg-yoca-lime" />
+                      <span className="text-[13px] font-extrabold tracking-[0.1em] text-yoca-lime">{String(index + 1).padStart(2, '0')}</span>
+                      <span className="text-[clamp(17px,1.6vw,22px)] font-bold tracking-[-0.01em] text-soft">{point}</span>
                     </li>
                   ))}
-                </ul>
+                </ol>
               </div>
             </Reveal>
             <Reveal delay={0.08}>
               <div>
-                <h2 className="text-2xl font-extrabold tracking-tight">
+                <h2 className="text-[clamp(26px,3vw,40px)] font-extrabold leading-[1.08] tracking-[-0.02em]">
                   {t.servicesPage.tabs.stack}
                 </h2>
-                <ul className="mt-6 flex flex-wrap gap-2.5">
+                <p className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-[15px] font-semibold text-muted">
                   {group.stack.map((tool) => (
-                    <li
-                      key={tool}
-                      className="rounded-sm border border-line bg-surface px-3.5 py-2 text-[13px] font-bold text-soft"
-                    >
-                      {tool}
-                    </li>
+                    <span key={tool}>{tool}</span>
                   ))}
-                </ul>
-                <p className="mt-4 text-[13px] italic text-subtle">{t.servicesPage.stackNote}</p>
+                </p>
+                <p className="mt-4 text-[13px] text-subtle">{t.servicesPage.stackNote}</p>
 
                 {related.length > 0 && (
                   <div className="mt-10 border-t border-line pt-6">
@@ -173,9 +167,9 @@ export default async function ServiceDetailPage({ params }: PageProps) {
                         <li key={item.slug}>
                           <Link
                             href={`${base}/services/${item.slug}`}
-                            className="text-[14px] font-bold text-muted transition-colors hover:text-yoca-lime"
+                            className="group inline-flex items-center gap-2 text-[15px] font-bold text-muted transition-colors hover:text-yoca-lime"
                           >
-                            → {t.services.items[item.item].name}
+                            <span aria-hidden="true" className="icon-arrow">→</span> {t.services.items[item.item].name}
                           </Link>
                         </li>
                       ))}

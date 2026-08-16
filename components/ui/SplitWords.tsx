@@ -20,6 +20,25 @@ interface SplitWordsProps {
   delay?: number;
   stagger?: number;
   className?: string;
+  /** Multi-sentence headings break after each sentence ("Tek süreç. / Kapalı kutu yok."). Default: on. */
+  breakSentences?: boolean;
+}
+
+/** Split into sentences without lookbehind (tsconfig target): ends on . ! ? ؟ followed by space. */
+function toSentences(text: string): string[] {
+  const out: string[] = [];
+  let current = '';
+  const chars = Array.from(text);
+  for (let i = 0; i < chars.length; i += 1) {
+    current += chars[i];
+    const isEnd = /[.!?؟]/.test(chars[i]) && (i === chars.length - 1 || /\s/.test(chars[i + 1]));
+    if (isEnd) {
+      out.push(current.trim());
+      current = '';
+    }
+  }
+  if (current.trim()) out.push(current.trim());
+  return out.filter(Boolean);
 }
 
 export default function SplitWords({
@@ -29,9 +48,16 @@ export default function SplitWords({
   delay = 0,
   stagger = 0.045,
   className,
+  breakSentences = true,
 }: SplitWordsProps) {
   const reduced = useReducedMotion();
-  const words = text.split(/\s+/).filter(Boolean);
+  const sentences = breakSentences ? toSentences(text) : [text];
+  // Words carry their sentence index so line breaks land between sentences.
+  const words: Array<{ word: string; sentence: number }> = [];
+  sentences.forEach((sentence, si) => {
+    sentence.split(/\s+/).filter(Boolean).forEach((word) => words.push({ word, sentence: si }));
+  });
+  const multi = sentences.length > 1;
   // Strip surrounding punctuation (any script) without Unicode-property regex (tsconfig target).
   const core = (word: string) => word.replace(/^[\s.,;:!?"'()\[\]{}«»،؛؟\-–—]+|[\s.,;:!?"'()\[\]{}«»،؛؟\-–—]+$/g, '');
   const isEmphasis = (word: string) => emphasis.some((e) => core(word) === core(e));
@@ -39,36 +65,48 @@ export default function SplitWords({
   if (reduced) {
     return (
       <span className={className}>
-        {words.map((word, index) => (
+        {words.map(({ word, sentence }, index) => (
           <span key={index}>
             {isEmphasis(word) ? <span className="underline decoration-yoca-lime decoration-[0.045em] underline-offset-[0.06em]">{word}</span> : word}
-            {index < words.length - 1 ? ' ' : ''}
+            {index < words.length - 1 ? (multi && words[index + 1].sentence !== sentence ? <br /> : ' ') : ''}
           </span>
         ))}
       </span>
     );
   }
 
-  const inner = (index: number) => ({
-    initial: { y: '110%' },
-    ...(trigger === 'load' ? { animate: { y: '0%' } } : { whileInView: { y: '0%' }, viewport: VIEWPORT_ONCE }),
-    transition: { duration: 0.7, delay: delay + index * stagger, ease: EASE_YOCA },
-  });
+  const wordVariants = {
+    hidden: { y: '110%' },
+    visible: (index: number) => ({
+      y: '0%',
+      transition: { duration: 0.7, delay: delay + index * stagger, ease: EASE_YOCA },
+    }),
+  };
+
+  // The observer must watch the un-clipped wrapper: words start translated
+  // out of their overflow-hidden boxes, so observing them directly would
+  // never report an intersection.
+  const trigger_props =
+    trigger === 'load'
+      ? { initial: 'hidden', animate: 'visible' }
+      : { initial: 'hidden', whileInView: 'visible', viewport: VIEWPORT_ONCE };
 
   return (
-    <span className={className}>
-      {words.map((word, index) => (
-        <span key={index} className="inline-block overflow-hidden align-bottom pb-[0.08em] -mb-[0.08em]">
-          <motion.span {...inner(index)} className="inline-block">
-            {isEmphasis(word) ? (
-              <span className="underline decoration-yoca-lime decoration-[0.045em] underline-offset-[0.06em]">{word}</span>
-            ) : (
-              word
-            )}
-          </motion.span>
-          {index < words.length - 1 ? ' ' : ''}
+    <motion.span className={className} {...trigger_props}>
+      {words.map(({ word, sentence }, index) => (
+        <span key={index}>
+          <span className="inline-block overflow-hidden align-bottom pb-[0.08em] -mb-[0.08em]">
+            <motion.span variants={wordVariants} custom={index} className="inline-block">
+              {isEmphasis(word) ? (
+                <span className="underline decoration-yoca-lime decoration-[0.045em] underline-offset-[0.06em]">{word}</span>
+              ) : (
+                word
+              )}
+            </motion.span>
+          </span>
+          {index < words.length - 1 ? (multi && words[index + 1].sentence !== sentence ? <br /> : ' ') : ''}
         </span>
       ))}
-    </span>
+    </motion.span>
   );
 }

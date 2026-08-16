@@ -3,6 +3,7 @@ import Link from 'next/link';
 import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 import PageIntro from '@/components/ui/PageIntro';
+import SplitWords from '@/components/ui/SplitWords';
 import CtaSection from '@/components/sections/CtaSection';
 import ServiceUmbrellas from '@/components/sections/ServiceUmbrellas';
 import Reveal from '@/components/ui/Reveal';
@@ -69,7 +70,7 @@ export default async function ServicesPage() {
             <Reveal>
               <div className="grid gap-6 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:items-end lg:gap-16">
                 <h2 className="max-w-[16ch] text-[clamp(32px,4.2vw,56px)] font-extrabold leading-[1.04] tracking-[-0.03em]">
-                  {sp.processTitle}
+                  <SplitWords text={sp.processTitle} />
                 </h2>
                 <p className="light-muted max-w-[46ch] text-[16px] leading-relaxed lg:justify-self-end">{sp.processSub}</p>
               </div>

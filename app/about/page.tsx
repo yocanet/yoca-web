@@ -3,6 +3,7 @@ import Link from 'next/link';
 import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 import PageIntro from '@/components/ui/PageIntro';
+import SplitWords from '@/components/ui/SplitWords';
 import TeamSection from '@/components/sections/TeamSection';
 import CtaSection from '@/components/sections/CtaSection';
 import SectionWrapper from '@/components/SectionWrapper';
@@ -129,7 +130,7 @@ export default async function AboutPage() {
             <div className="lg:sticky lg:top-32 lg:self-start">
               <Reveal>
                 <h2 className="text-[clamp(32px,4.2vw,56px)] font-extrabold leading-[1.04] tracking-[-0.03em]">
-                  {a.valuesTitle}
+                  <SplitWords text={a.valuesTitle} />
                 </h2>
                 <p className="mt-4 max-w-[44ch] text-[16px] leading-relaxed text-muted">
                   {a.valuesSub}

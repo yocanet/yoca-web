@@ -10,10 +10,11 @@ import { EASE_YOCA } from '@/lib/motion';
  * Yoca — the three systems on a soft-white editorial break.
  * Canonical order (never changes): 01 Yoca Brand System™ →
  * 02 Yoca Growth Engine™ → 03 Yoca Scale Framework™.
- * Each card carries its OWN visual language:
- *   01 — typographic fragments on a brand-architecture grid
- *   02 — data flow / funnel lines with performance nodes
- *   03 — expanding modular blocks (infrastructure & automation)
+ * Each system carries a diagram that explains HOW it works, labelled with
+ * the system's own (localized) points — no decorative filler:
+ *   01 — Brand: one core, three touchpoints (radiating structure)
+ *   02 — Growth: a closed loop — campaigns → conversion → content, repeating
+ *   03 — Scale: layered framework whose capacity compounds upward
  */
 
 interface SystemPillarsProps {
@@ -23,189 +24,200 @@ interface SystemPillarsProps {
 
 const GROUP_ANCHORS = ['brand', 'growth', 'scale'];
 
-/** 01 — Brand: type fragment + architecture grid */
-interface VisualProps {
-  reduced: boolean;
-  active: boolean;
-}
-
-function BrandVisual({ reduced, active }: VisualProps) {
+/** 01 — Brand System: one core → three touchpoints */
+function BrandVisual({ reduced, active, points }: VisualProps) {
+  const nodes = [46, 90, 134]; // y of the three touchpoints
   return (
-    <svg viewBox="0 0 220 84" className="h-auto w-full" aria-hidden="true">
-      {Array.from({ length: 3 }).map((_, row) =>
-        Array.from({ length: 8 }).map((__, col) => (
-          <rect
-            key={`${row}-${col}`}
-            x={4 + col * 28}
-            y={6 + row * 26}
-            width="20"
-            height="18"
-            fill="none"
-            stroke="rgba(5,5,5,0.12)"
-            strokeWidth="1"
-          />
-        )),
-      )}
-      <motion.text
-        x="14"
-        y="52"
-        fontSize="44"
-        fontWeight="800"
-        fill="#050505"
+    <svg viewBox="0 0 320 180" className="h-auto w-full" aria-hidden="true">
+      {/* Core: the two brand modules + a solid block */}
+      <motion.g
         initial={reduced ? false : { opacity: 0, x: -8 }}
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: 0.2 }}
+        transition={{ duration: 0.5 }}
       >
-        Aa
-      </motion.text>
-      <motion.rect
-        x="88"
-        y="32"
-        width="20"
-        height="18"
-        fill="#A2FF00"
-        initial={reduced ? false : { opacity: 0, scale: 0.6 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true }}
-        animate={active && !reduced ? { x: [88, 116, 88] } : undefined}
-        transition={
-          active && !reduced
-            ? { duration: 2.2, repeat: Infinity, ease: 'easeInOut' }
-            : { duration: 0.4, delay: 0.35 }
-        }
-      />
-      <motion.rect
-        x="144"
-        y="6"
-        width="20"
-        height="18"
-        fill="#050505"
-        initial={reduced ? false : { opacity: 0, scale: 0.6 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.4, delay: 0.45 }}
-      />
-      <motion.rect
-        x="172"
-        y="58"
-        width="20"
-        height="18"
-        fill="#40C401"
-        initial={reduced ? false : { opacity: 0, scale: 0.6 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.4, delay: 0.55 }}
-      />
+        <polygon points="24,64 26.7,32 58.9,32 56.2,64" fill="#A2FF00" />
+        <polygon points="42.5,64 74.6,64 71.9,96 39.8,96" fill="#40C401" />
+        <rect x="24" y="104" width="34" height="34" fill={INK} />
+      </motion.g>
+      {/* Spine */}
+      <line x1="96" y1="46" x2="96" y2="134" stroke={FAINT} strokeWidth="1.5" />
+      <line x1="76" y1="90" x2="96" y2="90" stroke={FAINT} strokeWidth="1.5" />
+      {nodes.map((y, index) => (
+        <motion.g
+          key={y}
+          initial={reduced ? false : { opacity: 0, x: -6 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.45, delay: 0.25 + index * 0.14 }}
+        >
+          <line x1="96" y1={y} x2="126" y2={y} stroke={FAINT} strokeWidth="1.5" />
+          <rect x="126" y={y - 9} width="18" height="18" fill={index === 0 ? '#A2FF00' : index === 1 ? '#40C401' : INK} />
+          <text x="154" y={y + 4} style={LABEL}>{points[index] ?? ''}</text>
+        </motion.g>
+      ))}
+      {/* Hover: signal leaves the core and reaches every touchpoint */}
+      {active && !reduced &&
+        nodes.map((y, index) => (
+          <motion.rect
+            key={`pulse-${y}`}
+            width="6"
+            height="6"
+            fill="#A2FF00"
+            stroke={INK}
+            strokeWidth="1"
+            initial={{ x: 73, y: 87 }}
+            animate={{ x: [73, 93, 93, 123], y: [87, 87, y - 3, y - 3] }}
+            transition={{ duration: 1.4, delay: index * 0.18, repeat: Infinity, repeatDelay: 0.4, ease: 'easeInOut' }}
+          />
+        ))}
     </svg>
   );
 }
 
-/** 02 — Growth: funnel lines + performance nodes */
-function GrowthVisual({ reduced, active }: VisualProps) {
-  const bars = [64, 46, 30, 18];
+/** 02 — Growth Engine: a closed loop that repeats */
+function GrowthVisual({ reduced, active, points }: VisualProps) {
+  const stations: Array<{ x: number; y: number; anchor: 'start' | 'middle' | 'end'; dy: number }> = [
+    { x: 60, y: 44, anchor: 'start', dy: -16 },
+    { x: 260, y: 44, anchor: 'end', dy: -16 },
+    { x: 160, y: 138, anchor: 'middle', dy: 26 },
+  ];
+  const loop = 'M 60 44 L 260 44 L 160 138 Z';
   return (
-    <svg viewBox="0 0 220 84" className="h-auto w-full" aria-hidden="true">
-      {bars.map((width, index) => (
-        <motion.rect
-          key={index}
-          x={110 - width}
-          y={8 + index * 18}
-          width={width * 2}
-          height="10"
-          fill={index === bars.length - 1 ? '#40C401' : 'rgba(5,5,5,0.10)'}
-          initial={reduced ? false : { scaleX: 0 }}
-          whileInView={{ scaleX: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.15 + index * 0.12 }}
-          style={{ transformOrigin: '110px 0px' }}
-        />
-      ))}
+    <svg viewBox="0 0 320 180" className="h-auto w-full" aria-hidden="true">
       <motion.path
-        d="M 20 70 L 70 54 L 120 60 L 170 30 L 208 14"
+        d={loop}
         fill="none"
-        stroke="#A2FF00"
-        strokeWidth="2.5"
+        stroke={FAINT}
+        strokeWidth="1.5"
         initial={reduced ? false : { pathLength: 0 }}
         whileInView={{ pathLength: 1 }}
         viewport={{ once: true }}
-        transition={{ duration: 1, delay: 0.5 }}
+        transition={{ duration: 1.1, ease: 'easeInOut' }}
       />
-      {/* Hover: a signal travels through the system and activates nodes */}
+      {/* Direction ticks — the loop turns clockwise */}
+      {[
+        [160, 44, 0],
+        [210, 91, 137],
+        [110, 91, -137],
+      ].map(([x, y, r], index) => (
+        <polygon
+          key={index}
+          points="-4,-4 4,0 -4,4"
+          fill={MID}
+          transform={`translate(${x} ${y}) rotate(${r})`}
+        />
+      ))}
+      {stations.map((station, index) => (
+        <motion.g
+          key={index}
+          initial={reduced ? false : { opacity: 0, scale: 0.6 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4, delay: 0.5 + index * 0.15 }}
+          style={{ transformOrigin: `${station.x}px ${station.y}px` }}
+        >
+          <rect x={station.x - 10} y={station.y - 10} width="20" height="20" fill={index === 0 ? '#A2FF00' : index === 1 ? INK : '#40C401'} />
+          <text x={station.x} y={station.y + station.dy} textAnchor={station.anchor} style={LABEL}>
+            {points[index] ?? ''}
+          </text>
+        </motion.g>
+      ))}
+      {/* Centre readout: momentum bars — grow while the loop runs */}
+      <g>
+        {[0, 1, 2, 3].map((index) => (
+          <motion.rect
+            key={index}
+            x={140 + index * 11}
+            y={94 - index * 5}
+            width="7"
+            height={10 + index * 5}
+            fill={index === 3 ? '#40C401' : FAINT}
+            initial={reduced ? false : { scaleY: 0 }}
+            whileInView={{ scaleY: 1 }}
+            viewport={{ once: true }}
+            animate={active && !reduced ? { scaleY: [1, 1.25, 1] } : undefined}
+            transition={
+              active && !reduced
+                ? { duration: 1.2, delay: index * 0.1, repeat: Infinity, ease: 'easeInOut' }
+                : { duration: 0.4, delay: 0.9 + index * 0.08 }
+            }
+            style={{ transformOrigin: `${143 + index * 11}px 104px` }}
+          />
+        ))}
+      </g>
+      {/* Hover: a signal circulates the loop */}
       {active && !reduced && (
         <motion.rect
           width="7"
           height="7"
-          fill="#050505"
-          stroke="#A2FF00"
-          strokeWidth="1.5"
-          initial={{ x: 16, y: 66 }}
-          animate={{ x: [16, 66, 116, 166, 202], y: [66, 50, 56, 26, 10] }}
-          transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
+          fill="#A2FF00"
+          stroke={INK}
+          strokeWidth="1"
+          initial={{ x: 56, y: 40 }}
+          animate={{ x: [56, 256, 156, 56], y: [40, 40, 134, 40] }}
+          transition={{ duration: 2.4, repeat: Infinity, ease: 'linear' }}
         />
       )}
-      {[
-        [70, 54],
-        [170, 30],
-      ].map(([x, y], index) => (
-        <motion.rect
-          key={index}
-          x={x - 4}
-          y={y - 4}
-          width="8"
-          height="8"
-          fill="#050505"
-          initial={reduced ? false : { opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 1 + index * 0.2 }}
-        />
-      ))}
     </svg>
   );
 }
 
-/** 03 — Scale: expanding modular blocks */
-function ScaleVisual({ reduced, active }: VisualProps) {
-  const blocks = [
-    { x: 12, y: 48, s: 16, fill: '#050505' },
-    { x: 36, y: 48, s: 16, fill: '#050505' },
-    { x: 12, y: 24, s: 16, fill: '#050505' },
-    { x: 36, y: 24, s: 16, fill: '#40C401' },
-    { x: 68, y: 24, s: 40, fill: 'rgba(5,5,5,0.10)' },
-    { x: 118, y: 12, s: 26, fill: '#A2FF00' },
-    { x: 118, y: 46, s: 26, fill: 'rgba(5,5,5,0.10)' },
-    { x: 154, y: 12, s: 60, fill: 'none' },
+/** 03 — Scale Framework: layers whose capacity compounds upward */
+function ScaleVisual({ reduced, active, points }: VisualProps) {
+  const layers = [
+    { y: 128, blocks: 1 },
+    { y: 84, blocks: 2 },
+    { y: 40, blocks: 4 },
   ];
   return (
-    <svg viewBox="0 0 220 84" className="h-auto w-full" aria-hidden="true">
-      {blocks.map((block, index) => (
-        <motion.rect
-          key={index}
-          x={block.x}
-          y={block.y}
-          width={block.s}
-          height={block.s}
-          fill={block.fill}
-          stroke={block.fill === 'none' ? '#050505' : undefined}
-          strokeWidth={block.fill === 'none' ? 1.5 : undefined}
-          strokeDasharray={block.fill === 'none' ? '4 4' : undefined}
-          initial={reduced ? false : { opacity: 0, scale: 0.5 }}
-          whileInView={{ opacity: 1, scale: 1 }}
+    <svg viewBox="0 0 320 180" className="h-auto w-full" aria-hidden="true">
+      {layers.map((layer, index) => (
+        <motion.g
+          key={layer.y}
+          initial={reduced ? false : { opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          animate={
-            active && !reduced && block.fill === 'none'
-              ? { opacity: [1, 0.4, 1], scale: [1, 1.06, 1] }
-              : undefined
-          }
-          transition={
-            active && !reduced && block.fill === 'none'
-              ? { duration: 1.6, repeat: Infinity, ease: 'easeInOut' }
-              : { duration: 0.45, delay: 0.15 + index * 0.09 }
-          }
-          style={{ transformOrigin: `${block.x + block.s / 2}px ${block.y + block.s / 2}px` }}
-        />
+          transition={{ duration: 0.45, delay: 0.15 + index * 0.16 }}
+        >
+          {/* Layer plate */}
+          <rect x="24" y={layer.y} width="272" height="30" fill="none" stroke={FAINT} strokeWidth="1.5" />
+          <rect x="24" y={layer.y} width="4" height="30" fill={index === 2 ? '#A2FF00' : index === 1 ? '#40C401' : INK} />
+          <text x="40" y={layer.y + 19} style={LABEL}>{points[index] ?? ''}</text>
+          {/* Capacity blocks: 1 → 2 → 4 */}
+          {Array.from({ length: layer.blocks }).map((_, block) => (
+            <motion.rect
+              key={block}
+              x={296 - 24 - block * 24}
+              y={layer.y + 7}
+              width="16"
+              height="16"
+              fill={index === 2 ? '#A2FF00' : index === 1 ? '#40C401' : INK}
+              initial={reduced ? false : { opacity: 0, scale: 0.4 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              animate={active && !reduced ? { opacity: [1, 0.35, 1] } : undefined}
+              transition={
+                active && !reduced
+                  ? { duration: 1.4, delay: block * 0.12 + index * 0.1, repeat: Infinity, ease: 'easeInOut' }
+                  : { duration: 0.35, delay: 0.5 + index * 0.16 + block * 0.08 }
+              }
+              style={{ transformOrigin: `${296 - 16 - block * 24}px ${layer.y + 15}px` }}
+            />
+          ))}
+        </motion.g>
       ))}
+      {/* Rising connector: bottom layer feeds the next */}
+      <motion.path
+        d="M 160 128 L 160 114 M 160 84 L 160 70"
+        stroke={MID}
+        strokeWidth="1.5"
+        strokeDasharray="3 3"
+        initial={reduced ? false : { pathLength: 0 }}
+        whileInView={{ pathLength: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8, delay: 0.7 }}
+      />
     </svg>
   );
 }
@@ -288,7 +300,7 @@ export default function SystemPillars({ t, base }: SystemPillarsProps) {
                   </div>
 
                   <div className="light-card p-6 lg:p-8">
-                    <Visual reduced={!!prefersReducedMotion} active={active} />
+                    <Visual reduced={!!prefersReducedMotion} active={active} points={system.points} />
                   </div>
                 </Link>
               </motion.li>

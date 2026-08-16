@@ -102,11 +102,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
       <SiteHeader t={t} path={`/work/${study.slug}`} />
       <main id="main">
         <section
-          className="relative z-[7] pb-10 pt-44"
-          style={{
-            background:
-              'radial-gradient(ellipse 60% 55% at 85% 0%, rgba(162,255,0,0.06), transparent 70%), #0D0E12',
-          }}
+          className="intro-slab relative z-[7] bg-surface-deep pb-10 pt-44"
         >
           <div className="container-y">
             <nav aria-label="Breadcrumb" className="flex flex-wrap gap-2.5 text-[13px] text-subtle">
@@ -126,11 +122,11 @@ export default async function CaseStudyPage({ params }: PageProps) {
               <h1 className="text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl">
                 {study.name}
               </h1>
-              <span className="rounded-sm border border-line px-2.5 py-1 text-[11px] font-extrabold uppercase tracking-[0.06em] text-soft">
+              <span className="slant bg-surface-elevated px-3 py-1 text-[11px] font-extrabold uppercase tracking-[0.06em] text-soft">
                 {statusLabel}
               </span>
               {study.metricBadge && (
-                <span className="rounded-sm bg-yoca-lime px-3 py-1.5 text-[13px] font-extrabold text-black">
+                <span className="slant bg-yoca-lime px-3.5 py-1.5 text-[13px] font-extrabold text-black">
                   {study.metricBadge}
                 </span>
               )}
@@ -212,7 +208,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
                         </div>
                         <div className="mt-2 h-2 overflow-hidden rounded-full bg-surface-elevated">
                           <div
-                            className="h-full rounded-full bg-gradient-to-r from-yoca-green to-yoca-lime"
+                            className="h-full rounded-full bg-yoca-lime"
                             style={{ width: `${Math.min(100, Math.max(4, stat.bar ?? 50))}%` }}
                           />
                         </div>

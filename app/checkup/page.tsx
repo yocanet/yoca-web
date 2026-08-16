@@ -37,11 +37,7 @@ export default async function CheckupPage() {
       <SiteHeader t={t} path="/checkup" />
       <main id="main">
         <section
-          className="relative z-[7] pb-10 pt-44"
-          style={{
-            background:
-              'radial-gradient(ellipse 60% 55% at 85% 0%, rgba(162,255,0,0.06), transparent 70%), #0D0E12',
-          }}
+          className="intro-slab relative z-[7] bg-surface-deep pb-10 pt-44"
         >
           <div className="container-y">
             <p className="eyebrow">{t.checkup.eyebrow}</p>

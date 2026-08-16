@@ -61,11 +61,7 @@ export default async function AboutPage() {
       <main id="main">
         {/* ── Intro ─────────────────────────────────────────────── */}
         <section
-          className="relative z-[7] pb-16 pt-44"
-          style={{
-            background:
-              'radial-gradient(ellipse 60% 55% at 85% 0%, rgba(162,255,0,0.07), transparent 70%), #0D0E12',
-          }}
+          className="intro-slab relative z-[7] bg-surface-deep pb-16 pt-44"
         >
           <div className="container-y">
             <p className="eyebrow">{a.eyebrow}</p>
@@ -138,11 +134,7 @@ export default async function AboutPage() {
 
         {/* ── Values ────────────────────────────────────────────── */}
         <section
-          className="relative z-[7] py-16 lg:py-24"
-          style={{
-            background:
-              'radial-gradient(ellipse 50% 60% at 10% 100%, rgba(64,196,1,0.05), transparent 70%), #0D0E12',
-          }}
+          className="relative z-[7] bg-surface-deep py-16 lg:py-24"
         >
           <div className="container-y grid gap-10 lg:grid-cols-[2fr_3fr] lg:gap-20">
             {/* Sticky title (desktop only; plain flow on mobile) */}

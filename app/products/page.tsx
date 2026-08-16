@@ -98,9 +98,9 @@ export default async function ProductsPage() {
 
   const statusLabel = { live: p.statusLive, soon: p.statusSoon, exp: p.statusExp } as const;
   const statusClass = {
-    live: 'border-yoca-green/40 text-yoca-green',
-    soon: 'border-yellow-400/40 text-yellow-300',
-    exp: 'border-line text-subtle',
+    live: 'bg-yoca-green text-black',
+    soon: 'bg-[#F5D90A] text-black',
+    exp: 'bg-surface-elevated text-soft',
   } as const;
 
   return (
@@ -120,11 +120,7 @@ export default async function ProductsPage() {
       <main id="main">
         {/* ── Intro ─────────────────────────────────────────────── */}
         <section
-          className="relative z-[7] pb-14 pt-44"
-          style={{
-            background:
-              'radial-gradient(ellipse 60% 55% at 85% 0%, rgba(64,196,1,0.07), transparent 70%), #0D0E12',
-          }}
+          className="intro-slab relative z-[7] bg-surface-deep pb-14 pt-44"
         >
           <div className="container-y">
             <p className="eyebrow">{p.eyebrow}</p>
@@ -163,7 +159,7 @@ export default async function ProductsPage() {
                         <h2 className="text-[22px] font-extrabold tracking-tight">{product.name}</h2>
                       )}
                       <span
-                        className={`flex-none rounded-full border px-3 py-1 text-[11px] font-bold uppercase tracking-[0.08em] ${statusClass[product.status]}`}
+                        className={`slant flex-none px-3.5 py-1 text-[11px] font-extrabold uppercase tracking-[0.08em] ${statusClass[product.status]}`}
                       >
                         {statusLabel[product.status]}
                       </span>

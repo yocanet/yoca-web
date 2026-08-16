@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { fetchMenu } from '@/lib/supabase';
 import { getRequestContext } from '@/lib/seo';
 import HeaderShell from '@/components/ui/HeaderShell';
-import LanguageSwitcher from '@/components/ui/LanguageSwitcher';
+import LanguageMenu from '@/components/ui/LanguageMenu';
 import MobileMenu from '@/components/ui/MobileMenu';
 import type { Dict } from '@/lib/i18n';
 import type { MenuItem } from '@/types';
@@ -133,16 +133,12 @@ export default async function SiteHeader({ t, path = '/' }: SiteHeaderProps) {
             href={`${base}/checkup`}
             className="hidden items-center gap-2 whitespace-nowrap rounded-sm border border-line bg-white/[0.02] px-3 py-2 text-[13px] font-bold text-soft transition-colors hover:border-yoca-lime/60 hover:text-yoca-lime min-[1120px]:inline-flex min-[1280px]:px-3.5"
           >
-            <span aria-hidden="true" className="block h-2 w-2 flex-none bg-yoca-lime" />
+            <span aria-hidden="true" className="slant block h-2 w-2.5 flex-none bg-yoca-lime" />
             <span className="hidden min-[1280px]:inline">{t.nav.checkup}</span>
             <span className="sr-only min-[1280px]:hidden">{t.nav.checkup}</span>
           </Link>
           <div className="max-[359px]:hidden">
-            <LanguageSwitcher
-              current={ctx.locale}
-              path={path}
-              ariaLabel={t.common.languageSwitcher}
-            />
+            <LanguageMenu current={ctx.locale} path={path} ariaLabel={t.common.languageSwitcher} />
           </div>
           <Link
             href={`${base}/contact`}

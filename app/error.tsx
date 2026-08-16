@@ -50,10 +50,6 @@ export default function ErrorPage({
   return (
     <main
       className="grid min-h-screen place-items-center bg-surface-deep px-5 py-24 text-center text-white"
-      style={{
-        background:
-          'radial-gradient(ellipse 55% 45% at 50% 0%, rgba(162,255,0,0.05), transparent 70%), #0D0E12',
-      }}
     >
       <div className="grid justify-items-center gap-4">
         <p

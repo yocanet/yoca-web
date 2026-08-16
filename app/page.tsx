@@ -5,7 +5,9 @@ import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 import Hero from '@/components/sections/Hero';
 import SystemPillars from '@/components/sections/SystemPillars';
-import PartnersAndClients from '@/components/sections/PartnersAndClients';
+import BrandBand from '@/components/sections/BrandBand';
+import WorkIndex from '@/components/sections/WorkIndex';
+import ToolsStrip from '@/components/sections/ToolsStrip';
 import TeamSection from '@/components/sections/TeamSection';
 import ServicesGrid from '@/components/sections/ServicesGrid';
 import CtaSection from '@/components/sections/CtaSection';
@@ -41,15 +43,12 @@ export default async function HomePage() {
       <SiteHeader t={t} path="/" />
       <main id="main">
         <SectionWrapper sectionKey="hero">
-          <Hero t={t.hero} base={base} />
+          <Hero t={t.hero} base={base} rail={t.systems.items.map((system) => system.name)} />
         </SectionWrapper>
 
+        {/* Brand band — the index line as a full-bleed lime strip */}
         <SectionWrapper sectionKey="clients">
-          <PartnersAndClients
-            t={{ clients: t.clients, partners: t.partners }}
-            showClients
-            showPartners={false}
-          />
+          <BrandBand line={t.hero.line} />
         </SectionWrapper>
 
         {/* System architecture — canonical order: Brand → Growth → Scale */}
@@ -57,57 +56,63 @@ export default async function HomePage() {
           <SystemPillars t={t.systems} base={base} />
         </SectionWrapper>
 
+        {/* Selected work — typographic index, honest status labels */}
+        <SectionWrapper sectionKey="work">
+          <WorkIndex t={t.work} locale={ctx.locale} base={base} />
+        </SectionWrapper>
+
         <SectionWrapper sectionKey="services">
           <ServicesGrid t={t.services} ctaLabel={t.cta.button} base={base} />
         </SectionWrapper>
 
-        <SectionWrapper sectionKey="team">
-          <TeamSection t={t.team} />
-        </SectionWrapper>
-
-        {/* Digital Check-Up — secondary lead magnet (border CTA) */}
+        {/* Digital Check-Up — full-bleed lime band (secondary lead magnet) */}
         <SectionWrapper sectionKey="checkup_banner">
-          <section className="relative z-[7] bg-surface py-14">
-            <div className="container-y">
-              <div className="glass grid items-center gap-8 overflow-hidden rounded-md p-8 md:grid-cols-[3fr_2fr] lg:p-12">
-                <div>
-                  <span className="inline-block rounded-sm border border-line px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.1em] text-yoca-lime">
-                    {t.checkup.eyebrow}
-                  </span>
-                  <h2 className="mt-4 text-2xl font-extrabold leading-snug tracking-tight lg:text-3xl">
-                    {t.checkup.introTitle}
-                  </h2>
-                  <p className="mt-3 max-w-[52ch] text-[15px] text-muted">{t.checkup.description}</p>
+          <section className="relative z-[7] overflow-hidden bg-yoca-lime py-16 text-black lg:py-24">
+            <span
+              aria-hidden="true"
+              className="slant absolute -bottom-10 end-[6%] hidden h-[220px] w-[240px] bg-black/10 lg:block"
+            />
+            <div className="container-y relative grid gap-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:items-end">
+              <div>
+                <p className="flex items-center gap-2.5 text-[12px] font-extrabold uppercase tracking-[0.14em] text-black/70">
+                  <span aria-hidden="true" className="slant block h-2.5 w-3 bg-black" />
+                  {t.checkup.eyebrow}
+                </p>
+                <h2 className="mt-5 max-w-[16ch] text-[clamp(32px,4.4vw,60px)] font-extrabold leading-[1.02] tracking-[-0.03em]">
+                  {t.checkup.introTitle}
+                </h2>
+                <p className="mt-5 max-w-[50ch] text-[16px] leading-relaxed text-black/75 lg:text-[17px]">
+                  {t.checkup.description}
+                </p>
+              </div>
+              <div className="grid justify-items-start gap-8 lg:justify-items-end">
+                <div aria-hidden="true" className="flex h-[96px] items-end gap-2">
+                  {[34, 58, 44, 76, 100].map((height, index) => (
+                    <span
+                      key={index}
+                      className={`w-[22px] ${index === 4 ? 'bg-black' : 'bg-black/20'}`}
+                      style={{ height: `${height}%` }}
+                    />
+                  ))}
                 </div>
-                <div className="grid justify-items-start gap-6 md:justify-items-end">
-                  <div aria-hidden="true" className="flex h-[74px] items-end gap-2">
-                    {[34, 58, 44, 76, 92].map((height, index) => (
-                      <span
-                        key={index}
-                        className={`w-[18px] border ${
-                          index === 4
-                            ? 'border-yoca-lime bg-yoca-lime'
-                            : 'border-line bg-surface-elevated'
-                        }`}
-                        style={{ height: `${height}%` }}
-                      />
-                    ))}
-                  </div>
-                  <Link href={`${base}/checkup`} className="btn-ghost">
-                    {t.hero.secondaryCta}
-                  </Link>
-                </div>
+                <Link
+                  href={`${base}/checkup`}
+                  className="inline-flex min-h-12 items-center gap-2 bg-black px-8 py-4 text-[15px] font-bold text-white transition-colors hover:bg-[#1a1a1a]"
+                >
+                  {t.hero.secondaryCta}
+                  <span aria-hidden="true" className="icon-arrow">→</span>
+                </Link>
               </div>
             </div>
           </section>
         </SectionWrapper>
 
         <SectionWrapper sectionKey="partners">
-          <PartnersAndClients
-            t={{ clients: t.clients, partners: t.partners }}
-            showClients={false}
-            showPartners
-          />
+          <ToolsStrip t={t.partners} />
+        </SectionWrapper>
+
+        <SectionWrapper sectionKey="team">
+          <TeamSection t={t.team} />
         </SectionWrapper>
 
         <SectionWrapper sectionKey="cta">

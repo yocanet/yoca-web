@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { Manrope } from 'next/font/google';
-import AmbientBackground from '@/components/ui/AmbientBackground';
 import CookieConsent from '@/components/ui/CookieConsent';
 import ScrollProgress from '@/components/ui/ScrollProgress';
 import { getDict } from '@/lib/i18n';
@@ -50,7 +49,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             __html: jsonLdString(professionalServiceSchema(ctx.host, ctx.locale)),
           }}
         />
-        <AmbientBackground />
         <ScrollProgress />
         {children}
         <CookieConsent

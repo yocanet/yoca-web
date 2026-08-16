@@ -11,11 +11,7 @@ export default function NotFound() {
   return (
     <main
       id="main"
-      className="relative z-[7] grid min-h-screen place-items-center px-5 py-24 text-center"
-      style={{
-        background:
-          'radial-gradient(ellipse 55% 45% at 50% 0%, rgba(162,255,0,0.05), transparent 70%), #0D0E12',
-      }}
+      className="intro-slab relative z-[7] grid min-h-screen place-items-center bg-surface-deep px-5 py-24 text-center"
     >
       <div className="grid justify-items-center gap-4">
         <p

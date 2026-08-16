@@ -43,11 +43,7 @@ export default async function ServicesPage() {
       <main id="main">
         {/* ── Intro ─────────────────────────────────────────────── */}
         <section
-          className="relative z-[7] pb-14 pt-44"
-          style={{
-            background:
-              'radial-gradient(ellipse 60% 55% at 85% 0%, rgba(162,255,0,0.06), transparent 70%), #0D0E12',
-          }}
+          className="intro-slab relative z-[7] bg-surface-deep pb-14 pt-44"
         >
           <div className="container-y">
             <p className="eyebrow">{sp.eyebrow}</p>
@@ -69,11 +65,7 @@ export default async function ServicesPage() {
 
         {/* ── Process ───────────────────────────────────────────── */}
         <section
-          className="relative z-[7] border-t border-line py-16 lg:py-24"
-          style={{
-            background:
-              'radial-gradient(ellipse 50% 60% at 90% 100%, rgba(64,196,1,0.05), transparent 70%), #0D0E12',
-          }}
+          className="relative z-[7] border-t border-line bg-surface-deep py-16 lg:py-24"
         >
           <div className="container-y">
             <Reveal>

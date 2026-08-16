@@ -12,11 +12,12 @@ import ServicesIndex from '@/components/sections/ServicesIndex';
 
 interface ServicesGridProps {
   t: Dict['services'];
+  flows: string[][];
   ctaLabel: string;
   base: string;
 }
 
-export default function ServicesGrid({ t, ctaLabel, base }: ServicesGridProps) {
+export default function ServicesGrid({ t, flows, ctaLabel, base }: ServicesGridProps) {
   return (
     <section className="relative z-[7] bg-surface-deep py-20 lg:py-32">
       <div className="container-y">
@@ -29,7 +30,7 @@ export default function ServicesGrid({ t, ctaLabel, base }: ServicesGridProps) {
           </p>
         </div>
 
-        <ServicesIndex t={t} base={base} />
+        <ServicesIndex t={t} flows={flows} base={base} />
 
         <div className="mt-12 flex flex-wrap items-center gap-4">
           <Link href={`${base}/services`} className="btn-ghost">

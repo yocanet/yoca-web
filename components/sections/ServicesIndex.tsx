@@ -8,9 +8,10 @@ import { EASE_YOCA } from '@/lib/motion';
 
 /**
  * Yoca — interactive services index (client).
- * Six hairline rows; on pointer devices (≥ lg) a sticky preview panel
- * crossfades between one composition per capability — identity system,
- * responsive UI, measurement, editorial media, workflow nodes, product UI.
+ * Six hairline rows; on pointer devices (≥ lg) a sticky preview panel shows
+ * the active service's number, title and a LITERAL preview — brand system,
+ * browser + phone, growth journey (localized words), content formats,
+ * automation flow (words), product frames. One 350 ms crossfade, then still.
  * Every row's description and "what changes" line stay visible on all
  * devices, so nothing is hover-only. Keyboard focus drives the preview too.
  */
@@ -19,92 +20,133 @@ const SERVICE_SLUGS = ['brand-strategy-identity', 'web-digital-experiences', 'gr
 
 interface ServicesIndexProps {
   t: Dict['services'];
+  /** Localized step flows per service (servicesPage.flows). */
+  flows: string[][];
   base: string;
 }
 
-/** Six abstract compositions — brand geometry only, no stock imagery. */
-function Preview({ index, reduced }: { index: number; reduced: boolean }) {
-  const common = { initial: reduced ? false : { opacity: 0, scale: 0.98 }, animate: { opacity: 1, scale: 1 }, exit: { opacity: 0, scale: 1.02 }, transition: { duration: 0.4, ease: EASE_YOCA } };
+/** Six literal previews — each must read as its service in under a second.
+ *  Word-based ones use the localized flow labels; none animate while idle. */
+function Preview({ index, reduced, flow }: { index: number; reduced: boolean; flow: string[] }) {
+  const swap = {
+    initial: reduced ? false : { opacity: 0, y: 6 },
+    animate: { opacity: 1, y: 0 },
+    exit: { opacity: 0, y: -6 },
+    transition: { duration: 0.35, ease: EASE_YOCA },
+  };
+  const W = 'rgba(255,255,255,0.35)';
+  const F = 'rgba(255,255,255,0.14)';
+
+  const flowNodes = (labels: string[]) => (
+    <ol className="grid gap-2">
+      {labels.map((label, i) => (
+        <li key={label} className="flex items-center gap-3">
+          <span className={`slant block h-[15px] w-[18px] flex-none ${i === labels.length - 1 ? 'bg-yoca-lime' : i === 0 ? 'bg-white' : 'bg-yoca-green'}`} aria-hidden="true" />
+          <span className="text-[14px] font-extrabold tracking-[-0.01em] text-soft">{label}</span>
+          {i < labels.length - 1 && <span aria-hidden="true" className="ms-auto h-px w-6 bg-line" />}
+        </li>
+      ))}
+    </ol>
+  );
+
   return (
     <AnimatePresence mode="wait">
-      <motion.svg key={index} viewBox="0 0 320 220" className="h-auto w-full" aria-hidden="true" {...common}>
+      <motion.div key={index} {...swap}>
         {index === 0 && (
-          <g>
-            {/* Identity system: mark modules + type block + swatches */}
-            <polygon points="30,60 32.7,28 64.9,28 62.2,60" fill="#A2FF00" />
-            <polygon points="48.5,60 80.7,60 78,92 45.8,92" fill="#40C401" />
-            <rect x="30" y="100" width="34" height="34" fill="#FFFFFF" />
-            <text x="120" y="70" fontSize="52" fontWeight="800" fill="#FFFFFF" letterSpacing="-2">Aa</text>
-            {[0, 1, 2, 3, 4, 5].map((i) => (
-              <rect key={i} x={120 + i * 30} y="100" width="22" height="22" fill={i === 0 ? '#A2FF00' : i === 1 ? '#40C401' : `rgba(255,255,255,${0.9 - i * 0.14})`} />
-            ))}
-            {[0, 1, 2].map((i) => <rect key={i} x="120" y={150 + i * 16} width={170 - i * 40} height="6" fill="rgba(255,255,255,0.18)" />)}
-          </g>
+          /* Brand: the real mark, type scale, colour tokens */
+          <div className="grid gap-5">
+            <div className="flex items-end gap-6">
+              <svg viewBox="-1 -0.5 70 70.5" className="h-16 w-auto" aria-hidden="true">
+                <path d="M0,16.71L1.36.62h16.18l-1.36,16.09H0Z" fill="#A2FF00" />
+                <path d="M25.49,16.71l-1.36,16.09H7.95l1.36-16.09h16.18Z" fill="#40C401" />
+                <path d="M42.59,69.04h-16.41l7.31-20.13h-18.06l1.23-16.09h22.9L50.92.62h16.51l-24.83,68.42Z" fill="#FFFFFF" />
+              </svg>
+              <span className="text-[56px] font-extrabold leading-none tracking-[-0.04em] text-white">Aa</span>
+              <span className="text-[28px] font-bold leading-none text-muted">Aa</span>
+              <span className="text-[16px] font-semibold leading-none text-subtle">Aa</span>
+            </div>
+            <div className="flex gap-2" aria-hidden="true">
+              {['#A2FF00', '#40C401', '#F4F4F1', '#B4B7BF', '#2A2E37', '#050505'].map((c) => (
+                <span key={c} className="h-8 flex-1 border border-line" style={{ background: c }} />
+              ))}
+            </div>
+            <div className="grid gap-1.5" aria-hidden="true">
+              <span className="h-2 w-3/4 bg-white/60" />
+              <span className="h-2 w-1/2 bg-white/30" />
+              <span className="h-2 w-2/3 bg-white/30" />
+            </div>
+          </div>
         )}
         {index === 1 && (
-          <g>
-            {/* Responsive UI: desktop + phone frames */}
-            <rect x="24" y="30" width="200" height="130" fill="none" stroke="rgba(255,255,255,0.35)" strokeWidth="1.5" />
-            <rect x="24" y="30" width="200" height="14" fill="rgba(255,255,255,0.12)" />
-            <rect x="40" y="60" width="90" height="10" fill="#FFFFFF" />
-            <rect x="40" y="78" width="120" height="6" fill="rgba(255,255,255,0.3)" />
-            <rect x="40" y="90" width="100" height="6" fill="rgba(255,255,255,0.3)" />
-            <rect x="40" y="112" width="52" height="18" fill="#A2FF00" />
-            <motion.rect x="240" y="60" width="56" height="120" fill="none" stroke="rgba(255,255,255,0.35)" strokeWidth="1.5" initial={reduced ? false : { y: 8, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.15, duration: 0.4 }} />
-            <rect x="248" y="78" width="40" height="8" fill="#FFFFFF" />
-            <rect x="248" y="92" width="32" height="5" fill="rgba(255,255,255,0.3)" />
-            <rect x="248" y="150" width="40" height="14" fill="#A2FF00" />
-          </g>
+          /* Web: browser + phone */
+          <svg viewBox="0 0 320 200" className="h-auto w-full" aria-hidden="true">
+            <rect x="12" y="20" width="210" height="150" fill="none" stroke={W} strokeWidth="1.5" />
+            <rect x="12" y="20" width="210" height="16" fill={F} />
+            <circle cx="22" cy="28" r="2.5" fill={W} /><circle cx="31" cy="28" r="2.5" fill={W} /><circle cx="40" cy="28" r="2.5" fill={W} />
+            <rect x="30" y="54" width="110" height="12" fill="#FFFFFF" />
+            <rect x="30" y="74" width="150" height="6" fill={W} />
+            <rect x="30" y="86" width="130" height="6" fill={W} />
+            <rect x="30" y="112" width="60" height="20" fill="#A2FF00" />
+            <rect x="120" y="106" width="86" height="50" fill={F} />
+            <rect x="244" y="44" width="64" height="130" rx="6" fill="none" stroke={W} strokeWidth="1.5" />
+            <rect x="254" y="66" width="44" height="9" fill="#FFFFFF" />
+            <rect x="254" y="82" width="34" height="5" fill={W} />
+            <rect x="254" y="92" width="40" height="5" fill={W} />
+            <rect x="254" y="110" width="44" height="30" fill={F} />
+            <rect x="254" y="150" width="44" height="14" fill="#A2FF00" />
+          </svg>
         )}
-        {index === 2 && (
-          <g>
-            {/* Measurement: bars + line, one green target */}
-            {[70, 96, 82, 118, 140, 168].map((h, i) => (
-              <motion.rect key={i} x={30 + i * 44} y={190 - h} width="26" height={h} fill={i === 5 ? '#40C401' : 'rgba(255,255,255,0.16)'} initial={reduced ? false : { scaleY: 0 }} animate={{ scaleY: 1 }} transition={{ delay: 0.05 * i, duration: 0.45 }} style={{ transformOrigin: `${43 + i * 44}px 190px` }} />
-            ))}
-            <motion.path d="M 43 130 L 87 108 L 131 118 L 175 90 L 219 70 L 263 42" fill="none" stroke="#A2FF00" strokeWidth="2.5" initial={reduced ? false : { pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ delay: 0.2, duration: 0.7 }} />
-          </g>
-        )}
+        {index === 2 && flowNodes(flow)}
         {index === 3 && (
-          <g>
-            {/* Editorial media: overlapping frames */}
-            <rect x="30" y="40" width="150" height="100" fill="rgba(255,255,255,0.10)" />
-            <rect x="110" y="70" width="150" height="100" fill="rgba(255,255,255,0.18)" />
-            <rect x="70" y="120" width="110" height="70" fill="#A2FF00" />
-            <rect x="200" y="30" width="60" height="30" fill="#40C401" />
-            <text x="200" y="196" fontSize="12" fontWeight="800" fill="rgba(255,255,255,0.6)" letterSpacing="2">04</text>
-          </g>
+          /* Creative production: content formats 1:1 · 9:16 · 16:9 */
+          <div className="grid grid-cols-[1fr_0.62fr_1.5fr] items-end gap-3" aria-hidden="true">
+            <div className="grid gap-2">
+              <span className="block aspect-square w-full border border-line bg-surface-elevated" />
+              <span className="text-[11px] font-bold uppercase tracking-[0.1em] text-subtle">1:1</span>
+            </div>
+            <div className="grid gap-2">
+              <span className="block aspect-[9/16] w-full border border-line bg-yoca-lime" />
+              <span className="text-[11px] font-bold uppercase tracking-[0.1em] text-subtle">9:16</span>
+            </div>
+            <div className="grid gap-2">
+              <span className="relative block aspect-video w-full border border-line bg-surface-elevated">
+                <span className="absolute start-1/2 top-1/2 block h-0 w-0 -translate-x-1/2 -translate-y-1/2 border-y-[7px] border-s-[12px] border-y-transparent border-s-white" />
+              </span>
+              <span className="text-[11px] font-bold uppercase tracking-[0.1em] text-subtle">16:9</span>
+            </div>
+          </div>
         )}
-        {index === 4 && (
-          <g>
-            {/* Workflow nodes */}
-            {[[40, 60], [130, 40], [130, 110], [220, 75], [280, 150]].map(([x, y], i) => (
-              <rect key={i} x={x} y={y} width="26" height="26" fill={i === 3 ? '#A2FF00' : i === 4 ? '#40C401' : 'rgba(255,255,255,0.7)'} />
-            ))}
-            <motion.path d="M 66 73 L 130 53 M 66 73 L 130 123 M 156 53 L 220 88 M 156 123 L 220 88 M 246 88 L 280 163" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" initial={reduced ? false : { pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.8 }} />
-          </g>
-        )}
+        {index === 4 && flowNodes(flow)}
         {index === 5 && (
-          <g>
-            {/* Product UI: app shell */}
-            <rect x="30" y="30" width="260" height="160" fill="none" stroke="rgba(255,255,255,0.35)" strokeWidth="1.5" />
-            <rect x="30" y="30" width="70" height="160" fill="rgba(255,255,255,0.08)" />
-            {[0, 1, 2, 3].map((i) => <rect key={i} x="42" y={50 + i * 22} width="46" height="8" fill={i === 0 ? '#A2FF00' : 'rgba(255,255,255,0.3)'} />)}
-            {[0, 1, 2].map((i) => (
-              <motion.rect key={i} x={116 + i * 58} y="50" width="50" height="40" fill="rgba(255,255,255,0.14)" initial={reduced ? false : { opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 * i, duration: 0.35 }} />
-            ))}
-            <rect x="116" y="106" width="162" height="70" fill="rgba(255,255,255,0.08)" />
-            <rect x="128" y="120" width="80" height="8" fill="#FFFFFF" />
-            <rect x="128" y="136" width="120" height="5" fill="rgba(255,255,255,0.3)" />
-            <rect x="128" y="154" width="44" height="12" fill="#40C401" />
-          </g>
+          /* Product: wireframe → interface → product (three frames) + flow words */
+          <div className="grid gap-5">
+            <div className="grid grid-cols-3 gap-3" aria-hidden="true">
+              <span className="grid aspect-[4/3] content-start gap-1.5 border border-dashed border-line p-2">
+                <span className="h-1.5 w-2/3 bg-white/40" /><span className="h-1.5 w-1/2 bg-white/25" /><span className="mt-1 h-4 w-1/2 border border-line" />
+              </span>
+              <span className="grid aspect-[4/3] content-start gap-1.5 border border-line bg-surface-elevated p-2">
+                <span className="h-1.5 w-2/3 bg-white/70" /><span className="h-1.5 w-1/2 bg-white/35" /><span className="mt-1 h-4 w-1/2 bg-white/20" />
+              </span>
+              <span className="grid aspect-[4/3] content-start gap-1.5 border border-line bg-surface-elevated p-2">
+                <span className="h-1.5 w-2/3 bg-white" /><span className="h-1.5 w-1/2 bg-white/40" /><span className="mt-1 h-4 w-1/2 bg-yoca-lime" />
+              </span>
+            </div>
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[13px] font-extrabold text-soft">
+              {flow.map((label, i) => (
+                <span key={label} className="flex items-center gap-3">
+                  {label}
+                  {i < flow.length - 1 && <span aria-hidden="true" className="icon-arrow text-subtle">→</span>}
+                </span>
+              ))}
+            </div>
+          </div>
         )}
-      </motion.svg>
+      </motion.div>
     </AnimatePresence>
   );
 }
 
-export default function ServicesIndex({ t, base }: ServicesIndexProps) {
+export default function ServicesIndex({ t, flows, base }: ServicesIndexProps) {
   const reduced = useReducedMotion();
   const [active, setActive] = useState(0);
 
@@ -148,11 +190,12 @@ export default function ServicesIndex({ t, base }: ServicesIndexProps) {
       {/* Sticky preview — desktop pointer devices */}
       <div className="hover-preview lg:sticky lg:top-28 lg:self-start">
         <div className="border border-line bg-surface p-6">
-          <div className="mb-4 flex items-center justify-between text-[11px] font-bold uppercase tracking-[0.12em] text-subtle">
-            <span>{String(active + 1).padStart(2, '0')}</span>
-            <span className="truncate ps-4">{t.items[active]?.name}</span>
+          {/* Zero ambiguity: number + title of the active service, then its preview */}
+          <div className="mb-5 border-b border-line pb-4">
+            <span className="text-[12px] font-extrabold tracking-[0.1em] text-yoca-lime">{String(active + 1).padStart(2, '0')}</span>
+            <span className="mt-1 block text-[18px] font-extrabold tracking-[-0.02em] text-white">{t.items[active]?.name}</span>
           </div>
-          <Preview index={active} reduced={!!reduced} />
+          <Preview index={active} reduced={!!reduced} flow={flows[active] ?? []} />
         </div>
       </div>
     </div>

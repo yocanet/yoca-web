@@ -5,7 +5,6 @@ import { getRequestContext } from '@/lib/seo';
 import type { Dict } from '@/lib/i18n';
 import { COMPANY } from '@/lib/company';
 import YocaSignature from '@/components/branding/YocaSignature';
-import FooterMark from '@/components/ui/FooterMark';
 
 /**
  * Yoca — site footer.
@@ -153,8 +152,10 @@ export default async function SiteFooter({ t }: SiteFooterProps) {
           <YocaSignature variant="signature" theme="dark" source="yoca.net" className="footer-signature" />
         </div>
 
-        {/* Closing chapter: "Made to move forward." + oversized outlined wordmark */}
-        <FooterMark />
+        {/* One ending: the oversized outlined wordmark (typographic texture, not a logo redraw). */}
+        <p aria-hidden="true" className="wordmark-outline pointer-events-none mt-10 select-none text-center leading-none">
+          YOCA
+        </p>
       </div>
     </footer>
   );

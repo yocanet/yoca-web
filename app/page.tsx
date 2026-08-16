@@ -63,7 +63,7 @@ export default async function HomePage() {
         </SectionWrapper>
 
         <SectionWrapper sectionKey="services">
-          <ServicesGrid t={t.services} ctaLabel={t.cta.button} base={base} />
+          <ServicesGrid t={t.services} flows={t.servicesPage.flows} ctaLabel={t.cta.button} base={base} />
         </SectionWrapper>
 
         {/* Digital Check-Up — full-bleed lime band (secondary lead magnet) */}

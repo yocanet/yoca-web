@@ -95,7 +95,7 @@ export default function ProductMotif({ productKey }: { productKey: string }) {
   return (
     <svg viewBox="0 0 200 44" className="h-11 w-auto">
       <rect x="0" y="12" width="20" height="20" fill="rgba(5,5,5,0.25)" />
-      <motion.rect x="30" y="12" width="20" height="20" fill="none" stroke="#A2FF00" strokeWidth="1.5" strokeDasharray="4 3" animate={reduced ? undefined : { opacity: [1, 0.35, 1] }} transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }} />
+      <rect x="30" y="12" width="20" height="20" fill="none" stroke="#A2FF00" strokeWidth="1.5" strokeDasharray="4 3" />
       <rect x="60" y="12" width="20" height="20" fill="#40C401" />
       <rect x="90" y="4" width="36" height="36" fill="none" stroke="rgba(5,5,5,0.3)" strokeWidth="1.5" />
       <rect x="100" y="14" width="16" height="16" fill="#A2FF00" />

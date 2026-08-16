@@ -70,8 +70,8 @@ function BrandVisual({ reduced, active, points }: VisualProps) {
           <text x="154" y={y + 4} style={LABEL}>{points[index] ?? ''}</text>
         </motion.g>
       ))}
-      {/* Signal leaves the core and reaches every touchpoint — always; faster on hover */}
-      {!reduced &&
+      {/* Hover: a signal leaves the core and reaches every touchpoint */}
+      {active && !reduced &&
         nodes.map((y, index) => (
           <motion.rect
             key={`pulse-${y}`}
@@ -146,13 +146,13 @@ function GrowthVisual({ reduced, active, points }: VisualProps) {
           initial={reduced ? false : { scaleY: 0 }}
           whileInView={{ scaleY: 1 }}
           viewport={{ once: true }}
-          animate={reduced ? undefined : { scaleY: [1, 1.22, 1] }}
-          transition={{ duration: active ? 1.1 : 2.6, delay: index * 0.12, repeat: Infinity, ease: 'easeInOut' }}
+          animate={active && !reduced ? { scaleY: [1, 1.22, 1] } : { scaleY: 1 }}
+          transition={active && !reduced ? { duration: 1.1, delay: index * 0.12, repeat: Infinity, ease: 'easeInOut' } : { duration: 0.4 }}
           style={{ transformOrigin: `${143 + index * 11}px 116px` }}
         />
       ))}
-      {/* A signal circulates the loop — always; faster on hover */}
-      {!reduced && (
+      {/* Hover: a signal circulates the loop */}
+      {active && !reduced && (
         <motion.rect
           width="7"
           height="7"
@@ -199,17 +199,14 @@ function ScaleVisual({ reduced, active, points }: VisualProps) {
               height="16"
               fill={layer.fill}
               initial={reduced ? false : { opacity: 0.25 }}
-              animate={
-                reduced
-                  ? { opacity: 1 }
-                  : { opacity: [0.25, 1, 1, 0.25] }
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              animate={active && !reduced ? { opacity: [1, 0.35, 1] } : undefined}
+              transition={
+                active && !reduced
+                  ? { duration: cycle, delay: index * (cycle / 4) + block * 0.08, repeat: Infinity, ease: 'easeInOut' }
+                  : { duration: 0.4, delay: 0.3 + index * 0.15 + block * 0.06 }
               }
-              transition={{
-                duration: cycle,
-                delay: index * (cycle / 4) + block * 0.08,
-                repeat: Infinity,
-                ease: 'easeInOut',
-              }}
             />
           ))}
         </motion.g>
@@ -221,11 +218,11 @@ function ScaleVisual({ reduced, active, points }: VisualProps) {
         strokeWidth="1.5"
         strokeDasharray="3 3"
         fill="none"
-        animate={reduced ? undefined : { strokeDashoffset: [12, 0] }}
-        transition={{ duration: active ? 0.6 : 1.4, repeat: Infinity, ease: 'linear' }}
+        animate={active && !reduced ? { strokeDashoffset: [12, 0] } : undefined}
+        transition={{ duration: 0.8, repeat: Infinity, ease: 'linear' }}
       />
-      {/* Rising signal on the feed line */}
-      {!reduced && (
+      {/* Hover: rising signal on the feed line */}
+      {active && !reduced && (
         <motion.rect
           width="6"
           height="6"

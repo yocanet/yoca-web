@@ -76,7 +76,7 @@ export default function SplitWords({
   }
 
   const wordVariants = {
-    hidden: { y: '110%' },
+    hidden: { y: '125%' },
     visible: (index: number) => ({
       y: '0%',
       transition: { duration: 0.7, delay: delay + index * stagger, ease: EASE_YOCA },
@@ -95,7 +95,7 @@ export default function SplitWords({
     <motion.span className={className} {...trigger_props}>
       {words.map(({ word, sentence }, index) => (
         <span key={index}>
-          <span className="inline-block overflow-hidden align-bottom pb-[0.08em] -mb-[0.08em]">
+          <span className="inline-block overflow-hidden align-bottom pb-[0.3em] -mb-[0.3em] pt-[0.12em] -mt-[0.12em] pe-[0.08em] -me-[0.08em]">
             <motion.span variants={wordVariants} custom={index} className="inline-block">
               {isEmphasis(word) ? (
                 <span className="underline decoration-yoca-lime decoration-[0.045em] underline-offset-[0.06em]">{word}</span>

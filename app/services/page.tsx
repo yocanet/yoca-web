@@ -63,38 +63,45 @@ export default async function ServicesPage() {
           </div>
         </section>
 
-        {/* ── Process ───────────────────────────────────────────── */}
-        <section
-          className="relative z-[7] border-t border-line bg-surface-deep py-16 lg:py-24"
-        >
+        {/* ── Process — soft-white break, one horizontal sequence ── */}
+        <section className="section-light relative z-[7] py-20 lg:py-32">
           <div className="container-y">
             <Reveal>
-              <div className="mb-12 max-w-2xl">
-                <h2 className="text-[clamp(32px,4.2vw,56px)] font-extrabold leading-[1.04] tracking-[-0.03em]">
+              <div className="grid gap-6 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:items-end lg:gap-16">
+                <h2 className="max-w-[16ch] text-[clamp(32px,4.2vw,56px)] font-extrabold leading-[1.04] tracking-[-0.03em]">
                   {sp.processTitle}
                 </h2>
-                <p className="mt-4 text-[16px] leading-relaxed text-muted">{sp.processSub}</p>
+                <p className="light-muted max-w-[46ch] text-[16px] leading-relaxed lg:justify-self-end">{sp.processSub}</p>
               </div>
             </Reveal>
-            <ol className="grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
+            <ol className="relative mt-14 grid gap-10 sm:grid-cols-2 lg:mt-20 lg:grid-cols-5 lg:gap-6">
+              {/* Connecting rail (desktop) */}
+              <span aria-hidden="true" className="absolute inset-x-0 top-[9px] hidden h-px bg-[rgba(5,5,5,0.16)] lg:block" />
               {sp.process.map((step, index) => (
-                <Reveal key={step.name} delay={index * 0.08}>
-                  <li className="relative h-full rounded-md border border-line bg-surface p-6">
-                    <span className="text-[26px] font-extrabold leading-none text-yoca-lime">
+                <Reveal key={step.name} delay={index * 0.1}>
+                  <li className="relative">
+                    <span
+                      aria-hidden="true"
+                      className={`slant relative z-10 block h-[19px] w-[22px] ${index === sp.process.length - 1 ? 'bg-yoca-lime' : index === 0 ? 'bg-[#050505]' : 'bg-yoca-green'}`}
+                    />
+                    <span className="mt-6 block text-[clamp(44px,5vw,72px)] font-extrabold leading-none tracking-[-0.05em] text-[rgba(5,5,5,0.14)]">
                       {String(index + 1).padStart(2, '0')}
                     </span>
-                    <h3 className="mt-4 text-[17px] font-extrabold tracking-tight">{step.name}</h3>
-                    <p className="mt-2 text-[14px] leading-relaxed text-muted">{step.desc}</p>
+                    <h3 className="mt-3 text-[20px] font-extrabold tracking-[-0.02em]">{step.name}</h3>
+                    <p className="light-muted mt-2 max-w-[30ch] text-[14px] leading-relaxed">{step.desc}</p>
                   </li>
                 </Reveal>
               ))}
             </ol>
             <Reveal delay={0.2}>
-              <div className="mt-12 flex flex-wrap gap-4">
+              <div className="mt-16 flex flex-wrap gap-4">
                 <Link href={`${base}/contact`} className="btn-primary">
                   {t.hero.primaryCta}
                 </Link>
-                <Link href={`${base}/checkup`} className="btn-ghost">
+                <Link
+                  href={`${base}/checkup`}
+                  className="inline-flex min-h-12 items-center gap-2 border border-[rgba(5,5,5,0.3)] px-7 py-3 text-[15px] font-bold text-[#050505] transition-colors hover:border-[#050505]"
+                >
                   {t.hero.secondaryCta}
                 </Link>
               </div>

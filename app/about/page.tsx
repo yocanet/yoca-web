@@ -7,6 +7,7 @@ import TeamSection from '@/components/sections/TeamSection';
 import CtaSection from '@/components/sections/CtaSection';
 import SectionWrapper from '@/components/SectionWrapper';
 import Reveal from '@/components/ui/Reveal';
+import BrandMark from '@/components/ui/BrandMark';
 import Manifesto from '@/components/ui/Manifesto';
 import { getDict } from '@/lib/i18n';
 import { getContent } from '@/lib/content';
@@ -83,41 +84,39 @@ export default async function AboutPage() {
               </Reveal>
             </div>
 
-            {/* Flowing methodology cards — canonical 01→02→03 order */}
-            <div className="grid content-start gap-6">
+            {/* The three systems as a numbered index — canonical 01→02→03 order */}
+            <ol className="border-t border-line">
               {t.systems.items.map((system, index) => (
                 <Reveal key={system.name} delay={index * 0.08}>
-                  <article className="glass rounded-md p-7 transition-colors duration-300 hover:border-yoca-lime/40 lg:p-9">
-                    <p className="text-[13px] font-extrabold tracking-[0.1em] text-yoca-lime">
+                  <li className="grid gap-4 border-b border-line py-8 md:grid-cols-[72px_minmax(0,1fr)] md:gap-8">
+                    <span className="text-[clamp(28px,3vw,44px)] font-extrabold leading-none tracking-[-0.04em] text-yoca-lime">
                       {String(index + 1).padStart(2, '0')}
-                    </p>
-                    <h3 className="mt-3 text-xl font-extrabold tracking-tight">{system.name}</h3>
-                    <p className="mt-1 text-[12px] font-bold uppercase tracking-[0.12em] text-subtle">
-                      {system.tagline}
-                    </p>
-                    <p className="mt-4 text-[15px] leading-relaxed text-muted">{system.body}</p>
-                    <ul className="mt-5 grid gap-2 border-t border-line pt-4">
-                      {system.points.map((point) => (
-                        <li key={point} className="flex items-start gap-2.5 text-[13px] font-semibold text-soft">
-                          <span
-                            aria-hidden="true"
-                            className="mt-[6px] block h-1.5 w-1.5 flex-none bg-yoca-green"
-                          />
-                          {point}
-                        </li>
-                      ))}
-                    </ul>
-                  </article>
+                    </span>
+                    <div>
+                      <h3 className="text-[clamp(20px,2vw,26px)] font-extrabold tracking-[-0.02em]">{system.name}</h3>
+                      <p className="mt-1 text-[12px] font-bold uppercase tracking-[0.12em] text-subtle">{system.tagline}</p>
+                      <p className="mt-4 max-w-[52ch] text-[15px] leading-relaxed text-muted">{system.body}</p>
+                      <ul className="mt-4 flex flex-wrap gap-x-5 gap-y-2">
+                        {system.points.map((point) => (
+                          <li key={point} className="flex items-center gap-2 text-[13px] font-semibold text-soft">
+                            <span aria-hidden="true" className="slant block h-2 w-2.5 flex-none bg-yoca-green" />
+                            {point}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </li>
                 </Reveal>
               ))}
-            </div>
+            </ol>
           </div>
         </section>
 
         {/* ── Scroll-activated manifesto ────────────────────────── */}
-        <section className="relative z-[7] border-t border-line py-20 lg:py-32">
+        <section className="section-light relative z-[7] py-24 lg:py-40">
           <div className="container-y">
-            <Manifesto lines={a.manifesto} />
+            <BrandMark variant="modules" className="mb-10 h-9 w-auto" />
+            <Manifesto lines={a.manifesto} tone="light" />
           </div>
         </section>
 
@@ -137,20 +136,26 @@ export default async function AboutPage() {
                 </p>
               </Reveal>
             </div>
-            {/* Flowing principles */}
-            <div className="grid content-start gap-5">
+            {/* Principles as an index — hairline rows, hover fills the start rule */}
+            <ol className="border-t border-line">
               {a.values.map((value, index) => (
                 <Reveal key={value.title} delay={index * 0.06}>
-                  <article className="glass rounded-md p-7 transition-colors duration-300 hover:border-yoca-lime/40 lg:p-9">
-                    <span className="text-[13px] font-extrabold tracking-[0.1em] text-yoca-lime">
+                  <li className="group relative grid gap-3 border-b border-line py-7 ps-6 md:grid-cols-[56px_minmax(0,1fr)] md:gap-6 lg:py-9">
+                    <span
+                      aria-hidden="true"
+                      className="absolute inset-y-0 start-0 w-px bg-line transition-all duration-300 group-hover:w-[3px] group-hover:bg-yoca-lime"
+                    />
+                    <span className="text-[13px] font-extrabold tracking-[0.1em] text-yoca-lime md:pt-2">
                       {String(index + 1).padStart(2, '0')}
                     </span>
-                    <h3 className="mt-3 text-xl font-extrabold tracking-tight">{value.title}</h3>
-                    <p className="mt-3 text-[15px] leading-relaxed text-muted">{value.body}</p>
-                  </article>
+                    <div>
+                      <h3 className="text-[clamp(22px,2.4vw,32px)] font-extrabold leading-tight tracking-[-0.02em]">{value.title}</h3>
+                      <p className="mt-3 max-w-[56ch] text-[15px] leading-relaxed text-muted">{value.body}</p>
+                    </div>
+                  </li>
                 </Reveal>
               ))}
-            </div>
+            </ol>
           </div>
         </section>
 

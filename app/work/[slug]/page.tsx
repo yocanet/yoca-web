@@ -150,18 +150,18 @@ export default async function CaseStudyPage({ params }: PageProps) {
         </div>
 
         {/* Modules 1–3: Challenge / Applied System / Execution & Tech */}
-        <section className="relative z-[7] py-16 lg:py-24">
-          <div className="container-y grid gap-12 lg:gap-14">
+        <section className="section-light relative z-[7] mt-16 py-16 lg:mt-24 lg:py-28">
+          <div className="container-y grid gap-0">
             {narrative.map((block, blockIndex) => (
               <Reveal key={block.label} delay={blockIndex * 0.05}>
-                <div className="grid gap-3 md:grid-cols-[minmax(200px,1fr)_2fr] md:gap-8">
+                <div className="grid gap-4 border-t border-[rgba(5,5,5,0.16)] py-10 md:grid-cols-[minmax(200px,1fr)_2fr] md:gap-8 lg:py-14">
                   <div>
-                    <span className="text-[13px] font-extrabold tracking-[0.1em] text-yoca-lime">
+                    <span className="block text-[clamp(40px,4.6vw,64px)] font-extrabold leading-none tracking-[-0.05em] text-[rgba(5,5,5,0.14)]">
                       {String(blockIndex + 1).padStart(2, '0')}
                     </span>
-                    <h2 className="mt-2 text-xl font-extrabold">{block.label}</h2>
+                    <h2 className="mt-3 text-[clamp(20px,2vw,26px)] font-extrabold tracking-[-0.02em]">{block.label}</h2>
                   </div>
-                  <p className="max-w-[62ch] text-[17px] leading-[1.8] text-soft">{block.text}</p>
+                  <p className="max-w-[62ch] text-[17px] leading-[1.8] text-[rgba(5,5,5,0.78)]">{block.text}</p>
                 </div>
               </Reveal>
             ))}

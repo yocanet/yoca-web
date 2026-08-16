@@ -112,6 +112,8 @@ export interface Dict {
     statusExp: string;
     designedOutcome: string;
     liveLabel: string;
+    /** Label above the concept screen composition on case studies. */
+    screensLabel: string;
   };
   contact: {
     metaTitle: string;
@@ -420,6 +422,7 @@ const en: Dict = {
     statusProduct: 'Yoca Product',
     statusExp: 'Experimental',
     designedOutcome: 'Intended Impact',
+    screensLabel: 'Selected screens',
     liveLabel: 'View Live',
   },
   contact: {
@@ -786,6 +789,7 @@ const tr: Dict = {
     statusProduct: 'Yoca Ürünü',
     statusExp: 'Deneysel',
     designedOutcome: 'Hedeflenen Etki',
+    screensLabel: 'Seçili Ekranlar',
     liveLabel: 'Canlı Görüntüle',
   },
   contact: {
@@ -1152,6 +1156,7 @@ const az: Dict = {
     statusProduct: 'Yoca Məhsulu',
     statusExp: 'Eksperimental',
     designedOutcome: 'Nəzərdə tutulan təsir',
+    screensLabel: 'Seçilmiş ekranlar',
     liveLabel: 'Canlı Bax',
   },
   contact: {
@@ -1494,6 +1499,7 @@ const ar: Dict = {
     statusProduct: 'منتج Yoca',
     statusExp: 'تجريبي',
     designedOutcome: 'الأثر المستهدف',
+    screensLabel: 'شاشات مختارة',
     liveLabel: 'عرض مباشر',
   },
   contact: {

@@ -43,10 +43,10 @@ interface CaseStudyBase {
 }
 
 const BASE: CaseStudyBase[] = [
-  { slug: "marina-vista", year: "2025", market: "MENA", image: "/work/marina-vista/hero.webp", services: ["Brand", "Web"], kind: 'concept' },
-  { slug: "vertex-studio", year: "2025", market: "Europe", image: "/work/vertex-studio/hero.webp", services: ["Brand", "Web"], kind: 'concept' },
-  { slug: "novis-clinic", year: "2024", market: "Türkiye", image: "/work/novis-clinic/hero.webp", services: ["Web", "Growth"], kind: 'concept' },
-  { slug: "roam-safaris", year: "2024", market: "Africa / Global", image: "/work/roam-safaris/hero.webp", services: ["Web", "Product", "Growth"], kind: 'concept' },
+  { slug: "marina-vista", year: "2025", market: "MENA", image: "/brand/og-default.png", services: ["Brand", "Web"], kind: 'concept' },
+  { slug: "vertex-studio", year: "2025", market: "Europe", image: "/brand/og-default.png", services: ["Brand", "Web"], kind: 'concept' },
+  { slug: "novis-clinic", year: "2024", market: "Türkiye", image: "/brand/og-default.png", services: ["Web", "Growth"], kind: 'concept' },
+  { slug: "roam-safaris", year: "2024", market: "Africa / Global", image: "/brand/og-default.png", services: ["Web", "Product", "Growth"], kind: 'concept' },
 ];
 
 type LocalizedFields = Pick<CaseStudy, 'name' | 'sector' | 'summary' | 'problem' | 'approach' | 'solution' | 'results' | 'metricBadge' | 'stats'>;

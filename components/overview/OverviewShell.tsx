@@ -167,21 +167,23 @@ export default function OverviewShell({ locale, base, address, t }: ShellProps) 
 
       {/* ── Scenes ──────────────────────────────────────────── */}
       <Scene id="intro" index={0} tone="dark">
-        <div className="grid gap-8">
-          <Reveal reduced={!!reduced} delay={0}><p className="eyebrow">YOCA <span className="ms-2 text-subtle normal-case tracking-normal">{ov.identity}</span></p></Reveal>
-          <Reveal reduced={!!reduced} delay={0.12}>
-            <h1 className="max-w-[16ch] text-[clamp(38px,6.4vw,96px)] font-extrabold leading-[1.02] tracking-[-0.035em]">
-              {ov.cover.split('. ').map((line, i, arr) => <span key={i} className="block">{line}{i < arr.length - 1 ? '.' : ''}</span>)}
-            </h1>
-          </Reveal>
-          <Reveal reduced={!!reduced} delay={0.3}>
-            <button type="button" onClick={() => goTo(1)} className="inline-flex items-center gap-2 text-[13px] font-extrabold uppercase tracking-[0.12em] text-yoca-lime">
-              {ov.cue} <span aria-hidden="true" className={reduced ? '' : 'motion-safe:animate-bounce'}>↓</span>
-            </button>
-          </Reveal>
-        </div>
-        <div className="pointer-events-none absolute inset-y-0 end-0 hidden w-[42%] items-center justify-end pe-[4vw] lg:flex" aria-hidden="true">
-          <Reveal reduced={!!reduced} delay={0.2}><BrandMark className="h-[min(56vh,520px)] w-auto opacity-90" /></Reveal>
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:items-center">
+          <div className="grid gap-8">
+            <Reveal reduced={!!reduced} delay={0}><p className="eyebrow">YOCA <span className="ms-2 text-subtle normal-case tracking-normal">{ov.identity}</span></p></Reveal>
+            <Reveal reduced={!!reduced} delay={0.12}>
+              <h1 className="max-w-[14ch] text-[clamp(36px,5.6vw,84px)] font-extrabold leading-[1.02] tracking-[-0.035em]">
+                {ov.cover.split('. ').map((line, i, arr) => <span key={i} className="block">{line}{i < arr.length - 1 ? '.' : ''}</span>)}
+              </h1>
+            </Reveal>
+            <Reveal reduced={!!reduced} delay={0.3}>
+              <button type="button" onClick={() => goTo(1)} className="inline-flex items-center gap-2 text-[13px] font-extrabold uppercase tracking-[0.12em] text-yoca-lime">
+                {ov.cue} <span aria-hidden="true" className={reduced ? '' : 'motion-safe:animate-bounce'}>↓</span>
+              </button>
+            </Reveal>
+          </div>
+          <div className="pointer-events-none hidden justify-end lg:flex" aria-hidden="true">
+            <Reveal reduced={!!reduced} delay={0.2}><BrandMark className="h-[min(48vh,440px)] w-auto opacity-90" /></Reveal>
+          </div>
         </div>
       </Scene>
 

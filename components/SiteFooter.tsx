@@ -34,6 +34,7 @@ export default async function SiteFooter({ t }: SiteFooterProps) {
   ];
   const companyCol = [
     { title: t.nav.about, url: `${base}/about` },
+    { title: t.overview.title, url: `${base}/overview` },
     { title: t.nav.services, url: `${base}/services` },
     { title: t.nav.work, url: `${base}/work` },
     { title: t.nav.insights, url: `${base}/insights` },

@@ -24,6 +24,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const PATHS: Array<{ path: string; priority: number; changeFrequency: 'weekly' | 'monthly' }> = [
     { path: '/', priority: 1, changeFrequency: 'weekly' },
     { path: '/about', priority: 0.8, changeFrequency: 'monthly' },
+    { path: '/overview', priority: 0.7, changeFrequency: 'monthly' },
     { path: '/services', priority: 0.9, changeFrequency: 'monthly' },
     { path: '/work', priority: 0.9, changeFrequency: 'weekly' },
     ...slugs.map((slug) => ({

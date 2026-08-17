@@ -158,6 +158,23 @@ Sitedeki her eğik öğe (`.slant`, `.intro-slab`, eyebrow işareti, durum
 etiketleri) logodaki modüllerin **4,83°** eğimini kullanır. `components/ui/BrandMark.tsx`
 işareti birebir geometriyle çizer — başka yerde yeniden çizmeyin.
 
+## 4c. Insights (İçgörüler) + AI Editoryal Motor (v6)
+
+1. Supabase SQL editöründe `supabase/upgrade-v6-insights.sql` dosyasını çalıştırın
+   (tablolar: `insights`, `insight_categories`, `insight_revisions`, `ai_runs`;
+   `insights` storage bucket'ı; RLS: herkese açık okuma yalnızca YAYINDA + yayın saati geçmiş).
+2. Vercel → Environment Variables:
+   - `OPENAI_API_KEY` (zorunlu — yalnız sunucu)
+   - `OPENAI_EDITORIAL_MODEL`, `OPENAI_RESEARCH_MODEL` (isteğe bağlı; varsayılan gpt-4.1)
+   - `INSIGHTS_PREVIEW_SECRET` (taslak önizleme anahtarı — rastgele uzun bir değer)
+   - `SUPABASE_SERVICE_ROLE_KEY` zaten tanımlı olmalı (AI uç noktası oturumu bununla doğrular).
+3. `/admin/insights` → "+ Yeni içerik". Elle yazın ya da sağdaki AI Asistan ile
+   taslak üretin. AI **her zaman Taslak** oluşturur; yayın kararı sizindir.
+4. Header menüsü veritabanından yönetiliyorsa `/admin/menus`'a `/insights` satırı
+   ekleyin (eklenene kadar site otomatik ekler).
+5. Önizleme: editördeki "Önizle" düğmesi anahtarı sorar; URL
+   `/{dil}/insights/{slug}?preview={id}&token=…` — noindex, yalnız anahtarla açılır.
+
 ## 5. Yayın Sonrası Kontrol Listesi
 
 - [ ] Dört domain de açılıyor, `yoca.com.tr` → `yoca.tr`'ye yönleniyor

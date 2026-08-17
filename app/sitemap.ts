@@ -8,6 +8,7 @@ import {
   LOCALES,
 } from '@/lib/domains';
 import { getAllSlugs } from '@/lib/work';
+import { getAllPublishedInsights } from '@/lib/insights';
 
 /**
  * Yoca — sitemap for path-based i18n.
@@ -31,6 +32,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'monthly' as const,
     })),
     { path: '/products', priority: 0.8, changeFrequency: 'monthly' },
+    { path: '/insights', priority: 0.8, changeFrequency: 'weekly' },
     { path: '/checkup', priority: 0.8, changeFrequency: 'monthly' },
     { path: '/contact', priority: 0.8, changeFrequency: 'monthly' },
   ];
@@ -52,6 +54,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         alternates: { languages },
       });
     }
+  }
+
+  // Published insights: one entry per row, hreflang only across the same
+  // translation group (drafts / scheduled rows never reach this query).
+  const insights = await getAllPublishedInsights();
+  for (const row of insights) {
+    const siblings = insights.filter((r) => r.group_id === row.group_id);
+    const languages: Record<string, string> = {};
+    for (const sib of siblings) languages[HREFLANG[sib.locale]] = absoluteLocalizedUrl(host, sib.locale, `/insights/${sib.slug}`);
+    entries.push({
+      url: absoluteLocalizedUrl(host, row.locale, `/insights/${row.slug}`),
+      lastModified: new Date(row.updated_at),
+      changeFrequency: 'monthly',
+      priority: 0.6,
+      alternates: { languages },
+    });
   }
   return entries;
 }

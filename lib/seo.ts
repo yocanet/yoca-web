@@ -155,6 +155,38 @@ export function caseStudySchema(
   };
 }
 
+export function articleSchema(
+  host: string,
+  article: {
+    headline: string;
+    description: string;
+    path: string;
+    datePublished: string;
+    dateModified: string;
+    author: string;
+    image?: string | null;
+    locale: Locale;
+  },
+): JsonLd {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: article.headline,
+    description: article.description,
+    inLanguage: article.locale,
+    datePublished: article.datePublished,
+    dateModified: article.dateModified,
+    author: { '@type': 'Organization', name: article.author },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Yoca',
+      logo: { '@type': 'ImageObject', url: absoluteUrl(host, '/brand/yoca-logo-primary.svg') },
+    },
+    mainEntityOfPage: absoluteUrl(host, article.path),
+    ...(article.image ? { image: article.image.startsWith('http') ? article.image : absoluteUrl(host, article.image) } : {}),
+  };
+}
+
 export function breadcrumbSchema(
   host: string,
   items: Array<{ name: string; path: string }>,

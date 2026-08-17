@@ -35,6 +35,7 @@ function localizedTitle(url: string, fallback: string, t: Dict): string {
     '/services': t.nav.services,
     '/work': t.nav.work,
     '/products': t.nav.products,
+    '/insights': t.nav.insights,
     '/checkup': t.nav.checkup,
     '/contact': t.nav.contact,
   };
@@ -63,7 +64,13 @@ export default async function SiteHeader({ t, path = '/' }: SiteHeaderProps) {
         { title: t.nav.services, url: '/services' },
         { title: t.nav.work, url: '/work' },
         { title: t.nav.products, url: '/products' },
+        { title: t.nav.insights, url: '/insights' },
       ];
+  // Insights is part of the primary navigation; append it when a CMS-managed
+  // header menu predates it (until an /insights row is added in /admin/menus).
+  if (rows && !rawItems.some((item) => item.url === '/insights')) {
+    rawItems.push({ title: t.nav.insights, url: '/insights', external: false });
+  }
   const items = rawItems.map((item) =>
     item.external ? item : { ...item, logical: item.url, url: withBase(item.url) },
   );

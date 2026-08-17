@@ -157,6 +157,115 @@
     @apply block h-2.5 w-[11px] flex-none bg-yoca-lime;
     clip-path: polygon(7.75% 0, 100% 0, 92.25% 100%, 0 100%);
   }
+  /* ── Insights prose (long-form reading system) ─────────────── */
+  .prose-yoca {
+    max-width: 72ch;
+    font-size: 17px;
+    line-height: 1.8;
+    color: #d5d7dc;
+  }
+  @media (min-width: 1024px) {
+    .prose-yoca {
+      font-size: 18px;
+    }
+  }
+  .prose-yoca > * + * {
+    margin-top: 1.25em;
+  }
+  .prose-yoca h2 {
+    margin-top: 2.2em;
+    font-size: clamp(24px, 2.4vw, 32px);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+  }
+  .prose-yoca h3 {
+    margin-top: 1.8em;
+    font-size: clamp(19px, 1.8vw, 23px);
+    font-weight: 800;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+    color: #ffffff;
+  }
+  .prose-yoca h2 + *,
+  .prose-yoca h3 + * {
+    margin-top: 0.8em;
+  }
+  .prose-yoca p strong {
+    color: #ffffff;
+    font-weight: 700;
+  }
+  .prose-yoca a {
+    color: #a2ff00;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+  .prose-yoca a:hover {
+    color: #ffffff;
+  }
+  .prose-yoca ul,
+  .prose-yoca ol {
+    padding-inline-start: 1.4em;
+    display: grid;
+    gap: 0.5em;
+  }
+  .prose-yoca ul {
+    list-style: square;
+  }
+  .prose-yoca ol {
+    list-style: decimal;
+  }
+  .prose-yoca li::marker {
+    color: #a2ff00;
+  }
+  .prose-yoca blockquote {
+    margin-top: 1.8em;
+    margin-bottom: 1.8em;
+    border-inline-start: 3px solid #a2ff00;
+    padding-inline-start: 1.2em;
+    font-size: 1.15em;
+    font-weight: 700;
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+    color: #ffffff;
+  }
+  .prose-yoca code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.9em;
+    background: #1e222a;
+    padding: 0.1em 0.4em;
+    border-radius: 3px;
+    color: #f4f4f1;
+  }
+  .prose-yoca hr {
+    margin: 2.4em 0;
+    border: 0;
+    height: 1px;
+    background: #2a2e37;
+  }
+  .prose-yoca figure {
+    margin: 2em 0;
+  }
+  .prose-yoca figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid #2a2e37;
+  }
+  .prose-yoca figcaption {
+    margin-top: 0.6em;
+    font-size: 13px;
+    color: #a1a1aa;
+  }
+  .prose-yoca table {
+    display: block;
+    overflow-x: auto;
+    width: 100%;
+    font-size: 0.9em;
+    border-collapse: collapse;
+  }
   /* ── Soft-white editorial sections ─────────────────────────── */
   .section-light {
     background: #f4f4f1;
@@ -210,18 +319,6 @@
   /* The lockup is an English wordmark unit — keep its internal order in RTL */
   [dir='rtl'] .footer-signature {
     direction: ltr;
-  }
-  /* Oversized outlined footer wordmark */
-  .wordmark-outline {
-    font-size: clamp(72px, 17vw, 260px);
-    font-weight: 800;
-    letter-spacing: 0.04em;
-    color: transparent;
-    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.14);
-    transition: -webkit-text-stroke-color 0.5s ease;
-  }
-  .wordmark-outline:hover {
-    -webkit-text-stroke-color: rgba(162, 255, 0, 0.55);
   }
 }
 

@@ -9,7 +9,30 @@ export interface Dict {
     checkupTitle: string;
     checkupDescription: string;
   };
-  nav: { home: string; about: string; services: string; work: string; products: string; checkup: string; contact: string };
+  nav: { home: string; about: string; services: string; work: string; products: string; checkup: string; contact: string; insights: string };
+  insights: {
+    metaTitle: string;
+    metaDescription: string;
+    eyebrow: string;
+    heading: string;
+    sub: string;
+    featured: string;
+    latest: string;
+    all: string;
+    minRead: string;
+    by: string;
+    related: string;
+    sources: string;
+    faq: string;
+    ctaLine: string;
+    exploreService: string;
+    exploreProduct: string;
+    ctaContact: string;
+    ctaCheckup: string;
+    empty: string;
+    back: string;
+    share: string;
+  };
   services: {
     heading: string;
     sub: string;
@@ -247,7 +270,30 @@ const en: Dict = {
     checkupDescription:
       'Answer a short set of questions and get a personal analysis of your digital presence: website, SEO, ads, social and growth setup.',
   },
-  nav: { home: 'Home', about: 'About', services: 'Services', work: 'Work', products: 'Products', checkup: 'Digital Check-Up', contact: 'Contact' },
+  nav: { home: 'Home', about: 'About', services: 'Services', work: 'Work', products: 'Products', checkup: 'Digital Check-Up', contact: 'Contact', insights: 'Insights' },
+  insights: {
+    metaTitle: 'Insights — Thinking behind the work | Yoca',
+    metaDescription: 'Perspectives from Yoca on strategy, brand, digital experiences, growth, AI and products — the thinking behind the systems we build.',
+    eyebrow: 'Yoca Insights',
+    heading: 'The thinking behind the work.',
+    sub: 'Perspectives on strategy, brand, digital experiences, growth, AI and products — written from the inside of the systems we build.',
+    featured: 'Featured',
+    latest: 'Latest insights',
+    all: 'All',
+    minRead: 'min read',
+    by: 'By',
+    related: 'Related insights',
+    sources: 'Sources',
+    faq: 'Frequently asked',
+    ctaLine: 'Want to work through this in your own system?',
+    exploreService: 'Explore the service',
+    exploreProduct: 'Explore the product',
+    ctaContact: 'Start a project',
+    ctaCheckup: 'Free Digital Check-Up',
+    empty: 'New insights are on the way. In the meantime, explore how we work.',
+    back: 'All insights',
+    share: 'Share',
+  },
   services: {
     heading: 'What we build around your next move.',
     sub: 'We do not begin by selling a predefined package. We identify what needs to change, then combine the right capabilities around it.',
@@ -615,7 +661,30 @@ const tr: Dict = {
     checkupDescription:
       'Kısa bir soru setini yanıtlayın; web sitesi, SEO, reklam, sosyal medya ve büyüme kurulumunuz için kişisel bir analiz alın.',
   },
-  nav: { home: 'Ana Sayfa', about: 'Hakkımızda', services: 'Hizmetler', work: 'Projeler', products: 'Ürünler', checkup: 'Dijital Check-Up', contact: 'İletişim' },
+  nav: { home: 'Ana Sayfa', about: 'Hakkımızda', services: 'Hizmetler', work: 'Projeler', products: 'Ürünler', checkup: 'Dijital Check-Up', contact: 'İletişim', insights: 'İçgörüler' },
+  insights: {
+    metaTitle: 'İçgörüler — İşin arkasındaki düşünce | Yoca',
+    metaDescription: 'Yoca’dan strateji, marka, dijital deneyimler, büyüme, yapay zekâ ve ürünler üzerine bakış açıları — kurduğumuz sistemlerin arkasındaki düşünce.',
+    eyebrow: 'Yoca İçgörüler',
+    heading: 'İşin arkasındaki düşünce.',
+    sub: 'Strateji, marka, dijital deneyimler, büyüme, yapay zekâ ve ürünler üzerine bakış açıları — kurduğumuz sistemlerin içinden yazıldı.',
+    featured: 'Öne çıkan',
+    latest: 'Son içgörüler',
+    all: 'Tümü',
+    minRead: 'dk okuma',
+    by: 'Yazan',
+    related: 'İlgili içgörüler',
+    sources: 'Kaynaklar',
+    faq: 'Sık sorulanlar',
+    ctaLine: 'Bu konuyu kendi sisteminizde ele almak ister misiniz?',
+    exploreService: 'Hizmeti keşfet',
+    exploreProduct: 'Ürünü keşfet',
+    ctaContact: 'Projeyi başlat',
+    ctaCheckup: 'Ücretsiz Dijital Check-Up',
+    empty: 'Yeni içgörüler yolda. Bu arada nasıl çalıştığımıza göz atın.',
+    back: 'Tüm içgörüler',
+    share: 'Paylaş',
+  },
   services: {
     heading: 'Bir sonraki adımınızın ihtiyaç duyduğu yapıyı kuruyoruz.',
     sub: 'Önceden hazırlanmış bir paket satarak başlamayız. Değişmesi gereken noktayı belirler, doğru yetkinlikleri bunun etrafında birleştiririz.',
@@ -983,7 +1052,30 @@ const az: Dict = {
     checkupDescription:
       'Qısa sual dəstinə cavab verin; sayt, SEO, reklam, sosial media və inkişaf quruluşunuz üçün fərdi analiz əldə edin.',
   },
-  nav: { home: 'Ana səhifə', about: 'Haqqımızda', services: 'Xidmətlər', work: 'Layihələr', products: 'Məhsullar', checkup: 'Rəqəmsal Check-Up', contact: 'Əlaqə' },
+  nav: { home: 'Ana səhifə', about: 'Haqqımızda', services: 'Xidmətlər', work: 'Layihələr', products: 'Məhsullar', checkup: 'Rəqəmsal Check-Up', contact: 'Əlaqə', insights: 'Baxışlar' },
+  insights: {
+    metaTitle: 'Baxışlar — İşin arxasındakı düşüncə | Yoca',
+    metaDescription: 'Yoca-dan strategiya, brend, rəqəmsal təcrübələr, artım, süni intellekt və məhsullar haqqında baxışlar — qurduğumuz sistemlərin arxasındakı düşüncə.',
+    eyebrow: 'Yoca Baxışlar',
+    heading: 'İşin arxasındakı düşüncə.',
+    sub: 'Strategiya, brend, rəqəmsal təcrübələr, artım, süni intellekt və məhsullar haqqında baxışlar — qurduğumuz sistemlərin içindən yazılıb.',
+    featured: 'Seçilmiş',
+    latest: 'Son baxışlar',
+    all: 'Hamısı',
+    minRead: 'dəq oxu',
+    by: 'Müəllif',
+    related: 'Əlaqəli baxışlar',
+    sources: 'Mənbələr',
+    faq: 'Tez-tez verilən suallar',
+    ctaLine: 'Bu mövzunu öz sisteminizdə ələ almaq istəyirsiniz?',
+    exploreService: 'Xidməti kəşf et',
+    exploreProduct: 'Məhsulu kəşf et',
+    ctaContact: 'Layihəyə başla',
+    ctaCheckup: 'Pulsuz Rəqəmsal Check-Up',
+    empty: 'Yeni baxışlar yoldadır. Bu arada necə işlədiyimizə baxın.',
+    back: 'Bütün baxışlar',
+    share: 'Paylaş',
+  },
   services: {
     heading: 'Növbəti addımınız üçün lazım olan sistemi qururuq.',
     sub: 'Əvvəlcədən hazırlanmış paket satmaqla başlamırıq. Dəyişməli olan nöqtəni müəyyən edir və uyğun bacarıqları onun ətrafında birləşdiririk.',
@@ -1351,7 +1443,30 @@ const ar: Dict = {
     checkupDescription:
       'أجب عن مجموعة قصيرة من الأسئلة واحصل على تحليل شخصي لحضورك الرقمي: الموقع، SEO، الإعلانات، وسائل التواصل وبنية النمو.',
   },
-  nav: { home: 'الرئيسية', about: 'من نحن', services: 'الخدمات', work: 'الأعمال', products: 'المنتجات', checkup: 'الفحص الرقمي', contact: 'تواصل معنا' },
+  nav: { home: 'الرئيسية', about: 'من نحن', services: 'الخدمات', work: 'الأعمال', products: 'المنتجات', checkup: 'الفحص الرقمي', contact: 'تواصل معنا', insights: 'رؤى' },
+  insights: {
+    metaTitle: 'رؤى — الفكر وراء العمل | Yoca',
+    metaDescription: 'وجهات نظر من Yoca حول الاستراتيجية والعلامة التجارية والتجارب الرقمية والنمو والذكاء الاصطناعي والمنتجات — الفكر وراء الأنظمة التي نبنيها.',
+    eyebrow: 'رؤى Yoca',
+    heading: 'الفكر وراء العمل.',
+    sub: 'وجهات نظر حول الاستراتيجية والعلامة والتجارب الرقمية والنمو والذكاء الاصطناعي والمنتجات — مكتوبة من داخل الأنظمة التي نبنيها.',
+    featured: 'مميّز',
+    latest: 'أحدث الرؤى',
+    all: 'الكل',
+    minRead: 'دقائق قراءة',
+    by: 'بقلم',
+    related: 'رؤى ذات صلة',
+    sources: 'المصادر',
+    faq: 'أسئلة شائعة',
+    ctaLine: 'هل تودّ معالجة هذا الموضوع في نظامك الخاص؟',
+    exploreService: 'اكتشف الخدمة',
+    exploreProduct: 'اكتشف المنتج',
+    ctaContact: 'ابدأ مشروعًا',
+    ctaCheckup: 'فحص رقمي مجاني',
+    empty: 'رؤى جديدة في الطريق. في هذه الأثناء، اطّلع على طريقة عملنا.',
+    back: 'كل الرؤى',
+    share: 'مشاركة',
+  },
   services: {
     heading: 'نبني البنية التي تحتاجها خطوتك التالية.',
     sub: 'لا نبدأ ببيع حزمة جاهزة. نحدد ما يجب أن يتغير، ثم نجمع القدرات المناسبة حوله.',

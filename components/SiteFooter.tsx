@@ -4,6 +4,7 @@ import { fetchMenu } from '@/lib/supabase';
 import { getRequestContext } from '@/lib/seo';
 import type { Dict } from '@/lib/i18n';
 import { COMPANY } from '@/lib/company';
+import FooterWordmark from '@/components/ui/FooterWordmark';
 import YocaSignature from '@/components/branding/YocaSignature';
 
 /**
@@ -35,6 +36,7 @@ export default async function SiteFooter({ t }: SiteFooterProps) {
     { title: t.nav.about, url: `${base}/about` },
     { title: t.nav.services, url: `${base}/services` },
     { title: t.nav.work, url: `${base}/work` },
+    { title: t.nav.insights, url: `${base}/insights` },
     { title: t.nav.checkup, url: `${base}/checkup` },
     { title: t.nav.contact, url: `${base}/contact` },
   ];
@@ -152,10 +154,8 @@ export default async function SiteFooter({ t }: SiteFooterProps) {
           <YocaSignature variant="signature" theme="dark" source="yoca.net" className="footer-signature" />
         </div>
 
-        {/* One ending: the oversized outlined wordmark (typographic texture, not a logo redraw). */}
-        <p aria-hidden="true" className="wordmark-outline pointer-events-none mt-10 select-none text-center leading-none">
-          YOCA
-        </p>
+        {/* One ending: the real logo as an oversized hairline outline. */}
+        <FooterWordmark />
       </div>
     </footer>
   );

@@ -19,6 +19,7 @@ const NAV: Array<{ href: string; label: string; icon: string }> = [
   { href: '/admin/menus', label: 'Menüler', icon: '≡' },
   { href: '/admin/content', label: 'Metinler', icon: '¶' },
   { href: '/admin/work', label: 'Work / Projeler', icon: '▣' },
+  { href: '/admin/insights', label: 'İçerik / Insights', icon: '✎' },
   { href: '/admin/team', label: 'Ekip', icon: '◉' },
   { href: '/admin/submissions', label: 'Başvurular', icon: '✉' },
 ];

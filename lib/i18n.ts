@@ -10,6 +10,41 @@ export interface Dict {
     checkupDescription: string;
   };
   nav: { home: string; about: string; services: string; work: string; products: string; checkup: string; contact: string; insights: string };
+  overview: {
+    metaTitle: string;
+    metaDescription: string;
+    title: string;
+    identity: string;
+    cover: string;
+    cue: string;
+    menu: string[];
+    backToSite: string;
+    scene: string;
+    whatHeading: string;
+    whatSub: string;
+    whatWords: string[];
+    whyLines: string[];
+    whyConclusion: string;
+    systemsCaption: string;
+    servicesCta: string;
+    processHeading: string;
+    processLines: string[];
+    workLabel: string;
+    workCta: string;
+    productsOpen: string;
+    productsReveal: string;
+    productsCta: string;
+    whoLines: string[];
+    whoTraits: string[];
+    whoFormula: string;
+    globalLine: string;
+    finalSmall: string;
+    finalLarge: string;
+    pathProject: string;
+    pathCheckup: string;
+    pathCheckupSub: string;
+    pathSite: string;
+  };
   insights: {
     metaTitle: string;
     metaDescription: string;
@@ -271,6 +306,41 @@ const en: Dict = {
       'Answer a short set of questions and get a personal analysis of your digital presence: website, SEO, ads, social and growth setup.',
   },
   nav: { home: 'Home', about: 'About', services: 'Services', work: 'Work', products: 'Products', checkup: 'Digital Check-Up', contact: 'Contact', insights: 'Insights' },
+  overview: {
+    metaTitle: 'Meet Yoca — 90-second company overview',
+    metaDescription: 'Who Yoca is, why it exists, what it does, how it works, what it builds and where it operates — in about ninety seconds.',
+    title: 'Meet Yoca',
+    identity: 'Your Own Creative Agency',
+    cover: 'Ideas into brands. Brands into systems built to grow.',
+    cue: 'Discover Yoca',
+    menu: ['Intro', 'Yoca', 'Why', 'Systems', 'Services', 'Process', 'Work', 'Products', 'About', 'Global', 'Contact'],
+    backToSite: 'Back to the full site',
+    scene: 'Scene',
+    whatHeading: 'Not an agency. A connected growth system.',
+    whatSub: 'Strategy, identity, experience, technology and growth — designed and run as one system.',
+    whatWords: ['Strategy', 'Identity', 'Experience', 'Technology', 'Growth'],
+    whyLines: ['Your brand can be good.', 'Your website can be good.', 'Your ads can work.', 'Your technology can be strong.'],
+    whyConclusion: 'But if they are not connected, it is not a growth system.',
+    systemsCaption: 'One methodology. Three connected systems.',
+    servicesCta: 'Explore all services',
+    processHeading: 'How we work',
+    processLines: ['Context before assumptions.', 'One clear direction.', 'Strategy becomes real.', 'Ship. Measure. Learn.', 'Improve what works.'],
+    workLabel: 'Selected concept projects',
+    workCta: 'See selected work',
+    productsOpen: 'We build for clients.',
+    productsReveal: 'We build for ourselves too.',
+    productsCta: 'Explore products',
+    whoLines: ['Small team.', 'Senior thinking.', 'Built around the problem.'],
+    whoTraits: ['Independent', 'Multidisciplinary', 'Accountable'],
+    whoFormula: 'Strategy + Creative + Technology + Growth',
+    globalLine: 'Based in Türkiye. Working beyond borders.',
+    finalSmall: 'So, what are we building next?',
+    finalLarge: 'Let’s move forward.',
+    pathProject: 'Start a project',
+    pathCheckup: 'Not sure where to begin?',
+    pathCheckupSub: 'Free Digital Check-Up',
+    pathSite: 'Explore the full site',
+  },
   insights: {
     metaTitle: 'Insights — Thinking behind the work | Yoca',
     metaDescription: 'Perspectives from Yoca on strategy, brand, digital experiences, growth, AI and products — the thinking behind the systems we build.',
@@ -662,6 +732,41 @@ const tr: Dict = {
       'Kısa bir soru setini yanıtlayın; web sitesi, SEO, reklam, sosyal medya ve büyüme kurulumunuz için kişisel bir analiz alın.',
   },
   nav: { home: 'Ana Sayfa', about: 'Hakkımızda', services: 'Hizmetler', work: 'Projeler', products: 'Ürünler', checkup: 'Dijital Check-Up', contact: 'İletişim', insights: 'İçgörüler' },
+  overview: {
+    metaTitle: 'Yoca’yı Tanıyın — 90 saniyelik şirket özeti',
+    metaDescription: 'Yoca kimdir, neden var, ne yapar, nasıl çalışır, ne inşa eder ve nerede çalışır — yaklaşık doksan saniyede.',
+    title: 'Yoca’yı Tanıyın',
+    identity: 'Your Own Creative Agency',
+    cover: 'Fikirleri markaya. Markaları büyüyen sistemlere.',
+    cue: 'Yoca’yı keşfet',
+    menu: ['Giriş', 'Yoca', 'Neden', 'Sistemler', 'Hizmetler', 'Süreç', 'Projeler', 'Ürünler', 'Hakkımızda', 'Global', 'İletişim'],
+    backToSite: 'Tam siteye dön',
+    scene: 'Sahne',
+    whatHeading: 'Bir ajans değil. Birbirine bağlı bir büyüme sistemi.',
+    whatSub: 'Strateji, kimlik, deneyim, teknoloji ve büyüme — tek bir sistem olarak tasarlanır ve işletilir.',
+    whatWords: ['Strateji', 'Kimlik', 'Deneyim', 'Teknoloji', 'Büyüme'],
+    whyLines: ['Markanız iyi olabilir.', 'Web siteniz iyi olabilir.', 'Reklamınız çalışabilir.', 'Teknolojiniz güçlü olabilir.'],
+    whyConclusion: 'Ama birbirine bağlı değillerse, bu bir büyüme sistemi değildir.',
+    systemsCaption: 'Tek metodoloji. Birbirine bağlı üç sistem.',
+    servicesCta: 'Tüm hizmetleri keşfet',
+    processHeading: 'Nasıl çalışıyoruz',
+    processLines: ['Varsayımdan önce bağlam.', 'Tek ve net bir yön.', 'Strateji gerçeğe dönüşür.', 'Yayınla. Ölç. Öğren.', 'İşe yarayanı geliştir.'],
+    workLabel: 'Seçili konsept projeler',
+    workCta: 'Seçili işleri incele',
+    productsOpen: 'Müşteriler için inşa ediyoruz.',
+    productsReveal: 'Kendimiz için de inşa ediyoruz.',
+    productsCta: 'Ürünleri keşfet',
+    whoLines: ['Kompakt ekip.', 'Kıdemli düşünce.', 'Problemin etrafında kurulu.'],
+    whoTraits: ['Bağımsız', 'Çok disiplinli', 'Sorumlu'],
+    whoFormula: 'Strateji + Yaratıcılık + Teknoloji + Büyüme',
+    globalLine: 'Türkiye merkezli. Sınırların ötesinde çalışıyoruz.',
+    finalSmall: 'Peki, sırada ne inşa ediyoruz?',
+    finalLarge: 'Birlikte ileri.',
+    pathProject: 'Projeyi başlat',
+    pathCheckup: 'Nereden başlayacağınızdan emin değil misiniz?',
+    pathCheckupSub: 'Ücretsiz Dijital Check-Up',
+    pathSite: 'Tam siteyi keşfet',
+  },
   insights: {
     metaTitle: 'İçgörüler — İşin arkasındaki düşünce | Yoca',
     metaDescription: 'Yoca’dan strateji, marka, dijital deneyimler, büyüme, yapay zekâ ve ürünler üzerine bakış açıları — kurduğumuz sistemlerin arkasındaki düşünce.',
@@ -1053,6 +1158,41 @@ const az: Dict = {
       'Qısa sual dəstinə cavab verin; sayt, SEO, reklam, sosial media və inkişaf quruluşunuz üçün fərdi analiz əldə edin.',
   },
   nav: { home: 'Ana səhifə', about: 'Haqqımızda', services: 'Xidmətlər', work: 'Layihələr', products: 'Məhsullar', checkup: 'Rəqəmsal Check-Up', contact: 'Əlaqə', insights: 'Baxışlar' },
+  overview: {
+    metaTitle: 'Yoca ilə tanış olun — 90 saniyəlik şirkət icmalı',
+    metaDescription: 'Yoca kimdir, niyə var, nə edir, necə işləyir, nə qurur və harada fəaliyyət göstərir — təxminən doxsan saniyədə.',
+    title: 'Yoca ilə tanış olun',
+    identity: 'Your Own Creative Agency',
+    cover: 'İdeyaları brendə. Brendləri böyüyən sistemlərə.',
+    cue: 'Yoca-nı kəşf et',
+    menu: ['Giriş', 'Yoca', 'Niyə', 'Sistemlər', 'Xidmətlər', 'Proses', 'Layihələr', 'Məhsullar', 'Haqqımızda', 'Qlobal', 'Əlaqə'],
+    backToSite: 'Tam sayta qayıt',
+    scene: 'Səhnə',
+    whatHeading: 'Agentlik deyil. Bir-birinə bağlı artım sistemi.',
+    whatSub: 'Strategiya, kimlik, təcrübə, texnologiya və artım — tək sistem kimi dizayn edilir və idarə olunur.',
+    whatWords: ['Strategiya', 'Kimlik', 'Təcrübə', 'Texnologiya', 'Artım'],
+    whyLines: ['Brendiniz yaxşı ola bilər.', 'Veb-saytınız yaxşı ola bilər.', 'Reklamınız işləyə bilər.', 'Texnologiyanız güclü ola bilər.'],
+    whyConclusion: 'Amma bir-birinə bağlı deyillərsə, bu artım sistemi deyil.',
+    systemsCaption: 'Tək metodologiya. Bir-birinə bağlı üç sistem.',
+    servicesCta: 'Bütün xidmətləri kəşf et',
+    processHeading: 'Necə işləyirik',
+    processLines: ['Fərziyyədən əvvəl kontekst.', 'Tək və aydın istiqamət.', 'Strategiya reallığa çevrilir.', 'Yayımla. Ölç. Öyrən.', 'İşləyəni inkişaf etdir.'],
+    workLabel: 'Seçilmiş konsept layihələr',
+    workCta: 'Seçilmiş işlərə bax',
+    productsOpen: 'Müştərilər üçün qururuq.',
+    productsReveal: 'Özümüz üçün də qururuq.',
+    productsCta: 'Məhsulları kəşf et',
+    whoLines: ['Kompakt komanda.', 'Təcrübəli düşüncə.', 'Problemin ətrafında qurulub.'],
+    whoTraits: ['Müstəqil', 'Çoxsahəli', 'Cavabdeh'],
+    whoFormula: 'Strategiya + Kreativ + Texnologiya + Artım',
+    globalLine: 'Türkiyə mərkəzli. Sərhədlərin o tayında işləyirik.',
+    finalSmall: 'Bəs, növbəti nə qururuq?',
+    finalLarge: 'Birlikdə irəli.',
+    pathProject: 'Layihəyə başla',
+    pathCheckup: 'Haradan başlayacağınıza əmin deyilsiniz?',
+    pathCheckupSub: 'Pulsuz Rəqəmsal Check-Up',
+    pathSite: 'Tam saytı kəşf et',
+  },
   insights: {
     metaTitle: 'Baxışlar — İşin arxasındakı düşüncə | Yoca',
     metaDescription: 'Yoca-dan strategiya, brend, rəqəmsal təcrübələr, artım, süni intellekt və məhsullar haqqında baxışlar — qurduğumuz sistemlərin arxasındakı düşüncə.',
@@ -1444,6 +1584,41 @@ const ar: Dict = {
       'أجب عن مجموعة قصيرة من الأسئلة واحصل على تحليل شخصي لحضورك الرقمي: الموقع، SEO، الإعلانات، وسائل التواصل وبنية النمو.',
   },
   nav: { home: 'الرئيسية', about: 'من نحن', services: 'الخدمات', work: 'الأعمال', products: 'المنتجات', checkup: 'الفحص الرقمي', contact: 'تواصل معنا', insights: 'رؤى' },
+  overview: {
+    metaTitle: 'تعرّف على Yoca — لمحة عن الشركة في 90 ثانية',
+    metaDescription: 'من هي Yoca، لماذا وُجدت، ماذا تفعل، كيف تعمل، ماذا تبني وأين تعمل — في نحو تسعين ثانية.',
+    title: 'تعرّف على Yoca',
+    identity: 'Your Own Creative Agency',
+    cover: 'من الأفكار إلى علامات. ومن العلامات إلى أنظمة تنمو.',
+    cue: 'اكتشف Yoca',
+    menu: ['المقدمة', 'Yoca', 'لماذا', 'الأنظمة', 'الخدمات', 'المنهج', 'الأعمال', 'المنتجات', 'من نحن', 'عالميًا', 'تواصل'],
+    backToSite: 'العودة إلى الموقع الكامل',
+    scene: 'مشهد',
+    whatHeading: 'ليست وكالة. بل نظام نمو مترابط.',
+    whatSub: 'الاستراتيجية والهوية والتجربة والتقنية والنمو — تُصمَّم وتُدار كنظام واحد.',
+    whatWords: ['الاستراتيجية', 'الهوية', 'التجربة', 'التقنية', 'النمو'],
+    whyLines: ['قد تكون علامتك جيدة.', 'قد يكون موقعك جيدًا.', 'قد تعمل إعلاناتك.', 'قد تكون تقنيتك قوية.'],
+    whyConclusion: 'لكن إن لم تكن مترابطة، فهي ليست نظام نمو.',
+    systemsCaption: 'منهجية واحدة. ثلاثة أنظمة مترابطة.',
+    servicesCta: 'اكتشف كل الخدمات',
+    processHeading: 'كيف نعمل',
+    processLines: ['السياق قبل الافتراض.', 'اتجاه واحد واضح.', 'تتحوّل الاستراتيجية إلى واقع.', 'أطلق. قِس. تعلّم.', 'طوّر ما ينجح.'],
+    workLabel: 'مشاريع مفهومية مختارة',
+    workCta: 'اطّلع على الأعمال المختارة',
+    productsOpen: 'نبني للعملاء.',
+    productsReveal: 'ونبني لأنفسنا أيضًا.',
+    productsCta: 'اكتشف المنتجات',
+    whoLines: ['فريق مضغوط.', 'تفكير رفيع الخبرة.', 'مبنيّ حول المشكلة.'],
+    whoTraits: ['مستقلّون', 'متعدّدو التخصّصات', 'مسؤولون'],
+    whoFormula: 'استراتيجية + إبداع + تقنية + نمو',
+    globalLine: 'مقرّنا تركيا. ونعمل عبر الحدود.',
+    finalSmall: 'إذن، ماذا نبني تاليًا؟',
+    finalLarge: 'لنمضِ قُدمًا معًا.',
+    pathProject: 'ابدأ مشروعًا',
+    pathCheckup: 'لست متأكدًا من أين تبدأ؟',
+    pathCheckupSub: 'فحص رقمي مجاني',
+    pathSite: 'اكتشف الموقع الكامل',
+  },
   insights: {
     metaTitle: 'رؤى — الفكر وراء العمل | Yoca',
     metaDescription: 'وجهات نظر من Yoca حول الاستراتيجية والعلامة التجارية والتجارب الرقمية والنمو والذكاء الاصطناعي والمنتجات — الفكر وراء الأنظمة التي نبنيها.',

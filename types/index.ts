@@ -156,3 +156,62 @@ export interface MenuItem {
   url: string;
   external?: boolean;
 }
+
+// ── Insights ───────────────────────────────────────────────────────
+export type InsightStatus = 'DRAFT' | 'IN_REVIEW' | 'SCHEDULED' | 'PUBLISHED' | 'ARCHIVED';
+export type InsightCtaType = 'none' | 'contact' | 'checkup' | 'service' | 'product';
+
+export interface InsightSource {
+  title: string;
+  url: string;
+  domain: string;
+  accessed_at: string;
+  source_type?: string;
+}
+
+export interface InsightFaq {
+  q: string;
+  a: string;
+}
+
+export interface InsightRow {
+  id: string;
+  group_id: string;
+  locale: Locale;
+  slug: string;
+  title: string;
+  excerpt: string;
+  body_md: string;
+  cover_url: string | null;
+  cover_alt: string | null;
+  cover_caption: string | null;
+  category_key: string | null;
+  tags: string[];
+  author_name: string;
+  author_role: string | null;
+  status: InsightStatus;
+  publish_at: string | null;
+  featured: boolean;
+  related_service: string | null;
+  related_product: string | null;
+  related_insight_id: string | null;
+  cta_type: InsightCtaType;
+  seo_title: string | null;
+  meta_description: string | null;
+  canonical_override: string | null;
+  og_title: string | null;
+  og_description: string | null;
+  og_image: string | null;
+  noindex: boolean;
+  sources: InsightSource[];
+  faq: InsightFaq[];
+  reading_minutes: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface InsightCategoryRow {
+  key: string;
+  names: Record<Locale, string>;
+  sort_order: number;
+}

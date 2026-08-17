@@ -33,10 +33,8 @@ interface ShellProps {
     hero: { title: string; line: string; primaryCta: string };
     systems: Dict['systems'];
     services: { items: Array<{ name: string; changes: string }> };
-    flows: string[][];
     process: Array<{ name: string; desc: string }>;
     products: Array<{ key: string; name: string; category: string }>;
-    about: { builtTitle: string };
     clocks: Dict['clocks'];
     nav: Dict['nav'];
     workLabels: { concept: string };
@@ -115,6 +113,12 @@ export default function OverviewShell({ locale, base, address, t }: ShellProps) 
   const cta = (event: string) => () => track(event, { locale });
   const studies = useMemo(() => staticCaseStudies(locale).slice(0, 4), [locale]);
   const pad = (n: number) => String(n).padStart(2, '0');
+  // Final CTA paths — numbering is generated, never hand-typed.
+  const paths: Array<{ href: string; label: string; sub?: string; event: string; tone: 'lime' | 'surface' | 'ghost' }> = [
+    { href: `${base}/contact`, label: ov.pathProject, event: 'overview_contact_click', tone: 'lime' },
+    { href: `${base}/checkup`, label: ov.pathCheckupSub, sub: ov.pathCheckup, event: 'overview_checkup_click', tone: 'surface' },
+    { href: base, label: ov.pathSite, event: 'overview_fullsite_click', tone: 'ghost' },
+  ];
 
   return (
     <div ref={rootRef} className="ov-root h-[100svh] overflow-y-auto overscroll-y-contain bg-surface-deep text-white">
@@ -125,10 +129,13 @@ export default function OverviewShell({ locale, base, address, t }: ShellProps) 
           <img src="/brand/yoca-logo-primary.svg" alt="Yoca" width={96} height={26} className="h-6 w-auto" />
         </Link>
         <div className="flex items-center gap-3">
-          <p aria-live="polite" className="text-[12px] font-extrabold tabular-nums tracking-[0.12em] text-muted"><span className="sr-only">{ov.scene} </span>{pad(active + 1)} <span className="text-subtle">/ {pad(total)}</span></p>
-          <LanguageMenu current={locale} path="/overview" ariaLabel="Language" />
-          <button type="button" onClick={() => setMenuOpen((v) => !v)} aria-expanded={menuOpen} aria-controls="ov-menu" className="min-h-[38px] border border-line px-3 text-[12px] font-bold uppercase tracking-[0.1em] text-soft transition-colors hover:border-yoca-lime">
-            {menuOpen ? '✕' : 'Menu'}
+          <p className="text-[12px] font-extrabold tabular-nums tracking-[0.12em] text-muted">
+            <span className="sr-only" aria-live="polite">{ov.sceneOf.replace('{n}', String(active + 1)).replace('{total}', String(total))}</span>
+            <span aria-hidden="true">{pad(active + 1)} <span className="text-subtle">/ {pad(total)}</span></span>
+          </p>
+          <LanguageMenu current={locale} path={`/overview#${SCENES[active]}`} ariaLabel="Language" />
+          <button type="button" onClick={() => setMenuOpen((v) => !v)} aria-expanded={menuOpen} aria-controls="ov-menu" aria-label={ov.menuLabel} className="min-h-[38px] border border-line px-3 text-[12px] font-bold uppercase tracking-[0.1em] text-soft transition-colors hover:border-yoca-lime">
+            {menuOpen ? '✕' : ov.menuLabel}
           </button>
         </div>
       </header>
@@ -172,7 +179,7 @@ export default function OverviewShell({ locale, base, address, t }: ShellProps) 
             <Reveal reduced={!!reduced} delay={0}><p className="eyebrow">YOCA <span className="ms-2 text-subtle normal-case tracking-normal">{ov.identity}</span></p></Reveal>
             <Reveal reduced={!!reduced} delay={0.12}>
               <h1 className="max-w-[14ch] text-[clamp(36px,5.6vw,84px)] font-extrabold leading-[1.02] tracking-[-0.035em]">
-                {ov.cover.split('. ').map((line, i, arr) => <span key={i} className="block">{line}{i < arr.length - 1 ? '.' : ''}</span>)}
+                {ov.coverLines.map((line) => <span key={line} className="block">{line}</span>)}
               </h1>
             </Reveal>
             <Reveal reduced={!!reduced} delay={0.3}>
@@ -238,7 +245,7 @@ export default function OverviewShell({ locale, base, address, t }: ShellProps) 
       </Scene>
 
       <Scene id="systems" index={3} tone="dark">
-        <SystemsScene t={t.systems} caption={ov.systemsCaption} flows={t.flows} reduced={!!reduced} />
+        <SystemsScene names={t.systems.items.slice(0, 3).map((s) => s.name)} systems={ov.systems} caption={ov.systemsCaption} reduced={!!reduced} />
       </Scene>
 
       <Scene id="services" index={4} tone="dark">
@@ -246,16 +253,13 @@ export default function OverviewShell({ locale, base, address, t }: ShellProps) 
         <ol className="grid gap-x-10 gap-y-3 sm:grid-cols-2 lg:grid-cols-3">
           {t.services.items.map((s, i) => (
             <Reveal key={s.name} reduced={!!reduced} delay={0.05 * i}>
-              <li className="group border-t border-line py-4">
-                <details className="lg:pointer-events-none">
-                  <summary className="flex cursor-pointer list-none items-baseline gap-3 [&::-webkit-details-marker]:hidden lg:cursor-default">
-                    <span className="text-[12px] font-extrabold tracking-[0.1em] text-yoca-lime">{pad(i + 1)}</span>
-                    <span className="text-[clamp(18px,1.9vw,26px)] font-extrabold tracking-[-0.02em] transition-colors group-hover:text-yoca-lime">{s.name}</span>
-                    <span aria-hidden="true" className="icon-arrow ms-auto text-subtle">→</span>
-                  </summary>
-                  <p className="mt-2 max-w-[36ch] text-[14px] leading-relaxed text-muted lg:hidden">{s.changes}</p>
-                </details>
-                <p className="mt-2 hidden max-w-[36ch] text-[14px] leading-relaxed text-muted opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100 lg:block">{s.changes}</p>
+              <li className="group border-t border-line py-4" tabIndex={0}>
+                <p className="flex items-baseline gap-3">
+                  <span className="text-[12px] font-extrabold tracking-[0.1em] text-yoca-lime">{pad(i + 1)}</span>
+                  <span className="text-[clamp(18px,1.9vw,26px)] font-extrabold tracking-[-0.02em] transition-colors group-hover:text-yoca-lime">{s.name}</span>
+                </p>
+                {/* One semantic instance: always visible ≤lg, revealed on hover/focus ≥lg (visibility stays in the a11y tree via opacity only) */}
+                <p className="mt-2 max-w-[38ch] text-[14px] leading-relaxed text-muted transition-opacity duration-300 lg:opacity-40 lg:group-hover:opacity-100 lg:group-focus-within:opacity-100">{s.changes}</p>
               </li>
             </Reveal>
           ))}
@@ -306,7 +310,7 @@ export default function OverviewShell({ locale, base, address, t }: ShellProps) 
       <Scene id="about" index={8} tone="light">
         <div className="grid gap-12 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:items-end">
           <div>
-            <Reveal reduced={!!reduced}><p className="flex items-center gap-2.5 text-[12px] font-extrabold uppercase tracking-[0.14em] text-[rgba(5,5,5,0.55)]"><span className="slant block h-2.5 w-3 bg-[#050505]" aria-hidden="true" />{t.about.builtTitle}</p></Reveal>
+            <Reveal reduced={!!reduced}><p className="flex items-center gap-2.5 text-[12px] font-extrabold uppercase tracking-[0.14em] text-[rgba(5,5,5,0.55)]"><span className="slant block h-2.5 w-3 bg-[#050505]" aria-hidden="true" />{ov.whoHeading}</p></Reveal>
             <div className="mt-6 grid gap-1">
               {ov.whoLines.map((line, i) => <Reveal key={line} reduced={!!reduced} delay={0.1 + i * 0.12}><p className="text-[clamp(30px,4.6vw,66px)] font-extrabold leading-[1.05] tracking-[-0.03em] text-[#050505]">{line}</p></Reveal>)}
             </div>
@@ -328,11 +332,21 @@ export default function OverviewShell({ locale, base, address, t }: ShellProps) 
             <Reveal reduced={!!reduced}><p className="eyebrow">{ov.finalSmall}</p></Reveal>
             <Reveal reduced={!!reduced} delay={0.12}><h2 className="mt-6 text-[clamp(40px,7vw,104px)] font-extrabold leading-[0.98] tracking-[-0.04em]">{ov.finalLarge}</h2></Reveal>
           </div>
-          <div className="grid gap-4 md:grid-cols-3">
-            <Reveal reduced={!!reduced} delay={0.25}><Link href={`${base}/contact`} onClick={cta('overview_contact_click')} className="flex h-full flex-col justify-between gap-8 bg-yoca-lime p-7 text-black transition-colors hover:bg-yoca-green"><span className="text-[13px] font-bold text-black/70">01</span><span className="text-xl font-extrabold tracking-tight">{ov.pathProject} <span aria-hidden="true" className="icon-arrow">→</span></span></Link></Reveal>
-            <Reveal reduced={!!reduced} delay={0.32}><Link href={`${base}/checkup`} onClick={cta('overview_checkup_click')} className="flex h-full flex-col justify-between gap-8 border border-line bg-surface p-7 transition-colors hover:border-yoca-lime/60"><span className="text-[13px] text-muted">{ov.pathCheckup}</span><span className="text-xl font-extrabold tracking-tight text-soft">{ov.pathCheckupSub} <span aria-hidden="true" className="icon-arrow">→</span></span></Link></Reveal>
-            <Reveal reduced={!!reduced} delay={0.39}><Link href={base} onClick={cta('overview_fullsite_click')} className="flex h-full flex-col justify-between gap-8 border border-line/60 p-7 transition-colors hover:border-line"><span className="text-[13px] text-subtle">03</span><span className="text-xl font-extrabold tracking-tight text-muted">{ov.pathSite} <span aria-hidden="true" className="icon-arrow">→</span></span></Link></Reveal>
-          </div>
+          <ol className="grid gap-4 md:grid-cols-3">
+            {paths.map((p, i) => (
+              <Reveal key={p.href} reduced={!!reduced} delay={0.25 + i * 0.07}>
+                <li className="h-full">
+                  <Link href={p.href} onClick={cta(p.event)} className={`flex h-full flex-col justify-between gap-8 p-7 transition-colors ${p.tone === 'lime' ? 'bg-yoca-lime text-black hover:bg-yoca-green' : p.tone === 'surface' ? 'border border-line bg-surface hover:border-yoca-lime/60' : 'border border-line/60 hover:border-line'}`}>
+                    <span className={`text-[13px] font-bold ${p.tone === 'lime' ? 'text-black/70' : 'text-subtle'}`}>{pad(i + 1)}</span>
+                    <span className="grid gap-1">
+                      {p.sub ? <span className="text-[13px] text-muted">{p.sub}</span> : null}
+                      <span className={`text-xl font-extrabold tracking-tight ${p.tone === 'lime' ? '' : p.tone === 'surface' ? 'text-soft' : 'text-muted'}`}>{p.label} <span aria-hidden="true" className="icon-arrow">→</span></span>
+                    </span>
+                  </Link>
+                </li>
+              </Reveal>
+            ))}
+          </ol>
           <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-line pt-6">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/brand/yoca-logo-primary.svg" alt="Yoca" width={140} height={38} className="h-9 w-auto" />
@@ -368,48 +382,47 @@ function Reveal({ children, delay = 0, reduced }: { children: React.ReactNode; d
   );
 }
 
-/* Systems: 01 → 02 → 03 resolve into BRAND → GROWTH → SCALE */
-function SystemsScene({ t, caption, flows, reduced }: { t: Dict['systems']; caption: string; flows: string[][]; reduced: boolean }) {
+/* Systems: one localized data structure, one renderer — 01 → 02 → 03 resolve into BRAND → GROWTH → SCALE */
+function SystemsScene({ names, systems, caption, reduced }: { names: string[]; systems: Dict['overview']['systems']; caption: string; reduced: boolean }) {
   const [active, setActive] = useState(0);
-  const items = t.items.slice(0, 3);
-  // Concept words per system come from the localized service flows (Brand / Growth / Product)
-  const concept = [flows[0] ?? [], (flows[2] ?? []).slice(0, 3), (flows[5] ?? []).slice(0, 3)];
+  const items = systems.map((sys, i) => ({ ...sys, name: names[i] ?? sys.short }));
+  const current = items[active] ?? items[0];
   return (
     <div className="grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-center">
       <div>
         <Reveal reduced={reduced}><h2 className="max-w-[14ch] text-[clamp(30px,4.2vw,58px)] font-extrabold leading-[1.06] tracking-[-0.03em]">{caption}</h2></Reveal>
         <ol className="mt-8 grid gap-1">
-          {items.map((s, i) => (
-            <li key={s.name}>
+          {items.map((sys, i) => (
+            <li key={sys.name}>
               <button type="button" onMouseEnter={() => setActive(i)} onFocus={() => setActive(i)} onClick={() => setActive(i)} aria-pressed={active === i} className={`flex w-full items-baseline gap-4 border-b border-line py-3 text-start transition-colors ${active === i ? 'text-white' : 'text-subtle hover:text-soft'}`}>
                 <span className={`text-[12px] font-extrabold tracking-[0.1em] ${active === i ? 'text-yoca-lime' : ''}`}>{String(i + 1).padStart(2, '0')}</span>
-                <span className="text-[clamp(18px,1.9vw,24px)] font-extrabold tracking-[-0.02em]">{s.name}</span>
+                <span className="text-[clamp(18px,1.9vw,24px)] font-extrabold tracking-[-0.02em]">{sys.name}</span>
               </button>
             </li>
           ))}
         </ol>
       </div>
       <div className="grid gap-6">
-        <div className="min-h-[120px]">
+        <div className="min-h-[130px]">
           <AnimatePresence mode="wait">
             <motion.div key={active} initial={reduced ? false : { opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.35, ease: EASE_YOCA }}>
-              <p className="text-[12px] font-bold uppercase tracking-[0.14em] text-subtle">{items[active]?.tagline}</p>
+              <p className="text-[12px] font-bold uppercase tracking-[0.14em] text-subtle">{current.descriptor}</p>
               <p className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-[clamp(20px,2.4vw,32px)] font-extrabold tracking-[-0.02em]">
-                {concept[active].map((w, i) => <span key={w} className="flex items-center gap-3">{w}{i < concept[active].length - 1 && <span aria-hidden="true" className="icon-arrow text-yoca-lime">→</span>}</span>)}
+                {current.steps.map((w, i) => <span key={w} className="flex items-center gap-3">{w}{i < current.steps.length - 1 && <span aria-hidden="true" className="icon-arrow text-yoca-lime">→</span>}</span>)}
               </p>
             </motion.div>
           </AnimatePresence>
         </div>
-        {/* Signature: BRAND → GROWTH → SCALE */}
-        <div className="grid grid-cols-3 items-center gap-2 border-t border-line pt-6">
-          {items.map((s, i) => (
-            <div key={s.name} className="relative">
+        {/* Signature: BRAND → GROWTH → SCALE (semantic order 01→02→03; visual direction follows the reading direction) */}
+        <ol className="grid grid-cols-3 items-center gap-2 border-t border-line pt-6" aria-label="01 → 02 → 03">
+          {items.map((sys, i) => (
+            <li key={sys.name} className="relative">
               <motion.span aria-hidden="true" className={`slant block h-3.5 w-4 ${i === 0 ? 'bg-white' : i === 1 ? 'bg-yoca-green' : 'bg-yoca-lime'}`} initial={false} animate={{ opacity: i <= active ? 1 : 0.25 }} transition={{ duration: 0.3 }} />
-              <motion.p className="mt-2 text-[11px] font-extrabold uppercase tracking-[0.14em]" initial={false} animate={{ opacity: i <= active ? 1 : 0.35 }}>{s.tagline}</motion.p>
-              {i < 2 && <motion.span aria-hidden="true" className="absolute start-6 top-[6px] h-px bg-yoca-green" style={{ width: 'calc(100% - 2rem)' }} initial={false} animate={{ scaleX: active > i ? 1 : 0.15, opacity: active > i ? 1 : 0.3 }} transition={{ duration: 0.4 }} />}
-            </div>
+              <motion.p className="mt-2 text-[11px] font-extrabold uppercase tracking-[0.14em]" initial={false} animate={{ opacity: i <= active ? 1 : 0.35 }}>{sys.short}</motion.p>
+              {i < 2 && <motion.span aria-hidden="true" className="absolute start-6 top-[6px] h-px origin-left bg-yoca-green rtl:origin-right" style={{ width: 'calc(100% - 2rem)' }} initial={false} animate={{ scaleX: active > i ? 1 : 0.15, opacity: active > i ? 1 : 0.3 }} transition={{ duration: 0.4 }} />}
+            </li>
           ))}
-        </div>
+        </ol>
       </div>
     </div>
   );

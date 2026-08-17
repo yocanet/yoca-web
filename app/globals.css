@@ -355,3 +355,14 @@
     scroll-behavior: auto;
   }
 }
+/* Arabic glyph metrics need more vertical room than Latin display type */
+[dir='rtl'] .ov-root h1,
+[dir='rtl'] .ov-root h2 {
+  line-height: 1.22;
+  letter-spacing: 0;
+}
+[dir='rtl'] .ov-root h3,
+[dir='rtl'] .ov-root p {
+  line-height: 1.35;
+  letter-spacing: 0;
+}

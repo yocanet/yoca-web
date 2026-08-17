@@ -6,6 +6,8 @@ import PageIntro from '@/components/ui/PageIntro';
 import CtaSection from '@/components/sections/CtaSection';
 import Reveal from '@/components/ui/Reveal';
 import ProductMotif from '@/components/products/ProductMotif';
+import ProductMedia from '@/components/products/ProductMedia';
+import { getProductMedia } from '@/lib/productMedia';
 import { getDict } from '@/lib/i18n';
 import { getContent } from '@/lib/content';
 import { buildMetadata, breadcrumbSchema, getRequestContext, jsonLdString } from '@/lib/seo';
@@ -75,7 +77,7 @@ export default async function ProductsPage() {
                 <Reveal key={product.key} delay={0.04}>
                   <li
                     id={product.key}
-                    className="grid scroll-mt-28 gap-8 border-b border-[rgba(5,5,5,0.16)] py-12 lg:grid-cols-[minmax(0,2fr)_minmax(0,5fr)_minmax(0,5fr)] lg:gap-10 lg:py-16"
+                    className="grid scroll-mt-28 gap-8 border-b border-[rgba(5,5,5,0.16)] py-12 lg:grid-cols-[minmax(0,2fr)_minmax(0,4fr)_minmax(0,6fr)] lg:gap-10 lg:py-16"
                   >
                     {/* Numeral + status */}
                     <div className="flex items-start justify-between gap-4 lg:block">
@@ -102,11 +104,15 @@ export default async function ProductsPage() {
                       </ul>
                     </div>
 
-                    {/* Motif + CTA */}
+                    {/* Media (real product presentation) or motif (until assets exist) + CTA */}
                     <div className="light-card flex flex-col justify-between gap-8 p-7 lg:p-9">
-                      <div aria-hidden="true" className="[&_svg]:h-16 [&_svg]:w-auto">
-                        <ProductMotif productKey={product.key} />
-                      </div>
+                      {getProductMedia(product.key) ? (
+                        <ProductMedia media={getProductMedia(product.key)!} name={product.name} />
+                      ) : (
+                        <div aria-hidden="true" className="[&_svg]:h-16 [&_svg]:w-auto">
+                          <ProductMotif productKey={product.key} />
+                        </div>
+                      )}
                       {product.url ? (
                         <a
                           href={product.url}

@@ -12,6 +12,7 @@ import { getContent } from '@/lib/content';
 import { getCaseStudies, getCaseStudy } from '@/lib/work';
 import { getWorkMedia } from '@/lib/workMedia';
 import ParallaxMedia from '@/components/ui/ParallaxMedia';
+import CaseStudyVideo from '@/components/ui/CaseStudyVideo';
 import ProjectCover from '@/components/work/ProjectCover';
 import {
   buildMetadata,
@@ -137,18 +138,16 @@ export default async function CaseStudyPage({ params }: PageProps) {
                 {study.metricBadge}
               </span>
             )}
+            {isConcept && <span className="text-[13px] text-subtle">{t.work.conceptNote}</span>}
           </div>
         </PageIntro>
 
-        <div className="container-y relative z-[7] pt-8">
-          {media.hero ? (
+        {/* Authentic hero capture only — no placeholder box while media is unavailable */}
+        {media.hero && (
+          <div className="container-y relative z-[7] pt-8">
             <ParallaxMedia src={media.hero} alt={study.name} width={1920} height={1200} priority />
-          ) : (
-            <div className="aspect-[21/9] w-full overflow-hidden border border-line max-md:aspect-[11/7]">
-              <ProjectCover slug={study.slug} name={study.name} sector={study.sector} index={index} size="lg" priority />
-            </div>
-          )}
-        </div>
+          </div>
+        )}
 
         {/* Modules 1–3: Challenge / Applied System / Execution & Tech */}
         <section className="section-light relative z-[7] mt-16 py-16 lg:mt-24 lg:py-28">
@@ -169,29 +168,49 @@ export default async function CaseStudyPage({ params }: PageProps) {
           </div>
         </section>
 
-        {/* Visual chapters — rendered only for media registered in lib/workMedia.ts */}
-        {Boolean(media.brand?.length || media.desktop?.length || media.mobile?.length || media.interaction) && (
+        {/* Visual chapters — concept presentation media registered in lib/workMedia.ts.
+            Rhythm: first large screen → "Selected screens" composition
+            (desktop 60 % + two mobiles) → system in motion (video) → Intended Impact. */}
+        {Boolean(media.desktop?.length || media.mobile?.length || media.interaction) && (
           <section className="relative z-[7] bg-surface-deep py-16 lg:py-24">
-            <div className="container-y grid gap-10 lg:gap-16">
-              {media.brand?.map((src, index) => (
-                <ParallaxMedia key={src} src={src} alt={`${study.name} — ${index + 1}`} width={1600} height={1000} />
-              ))}
-              {media.desktop && media.desktop.length > 0 && (
-                <div className={`grid gap-6 ${media.desktop.length > 1 ? 'md:grid-cols-2' : ''}`}>
-                  {media.desktop.map((src, index) => (
-                    <ParallaxMedia key={src} src={src} alt={`${study.name} — desktop ${index + 1}`} width={1920} height={1200} />
-                  ))}
+            <div className="container-y grid gap-14 lg:gap-24">
+              {media.desktop?.[0] && (
+                <ParallaxMedia src={media.desktop[0]} alt={`${study.name} — ${t.work.statusConcept}`} width={1920} height={1200} />
+              )}
+
+              {(media.desktop?.[1] || media.mobile?.length) && (
+                <div>
+                  <p className="eyebrow mb-8">{t.work.screensLabel}</p>
+                  <div className="grid gap-6 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:gap-8">
+                    {media.desktop?.[1] && (
+                      <ParallaxMedia src={media.desktop[1]} alt={`${study.name} — ${t.work.statusConcept} 02`} width={1920} height={1200} className="self-start" />
+                    )}
+                    {media.mobile && media.mobile.length > 0 && (
+                      <div className="grid grid-cols-2 gap-6 lg:gap-8">
+                        {media.mobile.slice(0, 2).map((src, index) => (
+                          <ParallaxMedia
+                            key={src}
+                            src={src}
+                            alt=""
+                            width={900}
+                            height={1800}
+                            className={index === 1 ? 'mt-10 lg:mt-20' : ''}
+                          />
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </div>
               )}
-              {media.mobile && media.mobile.length > 0 && (
-                <div className="grid grid-cols-2 gap-6 md:grid-cols-3">
-                  {media.mobile.map((src, index) => (
-                    <ParallaxMedia key={src} src={src} alt={`${study.name} — mobile ${index + 1}`} width={900} height={1800} className={index % 2 === 1 ? 'md:mt-16' : ''} />
-                  ))}
-                </div>
-              )}
+
               {media.interaction && (
-                <ParallaxMedia src={media.interaction.poster} video={{ src: media.interaction.video, poster: media.interaction.poster }} width={1600} height={1000} />
+                <div className="overflow-hidden border border-line bg-surface">
+                  <CaseStudyVideo
+                    src={media.interaction.video}
+                    poster={media.interaction.poster}
+                    alt={`${study.name} — ${t.work.statusConcept}`}
+                  />
+                </div>
               )}
             </div>
           </section>
@@ -291,20 +310,34 @@ export default async function CaseStudyPage({ params }: PageProps) {
           </div>
           {next && (
             <Link href={`${base}/work/${next.slug}`} className="group block" aria-label={next.name}>
-              <span className="relative block aspect-[21/7] overflow-hidden rounded-sm border border-line max-md:aspect-[11/7]">
-                <span className="absolute inset-0 block transition-transform duration-700 ease-out group-hover:scale-[1.03]">
-                  <ProjectCover slug={next.slug} name={next.name} sector={next.sector} index={index + 1} size="lg" />
-                </span>
-                <span className="absolute inset-0 bg-gradient-to-t from-surface-deep/90 via-surface-deep/30 to-transparent" />
-                <span className="absolute bottom-6 start-6">
-                  <span className="block text-[12px] font-bold uppercase tracking-[0.1em] text-yoca-lime">
-                    {t.work.allWork} <span aria-hidden="true" className="icon-arrow">→</span>
+              {getWorkMedia(next.slug).hero ? (
+                <span className="relative block aspect-[16/7] overflow-hidden rounded-sm border border-line max-md:aspect-[16/10]">
+                  <span className="absolute inset-0 block transition-transform duration-700 ease-out group-hover:scale-[1.03]">
+                    <ProjectCover slug={next.slug} name={next.name} sector={next.sector} position="top" />
                   </span>
-                  <span className="mt-1 block text-2xl font-extrabold tracking-tight sm:text-3xl">
-                    {next.name}
+                  <span className="absolute inset-0 bg-gradient-to-t from-surface-deep/90 via-surface-deep/30 to-transparent" />
+                  <span className="absolute bottom-6 start-6">
+                    <span className="block text-[12px] font-bold uppercase tracking-[0.1em] text-yoca-lime">
+                      {t.work.allWork} <span aria-hidden="true" className="icon-arrow">→</span>
+                    </span>
+                    <span className="mt-1 block text-2xl font-extrabold tracking-tight sm:text-3xl">{next.name}</span>
                   </span>
                 </span>
-              </span>
+              ) : (
+                /* Typographic transition — number · title · category · arrow */
+                <span className="relative flex flex-col justify-between gap-10 overflow-hidden rounded-sm border border-line bg-surface p-8 transition-colors duration-300 group-hover:border-yoca-lime/60 lg:p-12">
+                  <span className="flex flex-wrap items-center justify-between gap-3 text-[12px] font-bold uppercase tracking-[0.1em] text-subtle">
+                    <span className="text-yoca-lime">{String(index + 2).padStart(2, '0')}</span>
+                    <span>{next.sector}</span>
+                  </span>
+                  <span className="flex flex-wrap items-end justify-between gap-6">
+                    <span className="block text-[clamp(30px,4.6vw,64px)] font-extrabold leading-[1.02] tracking-[-0.03em] transition-transform duration-500 ease-out group-hover:translate-x-1 rtl:group-hover:-translate-x-1">
+                      {next.name}
+                    </span>
+                    <span aria-hidden="true" className="icon-arrow text-3xl text-yoca-lime">→</span>
+                  </span>
+                </span>
+              )}
             </Link>
           )}
         </nav>

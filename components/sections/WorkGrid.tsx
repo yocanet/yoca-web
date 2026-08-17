@@ -7,6 +7,7 @@ import { AnimatePresence, motion, useMotionValue, useSpring } from 'framer-motio
 import type { CaseStudy } from '@/lib/workData';
 import { DUR, EASE_YOCA } from '@/lib/motion';
 import ProjectCover from '@/components/work/ProjectCover';
+import { getWorkMedia } from '@/lib/workMedia';
 
 /**
  * Yoca — editorial Work grid (soft-white section).
@@ -38,11 +39,14 @@ type Filter = 'all' | 'client' | 'concept' | 'product';
  *   1st — full-width featured · 2nd/3rd — 60/40 asymmetric pair ·
  *   4th — wide horizontal · then the pattern repeats.
  */
-const LAYOUT: Array<{ span: string; aspect: string }> = [
-  { span: 'md:col-span-5', aspect: 'md:aspect-[21/9] aspect-[11/7]' },
-  { span: 'md:col-span-3', aspect: 'md:aspect-[4/3] aspect-[11/7]' },
-  { span: 'md:col-span-2', aspect: 'md:aspect-[3/4] aspect-[11/7]' },
-  { span: 'md:col-span-5', aspect: 'md:aspect-[21/8] aspect-[11/7]' },
+// Editorial rhythm: featured wide → 60/40 pair → wide. Tiles are typographic
+// while authentic media is unavailable; when a real capture is registered in
+// lib/workMedia.ts it appears above the tile automatically.
+const LAYOUT: Array<{ span: string; variant: 'landscape' | 'portrait' }> = [
+  { span: 'md:col-span-5', variant: 'landscape' },
+  { span: 'md:col-span-3', variant: 'landscape' },
+  { span: 'md:col-span-2', variant: 'portrait' },
+  { span: 'md:col-span-5', variant: 'landscape' },
 ];
 
 const STATUS_STYLE: Record<CaseStudy['kind'], string> = {
@@ -134,6 +138,7 @@ export default function WorkGrid({ studies, base, labels }: WorkGridProps) {
             {filtered.map((study, index) => {
               const slot = LAYOUT[index % LAYOUT.length];
               const featured = index % LAYOUT.length === 0;
+              const media = getWorkMedia(study.slug);
               return (
                 <motion.div
                   key={study.slug}
@@ -142,73 +147,95 @@ export default function WorkGrid({ studies, base, labels }: WorkGridProps) {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.97 }}
                   transition={{ duration: DUR.ui, ease: EASE_YOCA }}
-                  className={slot.span}
+                  className={`${slot.span} h-full`}
                 >
                   <Link
                     href={`${base}/work/${study.slug}`}
-                    className="group block"
+                    className="group block h-full"
                     aria-label={`${study.name} — ${labels.viewCase}`}
                     onMouseEnter={() => setHovered(study.slug)}
                     onMouseLeave={() => setHovered(null)}
                   >
-                    <span
-                      className={`relative block overflow-hidden rounded-sm border border-[rgba(5,5,5,0.14)] bg-white ${slot.aspect}`}
-                    >
-                      <span className="absolute inset-0 block transition-transform duration-700 ease-out group-hover:scale-[1.03]">
-                        <ProjectCover slug={study.slug} name={study.name} sector={study.sector} index={index} size={featured ? 'lg' : 'md'} priority={featured} />
-                      </span>
-                      {study.videoUrl && hovered === study.slug && (
-                        <video
-                          src={study.videoUrl}
-                          autoPlay
-                          muted
-                          loop
-                          playsInline
-                          className="absolute inset-0 h-full w-full object-cover"
-                        />
-                      )}
-                      {/* Status label */}
-                      <span
-                        className={`slant absolute start-3 top-3 px-3 py-1 text-[11px] font-extrabold uppercase tracking-[0.06em] ${STATUS_STYLE[study.kind]}`}
-                      >
-                        {labels.status[study.kind]}
-                      </span>
-                      {/* Verified metric badge — only when real data exists */}
-                      {study.metricBadge && (
-                        <span className="slant absolute end-3 top-3 bg-yoca-lime px-3 py-1 text-[12px] font-extrabold text-black">
-                          {study.metricBadge}
+                    {/* Authentic media only — rendered when a real capture is registered */}
+                    {media.hero && (
+                      <span className="relative mb-5 block aspect-[16/10] overflow-hidden rounded-sm border border-[rgba(5,5,5,0.14)] bg-white">
+                        <span className="absolute inset-0 block transition-transform duration-700 ease-out group-hover:scale-[1.03]">
+                          <ProjectCover slug={study.slug} name={study.name} sector={study.sector} index={index} priority={featured} />
                         </span>
-                      )}
+                        {hovered === study.slug && (study.videoUrl || media.interaction) && (
+                          <video
+                            src={study.videoUrl ?? media.interaction!.video}
+                            poster={media.interaction?.poster}
+                            autoPlay
+                            muted
+                            loop
+                            playsInline
+                            preload="none"
+                            className="hover-preview absolute inset-0 h-full w-full object-cover"
+                          />
+                        )}
+                      </span>
+                    )}
+
+                    {/* Typographic tile — the honest treatment while authentic media is unavailable */}
+                    <span
+                      className={`light-card relative flex h-full flex-col justify-between overflow-hidden rounded-sm transition-colors duration-300 group-hover:border-[#050505] ${
+                        featured ? 'min-h-[300px] p-8 lg:min-h-[360px] lg:p-12' : slot.variant === 'portrait' ? 'min-h-[300px] p-7 lg:p-8' : 'min-h-[260px] p-7 lg:p-9'
+                      }`}
+                    >
+                      {/* Subtle system grid detail */}
+                      <span
+                        aria-hidden="true"
+                        className="pointer-events-none absolute inset-0 opacity-[0.55]"
+                        style={{
+                          backgroundImage: 'linear-gradient(rgba(5,5,5,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(5,5,5,0.06) 1px, transparent 1px)',
+                          backgroundSize: '48px 48px',
+                          maskImage: 'linear-gradient(180deg, #000 20%, transparent 100%)',
+                          WebkitMaskImage: 'linear-gradient(180deg, #000 20%, transparent 100%)',
+                        }}
+                      />
+                      <span className="relative flex flex-wrap items-center justify-between gap-3">
+                        <span className="text-[13px] font-extrabold tracking-[0.1em] text-[#267800]">
+                          {String(index + 1).padStart(2, '0')}
+                        </span>
+                        <span className={`slant inline-block px-3 py-1 text-[11px] font-extrabold uppercase tracking-[0.06em] ${STATUS_STYLE[study.kind]}`}>
+                          {labels.status[study.kind]}
+                        </span>
+                      </span>
+                      <span className="relative mt-10">
+                        <span
+                          className={`block font-extrabold leading-[1.02] tracking-[-0.03em] transition-transform duration-500 ease-out group-hover:translate-x-1 rtl:group-hover:-translate-x-1 ${
+                            featured ? 'text-[clamp(34px,4.6vw,64px)]' : slot.variant === 'portrait' ? 'text-[clamp(26px,2.6vw,34px)]' : 'text-[clamp(28px,3vw,42px)]'
+                          }`}
+                        >
+                          {study.name}
+                        </span>
+                        <span className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] font-bold uppercase tracking-[0.1em] light-subtle">
+                          <span>{study.sector}</span>
+                          <span aria-hidden="true" className="h-3 w-px bg-[rgba(5,5,5,0.2)]" />
+                          <span>{study.services.join(' · ')}</span>
+                          <span aria-hidden="true" className="h-3 w-px bg-[rgba(5,5,5,0.2)]" />
+                          <span>{study.year}</span>
+                        </span>
+                        {slot.variant !== 'portrait' && (
+                          <span className={`light-muted mt-4 block text-[15px] leading-relaxed ${featured ? 'max-w-[56ch] lg:text-[16px]' : 'max-w-[44ch]'}`}>
+                            {study.summary}
+                          </span>
+                        )}
+                        {study.metricBadge && (
+                          <span className="slant mt-4 inline-block bg-yoca-lime px-3 py-1 text-[12px] font-extrabold text-black">
+                            {study.metricBadge}
+                          </span>
+                        )}
+                      </span>
+                      <span className="relative mt-8 inline-flex items-center gap-1.5 text-[13px] font-extrabold uppercase tracking-[0.08em] text-[#267800]">
+                        {labels.viewCase}
+                        <span aria-hidden="true" className="icon-arrow">→</span>
+                      </span>
                       <span
                         aria-hidden="true"
                         className="absolute bottom-0 start-0 h-[3px] w-0 bg-yoca-lime transition-all duration-300 group-hover:w-full"
                       />
-                    </span>
-                    <span className="mt-4 flex flex-wrap items-center gap-2">
-                      <span className="light-subtle inline-block rounded-sm border border-[rgba(5,5,5,0.18)] px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.1em]">
-                        {study.sector}
-                      </span>
-                      {study.services.map((service) => (
-                        <span
-                          key={service}
-                          className="light-subtle inline-block text-[11px] font-bold uppercase tracking-[0.1em]"
-                        >
-                          {service}
-                        </span>
-                      ))}
-                    </span>
-                    <h2 className={`mt-3 font-extrabold transition-transform duration-500 ease-out group-hover:translate-x-1 rtl:group-hover:-translate-x-1 ${featured ? 'text-[26px]' : 'text-[22px]'}`}>
-                      {study.name}
-                    </h2>
-                    <p className="light-muted mt-2 max-w-[60ch] text-[15px]">{study.summary}</p>
-                    <span className="mt-3 inline-flex items-center gap-1.5 text-[13px] font-extrabold uppercase tracking-[0.08em] text-[#267800]">
-                      {labels.viewCase}
-                      <span
-                        aria-hidden="true"
-                        className="icon-arrow"
-                      >
-                        →
-                      </span>
                     </span>
                   </Link>
                 </motion.div>

@@ -6,6 +6,7 @@ import { motion, useMotionValue, useReducedMotion, useSpring } from 'framer-moti
 import type { CaseStudy } from '@/lib/workData';
 import { EASE_YOCA, VIEWPORT_ONCE } from '@/lib/motion';
 import ProjectCover from '@/components/work/ProjectCover';
+import { getWorkMedia } from '@/lib/workMedia';
 
 /**
  * Yoca — work index rows (client half of WorkIndex).
@@ -104,12 +105,12 @@ export default function WorkIndexList({ studies, base, viewCase, status }: WorkI
         aria-hidden="true"
         className="hover-preview pointer-events-none absolute start-0 top-0 z-10 w-[260px] overflow-hidden border border-line shadow-[0_18px_40px_rgba(0,0,0,0.45)]"
         style={{ x: sx, y: sy, translateX: '-50%', translateY: '-50%' }}
-        animate={active && !reduced ? { opacity: 1, rotate: 0, scale: 1 } : { opacity: 0, rotate: -4.83, scale: 0.92 }}
+        animate={active && getWorkMedia(active.slug).hero && !reduced ? { opacity: 1, rotate: 0, scale: 1 } : { opacity: 0, rotate: -4.83, scale: 0.92 }}
         transition={{ duration: 0.35, ease: EASE_YOCA }}
       >
-        {active && (
-          <span className="block aspect-[11/7] w-full">
-            <ProjectCover slug={active.slug} name={active.name} sector={active.sector} size="sm" />
+        {active && getWorkMedia(active.slug).hero && (
+          <span className="block aspect-[16/10] w-full">
+            <ProjectCover slug={active.slug} name={active.name} sector={active.sector} />
           </span>
         )}
       </motion.span>

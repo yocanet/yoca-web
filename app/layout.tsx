@@ -29,9 +29,9 @@ export function generateMetadata(): Metadata {
     title: t.meta.homeTitle,
     description: t.meta.homeDescription,
   });
-  // Search Console HTML-tag verification (optional — DNS TXT on the domain property is preferred).
-  const googleVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
-  if (googleVerification) meta.verification = { google: googleVerification };
+  // Search Console HTML-tag verification (public token by design; env var overrides the default).
+  const googleVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ?? 'LVGW4fjn2iUVtUSWWXk9SyhKcjPnJ-OwFn8kvZZ24Ws';
+  meta.verification = { google: googleVerification };
   return meta;
 }
 

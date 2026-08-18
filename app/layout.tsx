@@ -23,12 +23,16 @@ const manrope = Manrope({
 export function generateMetadata(): Metadata {
   const ctx = getRequestContext();
   const t = getDict(ctx.locale);
-  return buildMetadata({
+  const meta = buildMetadata({
     ctx,
     path: '/',
     title: t.meta.homeTitle,
     description: t.meta.homeDescription,
   });
+  // Search Console HTML-tag verification (optional — DNS TXT on the domain property is preferred).
+  const googleVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
+  if (googleVerification) meta.verification = { google: googleVerification };
+  return meta;
 }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
